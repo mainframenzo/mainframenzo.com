@@ -1,0 +1,5 @@
+#!/bin/bash
+# This file is executed by VNC during its startup.
+# This file is responsible for starting the desktop environment for GUI-based development using containers.
+xrdb $HOME/.Xresources
+startxfce4 &

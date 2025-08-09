@@ -1,0 +1,58 @@
+<p>
+  <a href='#tableofcontents'>🔙</a>
+  Total USD cost: <b>$<%= totalCostUSD %></b>.
+</p>
+<p>A bill of materials <parenthetical>(BOM)</parenthetical> is listed below. While the BOM may include special tools not found in common toolboxes, it does <emphasis>not</emphasis> include extra parts purchased on account of, or in preparation for, <emphasis>whoopsies</emphasis>. Also, some prices include tax and shipping, but others do not.</p>
+<div class='bom-legend-container'>
+  <p>BOM legend:</p>
+  <ol class='bom-legend'>
+    <li><div class='bom-legend-part'></div> <span class='bom-legend-text'>Part</span></li>
+    <li><div class='bom-legend-fastener'></div> <span class='bom-legend-text'>Fastener</span></li>
+    <li><div class='bom-legend-service'></div> <span class='bom-legend-text'>Service</span></li>
+    <li><div class='bom-legend-tool'></div> <span class='bom-legend-text'>Tool</span></li>
+    <li><div class='bom-legend-disposable'></div> <span class='bom-legend-text'>Disposable</span></li>
+  </ol>
+</div>
+<!-- FIXME The styles needs some work on smaller screens. -->
+<table class='bom'>
+  <thead>
+    <tr>
+      <th>Quantity</th>
+      <th>Type</th>
+      <th>File</th>
+      <th>Description</th>
+      <th>Name</th>
+      <th>Link</th>
+      <th>Cost ($USD)</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% 
+      materials.forEach(function(material) {
+    %>
+    <tr class='bom-<%= material.type %>'>
+      <td><%= material.quantity %></td>
+      <td><%= material.type %></td>
+      <td><%= material.file %></td>
+      <td><%= material.description %></td>
+      <td><%= material.name %></td>
+      <% 
+      if (material.link === 'N/A') {
+      %>
+      <td>N/A</td>
+      <% 
+      } else {
+      %>
+      <td><a href='<%= material.link %>' target='_blank'><%= material.link %></a></td>
+      <% 
+      }
+      %>
+      <td>$<%= material.costUSD %></td>
+      <td><%= material.notes %></td>
+    </tr>
+    <%
+      });
+    %>
+  </tbody>
+</table>

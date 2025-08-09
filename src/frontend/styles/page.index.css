@@ -1,0 +1,53 @@
+.card-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.card-item {
+  width: 20rem;
+  height: 20rem;
+  border: gray;
+  margin: 1rem;
+  padding: 1rem;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  cursor: pointer;
+
+  /*
+  span {
+    align-self: center;
+  }
+  */
+}
+
+.products .product {
+  border-radius: .4rem;
+  border: 1px solid #eee;
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  height: 20rem; /*3*/
+  letter-spacing: .1rem;
+  line-height: 3rem;
+  margin-bottom: 2.5rem;
+  margin-right: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Larger than mobile screen */
+@media (min-width: 40.0rem) {
+
+}
+
+/* Larger than tablet screen */
+@media (min-width: 80.0rem) { 
+
+}
+
+/* Larger than desktop screen */
+@media (min-width: 120.0rem) {
+
+}

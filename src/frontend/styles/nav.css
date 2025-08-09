@@ -1,0 +1,81 @@
+.nav {
+  background: var(--bookend-color);
+  border-bottom: .1rem solid var(--border-color);
+  display: block;
+  height: 5.2rem;
+  left: 0;
+  max-width: 100%;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 4;
+}
+
+.nav .nav-list {
+  list-style: none;
+  margin-bottom: 0;
+}
+
+.nav .nav-item {
+  float: left;
+  margin-bottom: 0;
+  margin-left: 2.5rem;
+  position: relative;
+}
+
+.nav .img {
+  fill: #607d8b;
+  height: 2rem;
+  position: relative;
+  top: .3rem;
+}
+
+.nav .nav-title,
+.nav .title {
+  color: var(--link-text-color);
+  position: relative;
+}
+
+.nav .nav-link,
+.nav .nav-title,
+.nav .title {
+  display: inline;
+  line-height: 5.2rem;
+  padding: 0;
+  text-decoration: none;
+}
+
+.nav .title {
+  font-size: 1.8rem;
+}
+
+.nav .nav-link {
+  font-size: 1.6rem;
+}
+
+.nav .nav-link .active {
+  color: var(--text-color);
+}
+
+@keyframes b {
+  0%,50% {
+    transform: rotate(0);
+  }
+  25%,75% {
+    transform: rotate(-25deg);
+  }
+}
+
+/* Larger than mobile screen */
+/* STUB @media (min-width: 40.0rem) { ... }*/
+
+/* Larger than tablet screen */
+@media (min-width: 80rem) {
+  .nav .nav-list {
+    margin-right: 0;
+  }
+}
+
+/* Larger than desktop screen */
+/* STUB @media (min-width: 120.0rem) { ... } */

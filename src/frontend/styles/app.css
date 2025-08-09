@@ -1,0 +1,276 @@
+/* 
+Some styles just override Milligram CSS, which I used as a foundation.
+FIXME At some point, grab what I want from Milligram CSS and stop using it.
+*/
+
+:root {
+  --background-color: white;
+  --bookend-color: #f4f5f6;
+  --border-color: #d1d1d1;
+  --focus-color: #333;
+
+  --text-color: #606c76;
+  --text-quote-color: rgb(69, 54, 37);
+  --text-emphasis-color: #d14;
+  --text-emphasis-background-color: #f7f7f9;
+  --text-emphasis-border-color: #e1e1e8;
+
+  --link-color: rgb(90, 86, 86);
+  --link-text-color: #0b3a6e;
+
+  --container-text-color: rgb(69, 54, 37);
+  --container-column-color: #eee;
+
+  /*--image-border-color: #606c76;*/
+
+  --posts-count-color-border: #eee;
+  --posts-count-text-color: #333;
+  --posts-info-metadata-text-color: #aaa;
+
+  --post-title-text-color: black; 
+  --post-title-tagline-text-color: rgba(69, 54, 37, 0.6);
+
+  --success-color: #04AA6D;
+  --error-color: #f44336;
+  --warning-color: #ff9800;
+  --info-color: #2196F3;
+
+  --bom-fastener-color: #d9ead3;
+  --bom-service-color: #f3e2cf;
+  --bom-tool-color: #cfe2f3;
+  --bom-disposable-color: #fefec8;
+}
+
+/* TODO em vs rem */
+
+html {
+  scroll-padding-top: 10rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--link-text-color);
+}
+
+/* Markdown sections get converted to h5 as the starting size. */ 
+h5, h6 {
+  font-size: 2rem;
+}
+.linux.gecko h5, .linux.gecko h6 { 
+  font-size: 1.7rem;
+}
+
+/* FIXME Does wrapping in .container matter? */
+.container p, ol, ul, figcaption {
+  line-height: 1.5em;
+  color: var(--container-text-color);
+  font-size: 1em;
+}
+
+.container p, ol, ul, figcaption { 
+  font-size: .9em;
+}
+
+.linux.gecko .container p, 
+.linux.gecko ol, 
+.linux.gecko ul, 
+.linux.gecko figcaption { 
+  font-size: 1.2em;
+}
+
+a {
+  color: var(--link-color); 
+}
+a:current {
+  text-decoration: underline;
+}
+
+li {
+  margin-bottom: .5rem;
+}
+
+hr {
+  background: var(--text-emphasis-border-color);
+  width: 95%;
+  height: .08em;
+}
+
+pre {
+  border-left: .3rem solid var(--link-text-color);
+  color: black;
+}
+
+.wrapper {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  margin-top: 5rem; 
+  margin-bottom: 5rem;
+}
+
+.container {
+  max-width: 100rem; /* FIXME Why not % ? */
+}
+
+.container ul {
+  list-style-type: square;
+}
+
+.container .post ul {
+  margin-top: -1.5rem;
+}
+
+.container .the_deal {
+  column-gap: 3%;
+  column-count: 1;
+  column-width: 47%;
+  column-rule: .2rem solid var(--container-column-color);
+  width: 100%;
+  margin: 0 auto;
+  text-align: justify;
+  display: block;
+  line-break: strict;
+  word-wrap: break-word;
+}
+
+.container .quote {
+  color: var(--text-quote-color);
+  font-family: Georgia;
+  font-style: italic;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin: 0 auto;
+  text-align: center;
+  width: 70%;
+  margin-bottom: 2rem;
+}
+
+.container a {
+  color: var(--link-text-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.container a[aria-describedby="footnote-label"] {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.container a[aria-describedby="reference-label"] {
+  text-decoration: none;
+  cursor: pointer
+}
+
+.row {
+  padding: 0; /* Override Milligram. */
+}
+
+.row .column {
+  padding: 0; /* Override Milligram. */
+}
+
+.wrapper >.container {
+  padding-top: 3rem;
+}
+
+emphasis {
+  line-height: 190%;
+  border: none;
+  padding: .3rem .3rem;
+  color: var(--text-emphasis-color);
+  background-color: var(--text-emphasis-background-color);
+  border: 1px solid var(--text-emphasis-border-color);
+  font-family: Menlo, Monaco, "Courier New", monospace;
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+em {
+  line-height: 190%;
+  border: none;
+  padding: .3rem .3rem;
+  color: var(--text-emphasis-color);
+  background-color: var(--text-emphasis-background-color);
+  border: 1px solid var(--text-emphasis-border-color);
+  font-family: Menlo, Monaco, "Courier New", monospace;
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+parenthetical {
+  background: #f4f5f6;
+  border-radius: .4rem;
+  font-size: 90%;
+  margin: 0 .2rem;
+  padding: .2rem .5rem;
+  white-space: wrap;
+}
+
+gesture {
+  background: #f4f5f6;
+  border-radius: .4rem;
+  margin: 0 .2rem;
+  padding: .2rem .5rem;
+  white-space: wrap;
+  font-variant: small-caps;
+}
+
+/*
+code {
+  background: #f4f5f6;
+  border-radius: .4rem;
+  font-size: 86%;
+  margin: 0 .2rem;
+  padding: .2rem .5rem;
+  white-space: wrap;
+}
+*/
+
+.center-text {
+  text-align: center;
+}
+
+.mt-2 {
+  margin-top: 2em;
+}
+
+.mt-3 {
+  margin-top: 3em;
+}
+
+/*
+strong {
+  font-weight: bold;
+}
+*/
+
+@keyframes a {
+  0% {
+    fill-opacity: 0;
+    stroke-dashoffset: 38321;
+  }
+  25% {
+    fill-opacity: 0;
+    stroke: #607d8b;
+  }
+  to {
+    fill-opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Larger than mobile screen */
+@media (min-width: 40rem) {
+  .only-mobile {
+    display: none;
+  }
+
+  .container .the_deal {
+    column-count: 2;
+  }
+}
+
+/* Larger than tablet screen */
+/* STUB @media (min-width: 80.0rem) { ... } */
+/* Larger than desktop screen */
+/* STUB @media (min-width: 120.0rem) { ... } */

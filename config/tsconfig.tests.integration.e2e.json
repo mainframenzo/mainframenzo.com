@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../dist.tests.integration.e2e",
+    "rootDir": "../src",
+    "types": ["node"]
+  },
+  "include": [
+    "../src/@types/*.ts",
+    "../src/tests.integration.e2e/**/*.ts"
+  ]
+}

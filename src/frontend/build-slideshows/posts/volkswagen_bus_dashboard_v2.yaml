@@ -1,0 +1,123 @@
+- description: >-
+    The v2 dashboard back from the Powder Coaters; they managed to match the color! 
+    I got excited and accidentally installed the gauges upside down <parenthetical>(and on the wrong side)</parenthetical>. <emphasis>Whoopsies</emphasis>. 
+    I set v2 aside after this and waited to find time for installing it.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_0.jpg
+
+- description: >-
+    All the gauges on Frances stopped working one day, then a few days later the alternator went out as well. Cöincidence? The time had come to install v2.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_1.jpg
+
+- description: >-
+    The v1 dashboard removed. Problems arose soon after.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_2.jpg
+
+- description: >-
+    During v1's installation many years ago, I had encountered a problem with the radio knob holes and face being too small. I remembered to make them bigger this time around. 
+    Unfortunately, I remembered half-wrong. The radio knob holes weren't <emphasis>too small</emphasis>, they were just in the wrong place! <emphasis>Whoopsies</emphasis>.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_3.jpg
+  
+- description: >-
+    I, once again, drilled holes to solve the problem. But the problem was compounded by the fact that larger, unused, radio knob holes were no longer hidden by its face plate. 
+    But at least I finally had an excuse to replace the plastic radio face plate with metal :)
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_4.jpg 
+
+- description: >-
+    New radio face plate. Show's over, back to the build.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_5.jpg
+
+- description: >-
+    The aluminium backing I installed for v1 to screw into had to be removed because it interfered with the new speedometer, which was larger than the original.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_6.jpg
+
+- description: >-
+    The aluminium backing I installed for v1 to screw into had to be removed because it interfered with the new speaker mount.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_7.jpg
+
+- description: >-
+    The airbox controls got permanently moved into the heat + defrost position because v2 removed the slots for them <parenthetical>(no need for airbox controls, Frances does not have AC and only ever needs heat blown up at the windshield)</parenthetical>.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_8.jpg
+
+- description: >-
+    The old gauge panel was moved to a location where I could access it later.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_9.jpg
+
+- description: >-
+    I needed a way to mount v2 to the original steel dashboard using "dashboard-to-dashboard mounts"...which I needed to make. 
+    Warning, shoddy solution ahead: I grabbed some plastic moulding from Big Box Hardware Store and cut it into pieces. Voilà - dashboard-to-dashboard mounts.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_10.jpg
+
+- description: >-
+    This is what some of the dashboard-to-dashboard mounts looked like after they were installed.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_11.jpg
+
+- description: >-
+    Another set of the dashboard-to-dashboard mounts after they were installed.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_12.jpg
+
+- description: >-
+    The dashboard all roughed in, sans some hardware and the new radio faceplate. 
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_13.jpg
+
+- description: >-
+    I would have called this gap a problem, but I knew this would happen, and figured it would be fine. It was.
+    From anywhere except underneath you can't tell there's a gap where the "new Tech mount" sits. 
+    I would have went with thinner aluminium, but I wanted it to be stiff enough to handle getting hit by passengers, etc. 
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_14.jpg
+
+- description: >-
+    This gap on top <emphasis>is</emphasis> a problem. It is the result of not being able to get one of the dashboard-to-dashboard mounts properly seated.
+    Fixing the problem requires taking the dashboard out and cutting some steel tabs <parenthetical>(for mounting the original gauge cluster)</parenthetical> which are in the way.
+    I do not want to take the dashboard out, again. Since you can't see it from any angle I care about, 
+      this "problem" is "backlogged" until the next time the dashboard needs to come out. FIXME
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_15.jpg
+
+- description: >-
+    Another problem related to the steel tabs <parenthetical>(for mounting the original gauge cluster)</parenthetical> that need to be removed: this screw fails to sit flush!
+    Small as it is, you notice it...just not in this picture <parenthetical>(quite the photographer, I am)</parenthetical>. FIXME
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_16.jpg
+
+- description: >-
+    Crank up the music! Oh wait, no speakers yet. The speaker assembly is a simple bracket, 
+    two pieces of stainless steel mesh layed on top of each other, two speakers, and some hardware. The speakers mount to the bracket, 
+      the bracket mounts to the dashboard, and the mesh layers sit between the speakers and the bracket.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_17.jpg
+
+- description: >-
+    Drilling holes in the mesh took me a couple tries - I ripped up a piece with the drill
+      because I had not left enough extra material on the edges, and the drill just gobbled it up.
+    I also messed up the mounting holes for the speakers <parenthetical>(measure twice, blah blah)</parenthetical>, so I had to drill new ones. <emphasis>Whoopsies</emphasis>.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_18.jpg
+
+- description: >-
+    Speaker assembly installed and wired in. 
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_19.jpg
+
+- description: >-
+    Speaker assembly from the passenger's view.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_20.jpg
+
+- description: >-
+    Gauges installed.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_21.jpg
+
+- description: >-
+    I mounted the GPS antenna underneath the windshield (it's magnetic!), 
+    then enlarged an existing small hole to pass the wire through to the speedometer gauge.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_22.jpg
+
+- description: >-
+    The OBDII reader mounted with velcro.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_23.jpg
+
+- description: >-
+    Done, sans radio face plate.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_24.jpg
+
+- description: >-
+    Done-done.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_25.jpg
+
+# - description: >-
+#     Evening.
+#   filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v2/img_25.jpg # TODO image

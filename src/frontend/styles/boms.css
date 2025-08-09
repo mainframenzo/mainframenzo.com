@@ -1,0 +1,102 @@
+.bom {
+  margin-top: -3rem;
+}
+
+.bom tr {
+  font-size: .75em;
+}
+
+.bom td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: scroll;
+  max-width: 10rem; /* FIXME media query */
+}
+.bom td:hover {
+  overflow: visible; 
+  white-space: normal;
+  height: auto;
+  border-bottom: 2px solid gray;
+}
+
+.bom-legend-container {
+  margin-bottom: 5rem;
+}
+
+.bom-legend-container p {
+  display: inline;
+  position: relative;
+  margin-top: -.4em;
+}
+
+.bom-legend {
+  padding: 5px;
+  display: inline;
+}
+
+.bom-legend ol {
+  padding-top: 5px;
+}
+
+.bom-legend li {
+  display: inline;
+  margin-right: 10px;
+}
+
+.bom-legend-part {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border: 1px solid #eee;
+}
+
+.bom-legend-fastener {
+  width: 20px;
+  height: 20px;
+  background: var(--bom-fastener-color);
+  display: inline-block;
+}
+
+.bom-legend-service {
+  width: 20px;
+  height: 20px;
+  background: var(--bom-service-color);
+  display: inline-block;
+}
+
+.bom-legend-tool {
+  width: 20px;
+  height: 20px;
+  background: var(--bom-tool-color);
+  display: inline-block;
+}
+
+.bom-legend-disposable {
+  width: 20px;
+  height: 20px;
+  background: var(--bom-disposable-color);
+  display: inline-block;
+}
+
+.bom-fastener {
+  background: var(--bom-fastener-color);
+}
+
+.bom-service {
+  background: var(--bom-service-color);
+}
+
+.bom-tool {
+  background: var(--bom-tool-color);
+}
+
+.bom-disposable {
+  background: var(--bom-disposable-color);
+}
+
+.bom-legend-text {
+  display: inline;
+  position: relative;
+  top: -5px;
+}

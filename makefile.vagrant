@@ -1,0 +1,20 @@
+# This file is responsible for defining Vagrant related developer commands.
+include makefile.inc
+
+# Include environment configuration.
+ifneq (,$(wildcard ./config/.env))
+	include ./config/.env
+	export
+endif
+
+# GUI login should not be needed, but CLI login is vagrant/vagrant .
+vagrant/setup:
+	cd ./build-utils/vagrant; rm -rf ./vagrant; vagrant up 
+
+vagrant/develop/website:
+	docker run -it --rm $(platform_flag) \
+		-v ~/.aws:/root/.aws \
+		-p 8080:8080 \
+		-p 5000:5000 \
+		-e GENERATE_UNIQUE=false -e app_location="local" \
+		"$(frontend_image_name):latest"

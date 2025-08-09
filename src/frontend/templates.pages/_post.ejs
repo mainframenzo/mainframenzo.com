@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+<%- include(`${process.cwd()}/src/frontend/templates.partials/head`); -%>
+<body>
+  <!-- FIXME Only do ths once? lol.
+  <noscript>
+    <meta http-equiv='refresh' content='0; url=/posts/<%= post.postInfo.title %>.html'/>
+  </noscript>
+  -->
+  <main class='wrapper'>
+    <%- include(`${process.cwd()}/src/frontend/templates.partials/nav`); -%>
+    <section class='container'>
+      <div class='post'>
+        <div class='post_title'> 
+          <h1><%= post.postInfo.title %><span><%= post.postInfo.publishedOn %></span></h1>
+          <p class='quote'><%= post.postInfo.tagline %></p>
+          <% 
+            if (app_stage === 'local') {
+          %>
+            <!-- You use this as a way to calculate total costs for projects which have multiple BOMs. -->
+            <p>Total USD cost: <b>$<%= post.totalCostUSDAllBoms %></b></p>
+          <% 
+            }
+          %>
+        </div>
+        <!--
+          See: 
+          * https://stackoverflow.com/questions/10326950/render-a-variable-as-html-in-ejs 
+          * https://ejs.co/#docs
+        -->
+        <div class='markdown_to_html'>
+          <%- post.html %>
+        </div>
+      </div>
+    </section>
+    <section class='container'>
+      <!-- TODO js version of slideshow -->
+    </section>
+    <%- include(`${process.cwd()}/src/frontend/templates.partials/footer`); -%>
+  </main>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang='en'>
+<%- include(`${process.cwd()}/src/frontend/templates.partials/head`); -%>
+<body>
+  <main class='wrapper'>
+    <%- include(`${process.cwd()}/src/frontend/templates.partials/nav`); -%>
+    <section class='container'>
+      <div class='post'>
+        <div class='post_title'> 
+          <h1><%= post.postInfo.title %><span><%= post.postInfo.publishedOn %></span></h1>
+          <p class='quote'><%= post.postInfo.tagline %></p>
+        </div>
+        <!--
+          See: 
+          * https://stackoverflow.com/questions/10326950/render-a-variable-as-html-in-ejs 
+          * https://ejs.co/#docs
+        -->
+        <div class='markdown_to_html'>
+          <%- post.html %>
+        </div>
+      </div>
+    </section>
+    <section class='container'>
+      <div class='photo_dump'>
+        <%- post.slideshowHTML %>
+      </div>
+    </section>
+    <%- include(`${process.cwd()}/src/frontend/templates.partials/footer`); -%>
+  </main>
+</body>
+</html>

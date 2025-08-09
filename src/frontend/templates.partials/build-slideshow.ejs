@@ -1,0 +1,27 @@
+<p>
+  <a href='#tableofcontents'>🔙</a>
+  Let's walk through the build. <noscript>The build walk-through is limited to static renders with JavaScript disabled.</noscript><br/><br/>
+  <!-- FIXME Find a better way to explain this, or just assume folks will figure it out.
+  <span class='hide-when-javascript-disabled'>
+    Touch-screen navigation controls <parenthetical>(mobile/tablet)</parenthetical>: swipe left/right. Anywhere else: use the left/right arrow keys.<br/>
+    To use navigation controls, first select any area outside the image.
+  </span>
+  -->
+</p>
+<div id='<%= slideshowId %>' class='build-slideshow' autofocus='autofocus'>
+  <div class='build-slideshow-state'>
+    <p class='hide-when-javascript-disabled'><span class='build-slideshow-prev'>&lt;</span> Image <span id='<%= slideshowId %>-current-slide'>0</span> of <%= slides.length %> <span class='build-slideshow-next'>&gt;</span></p> 
+  </div>
+  <% 
+    slides.forEach(function(slide) {
+  %>
+  <figure>
+    <div class='image-container'>
+      <image loading='lazy' class='one_photo' src='<%= slide.filePath %>'/> <!-- FIXME  ondblclick='this.requestFullscreen()' shows black -->
+      <figcaption><%- slide.description %></figcaption>
+    </div>
+  </figure>
+  <%
+    });
+  %>
+</div> 

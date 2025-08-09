@@ -1,0 +1,21 @@
+.mascot {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.mascot .palm_tree {
+  margin-left: -.7em;
+  max-height: 12rem;
+}
+
+.circle_border {
+  clip-path: circle();
+  max-height: 200px;
+  margin-bottom: 2rem;
+  margin-left: 25%;
+  width: 50%;
+}
+
+.description {
+  text-align: center;
+}

@@ -1,0 +1,31 @@
+<p>
+  <a href='#tableofcontents'>🔙</a>
+  This is the design I ended up with. <noscript>The design files are limited to static renders with JavaScript disabled.</noscript><br/><br/>
+  <!-- FIXME Find a better way to explain this, or just assume folks will figure it out.
+  <span class='hide-when-javascript-disabled'>
+    Touch-screen navigation controls <parenthetical>(mobile/tablet)</parenthetical>: swipe left/right. Anywhere else: use the left/right arrow keys.<br/>
+    To use navigation controls, first select any area outside the design.
+  </span>
+  -->
+</p>
+<div id='<%= slideshowId %>' class='threed-slideshow' autofocus='autofocus'>
+  <div class='threed-slideshow-state'>
+    <p class='hide-when-javascript-disabled center-text'><span class='threed-slideshow-prev'>&lt;</span> Model <span id='<%= slideshowId %>-current-slide'>0</span> of <%= slides.length %> <span class='threed-slideshow-next'>&gt;</span></p> 
+  </div>
+  <div id='<%= slideshowId %>-data' class='threed-content-data'><%- JSON.stringify(slides) %></div>
+  <model-viewer id='<%= slideshowId %>-model-viewer' class='threed-content' loading='eager' camera-controls auto-rotate touch-action='pan-y' src='<%= slides[0].filePath %>'></model-viewer>
+  <p id='<%= slideshowId %>-description' class='threed-content center-text'><a href='<%- slides[0].filePath %>' target='_blank'><%- slides[0].filePath %></a><br/><%- slides[0].description %></p>
+  <% 
+    slides.forEach(function(slide) {
+  %>
+  <figure>
+    <div class='image-container'>
+      <image loading='lazy' class='one_photo' src='<%= slide.thumbnailPath %>'/>
+      <!-- If you have JavaScript disabled, you are probably comfortable with file paths. -->
+      <figcaption><a href='<%- slide.filePath %>' target='_blank'><%- slide.filePath %></a><br/><%- slide.description %></figcaption>
+    </div>
+  </figure>
+  <%
+    });
+  %>
+</div> 
