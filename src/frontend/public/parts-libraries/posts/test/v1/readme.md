@@ -1,0 +1,1 @@
+You put this directory in the ./posts directory when you need to debug. No need to spend time rendering it otherwise.
