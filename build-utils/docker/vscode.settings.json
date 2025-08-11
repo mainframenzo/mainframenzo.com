@@ -1,0 +1,23 @@
+{
+  "python.linting.enabled": true,
+  "workbench.colorTheme": "Default Dark Modern",
+  "remote.SSH.serverPickPortsFromRange": {
+    "localhost": "8002-9000"
+  },
+  "terminal.integrated.inheritEnv": false,
+  "python.venvPath": "/opt/conda/envs",
+  "python.condaPath": "/opt/conda/condabin/conda",
+  "python.pythonPath": "/opt/conda/envs/meblog/bin/python",
+  "python.defaultInterpreterPath": "/opt/conda/envs/meblog/bin/python",
+  "python.terminal.activateEnvironment": true,
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  "python.analysis.extraPaths": ["."],
+  "ocp-cad-viewer.default.theme": "light",
+  "ocp-cad-viewer.default.axes": true,
+  "ocp-cad-viewer.default.grid": true,
+  "ocp-cad-viewer.default.ortho": false,
+  "ocp-cad-viewer.default.transparency": 0.5,
+  "ocp-cad-viewer.default.position": [0, 0, 0],
+  "ocp-cad-viewer.default.rotation": [0, 0, 0],
+  "ocp-cad-viewer.default.zoom": 1.0
+}

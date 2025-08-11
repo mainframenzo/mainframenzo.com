@@ -1,0 +1,382 @@
+# This Dockerfile is responsible for defining a container-based environment to use for building the frontend.
+# Well - OK - You also built all the developer tools for parts libraries into this environment as well.
+# You are not 100% sure you need ALL these dependencies (this Dockerfile was cobbled together from several siloed ones), but you haven't had a chance to prune anything.
+# FIXME Not really doing much pruning to container image size, but see https://devopscube.com/reduce-docker-image-size/ for some additional tips.
+# The deps layer - node_modules and conda env - seems to be the biggest FYI.
+# References:
+# * https://github.com/peterzhuamazon/docker-images/blob/6c23ffde45b4c37dfde9b057ca241c9fd8357bc4/2.x/Dockerfile#L65
+# * https://github.com/nytimes/rd-blender-docker/blob/master/dist/2.82-cpu-ubuntu18.04/Dockerfile
+# * https://github.com/bernhard-42/vscode-ocp-cad-viewer
+# * https://github.com/kalemena/docker-cadquery/blob/master/Dockerfile
+# * https://github.com/amrit3701/docker-freecad-cli/blob/master/0.21/amd64/Dockerfile_01_05_2024
+# * https://github.com/dtinth/xtigervnc-docker/tree/main
+# syntax=docker/dockerfile:1
+ARG EXTEND="public.ecr.aws/ubuntu/ubuntu:22.04_stable"
+FROM ${EXTEND}
+
+SHELL ["/bin/bash", "-c"]
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV USERNAME=root
+
+# VNC config.
+ENV USER=root
+ENV PASSWORD=meblog
+ENV DISPLAY=:1
+ENV HOME=/home/root
+
+# Node.js config.
+ENV NODE_ENV="development"
+ENV NODE_OPTIONS=--max_old_space_size=2048
+
+# Blender config.
+ENV LC_ALL="C.UTF-8"
+ENV LANG="C.UTF-8"
+ENV HW="CPU"
+
+# FreeCAD config.
+# ENV PYTHON_VERSION=3.11.4
+# ENV PYTHON_MINOR_VERSION=3.11
+# ENV PYTHON_BIN_VERSION=python3.11
+
+# FreeCAD compiled but still broken with libfmt.9.so issues.
+ENV PYTHON_VERSION=3.10.16
+ENV PYTHON_MINOR_VERSION=3.10
+ENV PYTHON_BIN_VERSION=python3.10
+
+# X11/VNC servers.
+EXPOSE 5901
+
+# HTTP server.
+EXPOSE 8080
+
+# vscode server.
+EXPOSE 8081
+
+RUN mkdir -p /opt/app/meblog # Source code added here.
+ADD ./ /opt/app/meblog/
+
+RUN rm -rf /opt/app/meblog/node_modules
+
+RUN mkdir -p /home/${USERNAME}
+RUN touch /home/${USERNAME}/.bash_profile
+
+# FIXME firefox install tells me to install via snap.
+# RUN install -d -m 0755 /etc/apt/keyrings && \
+#   wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null && \
+#   echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null && \
+#   apt-get update -y && \
+#   apt remove -y firefox
+
+RUN apt-get update -y && \
+  apt-get install -y \
+  build-essential \
+  software-properties-common && \
+  apt-get update -y
+
+RUN \
+  pack_build=" \
+    apt-transport-https \
+    autoconf \
+    automake \
+    autotools-dev \
+    bsdmainutils \
+    bzip2 \
+    ca-certificates \
+    calculix-ccx \
+    curl \
+    dkms \
+    dbus-x11 \
+    firefox \
+    gcc-11 g++-11 \
+    git \
+    gmsh \
+    gnupg \
+    gnupg-agent \
+    gnupg2 \
+    imagemagick \
+    inotify-tools \
+    jq \
+    keyboard-configuration \
+    libayatana-appindicator3-dev \
+    libboost-date-time-dev \
+    libboost-dev \
+    libboost-filesystem-dev \
+    libboost-graph-dev \
+    libboost-iostreams-dev \
+    libboost-program-options-dev \
+    libboost-python-dev \
+    libboost-regex-dev \
+    libboost-serialization-dev \
+    libboost-thread-dev \
+    libcairo2-dev \
+    libcoin-dev \
+    libeigen3-dev \
+    libfontconfig1 \
+    libgl1-mesa-dri \
+    libgl1-mesa-glx \
+    libglapi-mesa \
+    libglu1-mesa-dev \
+    libglvnd-dev \
+    libgts-bin \
+    libgts-dev \
+    libfmt-dev \
+    libjpeg-dev \
+    libkdtree++-dev \
+    libmedc-dev \
+    libmetis-dev \
+    libnotify4 \
+    libocct-data-exchange-dev \
+    libocct-draw-dev \
+    libocct-foundation-dev \
+    libocct-modeling-algorithms-dev \
+    libocct-modeling-data-dev \
+    libocct-ocaf-dev \
+    libocct-visualization-dev \
+    libopenexr-dev \
+    libopencv-dev \
+    libopenmpi-dev \
+    libosmesa6 \
+    libpango1.0-dev \
+    libpng-dev \
+    libproj-dev \
+    libpyside2-dev \
+    libqt5opengl5-dev \
+    libqt5svg5-dev \
+    libqt5x11extras5-dev \
+    libqt5xmlpatterns5-dev \
+    librsvg2-dev \
+    libshiboken2-dev \
+    libssl-dev \
+    libtiff-dev \
+    libvtk9-dev \
+    libwebkit2gtk-4.0-dev \
+    libx11-dev \
+    libxerces-c-dev \
+    libxi-dev \
+    libxmu-dev \
+    libxrender1 \
+    libxxf86vm-dev \
+    libyaml-cpp-dev \
+    libzipios++-dev \
+    linux-headers-generic \
+    libtool \
+    lsb-core \
+    lsb-release \
+    make \
+    mesa-common-dev \
+    mesa-utils \
+    nano \
+    netgen \
+    netgen-headers \
+    occt-draw \
+    openbox \
+    openjdk-17-jdk \
+    pkg-config \
+    pyqt5-dev-tools \
+    pyside2-tools \
+    python$PYTHON_MINOR_VERSION \
+    python$PYTHON_MINOR_VERSION-dev \
+    python$PYTHON_MINOR_VERSION-distutils \
+    python3-dev \
+    python3-matplotlib \
+    python3-packaging \
+    python3-pip \
+    python3-pivy \
+    python3-ply \
+    python3-pyside2.* \
+    qtbase5-dev \
+    qttools5-dev \
+    qtwebengine5-dev \
+    tar \
+    tzdata \
+    ubuntu-drivers-common \
+    unzip \
+    wget \
+    xfonts-base \
+    x11-xserver-utils \
+    xfce4 \
+    xfce4-goodies \
+    tightvncserver \
+    xterm \
+    xvfb \
+    xz-utils \
+    zlib1g-dev " \
+  && apt-get update -y \
+  && apt install -y --no-install-recommends -o APT::Immediate-Configure=0 $pack_build
+
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11 --slave /usr/bin/g++ g++ /usr/bin/g++-11
+
+# Ran into error:0A000126:SSL routines::unexpected eof while reading when installing VS Code Server, this fixes it. See: https://stackoverflow.com/a/75867650
+RUN apt remove curl -y && \
+  apt purge curl -y && \
+  apt-get update -y && \
+  cd /usr/local/src && \
+  wget https://curl.se/download/curl-7.88.1.zip && \
+  unzip curl-7.88.1.zip && \
+  cd curl-7.88.1 && ./buildconf && ./configure --with-ssl && make && make install && \
+  cp /usr/local/bin/curl /usr/bin/curl && \
+  ldconfig
+
+ENV PYTHONPATH "/usr/local/lib:$PYTHONPATH"
+
+# Install CMake version 3.24 or later, which is not available via apt.
+RUN git clone --verbose -n https://gitlab.kitware.com/cmake/cmake.git && cd cmake && git checkout v3.31.6 && \
+  mkdir build && cd build && \
+  ../bootstrap && make install -j$(nproc --ignore=2) && \
+  rm -rfv /tmp/*
+
+ENV NVM_DIR=/usr/local/nvm
+RUN mkdir -p $NVM_DIR
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.39.1/install.sh | bash
+ENV NODE_VERSION="20.18.0"
+RUN source $NVM_DIR/nvm.sh && nvm install $NODE_VERSION && nvm alias default $NODE_VERSION && nvm use default
+RUN ls -al $NVM_DIR/versions
+ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+RUN npm config set yes true
+RUN mkdir -p /home/$USERNAME/.npm-global
+RUN npm config set prefix /home/$USERNAME/.npm-global
+ENV PATH /home/$USERNAME/.npm-global/bin:$PATH
+
+ENV CONDA_DIR=/opt/conda
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /home/${USERNAME}/miniconda.sh && \
+  chmod a+x /home/${USERNAME}/miniconda.sh && \
+  /home/${USERNAME}/miniconda.sh -b -p /opt/conda
+ENV PATH=$CONDA_DIR/bin:$PATH
+RUN conda init
+
+ENV BLENDER_INSTALL_DIR="/usr/local/blender"
+RUN mkdir -p $BLENDER_INSTALL_DIR && \
+  cd $BLENDER_INSTALL_DIR && \
+  wget https://mirrors.iu13.net/blender/release/Blender4.2/blender-4.2.1-linux-x64.tar.xz && \
+  tar -xvf blender-4.2.1-linux-x64.tar.xz -C $BLENDER_INSTALL_DIR --strip-components=1 && \
+  rm blender-4.2.1-linux-x64.tar.xz
+ENV PATH=$PATH:$BLENDER_INSTALL_DIR
+
+# FIXME You wish this worked, but it does not render anything.
+RUN wget https://github.com/jdegenstein/jmwright-CQ-Editor/releases/download/0.30-dev-7/CQ-editor-Linux-x86_64.zip && \
+  unzip CQ-editor-Linux-x86_64.zip && ls -al ./
+
+RUN git clone https://github.com/calculix/beso.git --depth=1 /home/${USERNAME}/beso && \
+  cd /home/${USERNAME}/beso && \
+  git checkout 5056d301c2675df9ac1af771af4f1cbea642e4ad
+
+# FIXME f3d segmentation faults on run.
+RUN wget https://github.com/f3d-app/f3d/releases/download/v3.0.0/F3D-3.0.0-Linux-x86_64-raytracing.deb && \
+  dpkg -i F3D-3.0.0-Linux-x86_64-raytracing.deb
+# RUN mkdir -p /usr/local/f3d
+# RUN wget https://github.com/f3d-app/f3d/releases/download/v3.0.0/F3D-3.0.0-Linux-x86_64-raytracing.tar.xz && \
+#   tar -xf F3D-3.0.0-Linux-x86_64-raytracing.tar.xz -C /usr/local/f3d
+# ENV PATH /usr/local/f3d/F3D-3.0.0-Linux-x86_64-raytracing/bin:$PATH
+
+# Fucking FreeCAD build is still broken...libfmt.so.9...does https://wiki.freecad.org/Compile_on_Docker help at all? https://gitlab.com/daviddaish/freecad_docker_env feels old!
+# FIXME: CMake Error at cMake/FreeCAD_Helpers/SetupQt.cmake:85 (qt_add_translation): Unknown CMake command "qt_add_translation".
+# See: https://github.com/FreeCAD/FreeCAD/issues/18928 
+# For now, remove flags -DBUILD_GUI=OFF -DBUILD_QT5=OFF -DBUILD_TECHDRAW=OFF .
+# Also, you could not get freecad-daily apt install to work with the FEM Workbench (ObjectsFem was not importable via Python though the .so was there).
+# Building from source w/ DBUILD_FEM_NETGEN flag fixes that, but you do not know why.
+RUN ldconfig
+ENV FREECAD_VERSION=ff11cd25ee99b5e959616f3805f0d9bfd3a0be76_fix_cmake
+ENV FREECAD_REPO=https://github.com/amrit3701/FreeCAD.git
+#ENV FREECAD_VERSION=releases/FreeCAD-1-0
+#ENV FREECAD_REPO=https://github.com/FreeCAD/FreeCAD.git
+RUN git clone --recurse-submodules --branch "$FREECAD_VERSION" "$FREECAD_REPO" && \
+  mkdir freecad-build && cd freecad-build && \
+  cmake \
+    -DPYTHON_EXECUTABLE=/usr/bin/$PYTHON_BIN_VERSION \
+    -DPYTHON_INCLUDE_DIR=/usr/include/$PYTHON_BIN_VERSION \
+    -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/lib${PYTHON_BIN_VERSION}.so \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_GUI=1 \
+    -DBUILD_FEM=1 \
+    -DBUILD_FEM_NETGEN=ON \
+    -DBUILD_QT5=ON \
+    -DENABLE_DEVELOPER_TESTS=OFF \
+    ../FreeCAD && \
+  make -j$(nproc --ignore=2) && \
+  make install && \
+  cd .. && rm -rf FreeCAD/ freecad-build/
+
+# FreeCAD import PySide2 module as `import PySide`.
+RUN ln -s /usr/lib/python3/dist-packages/PySide2 /usr/lib/python3/dist-packages/PySide
+
+# Fixed import MeshPart module due to missing libnglib.so .
+# https://bugs.launchpad.net/ubuntu/+source/freecad/+bug/1866914
+RUN echo "/usr/lib/x86_64-linux-gnu/netgen" >> /etc/ld.so.conf.d/x86_64-linux-gnu.conf
+RUN ldconfig
+
+# Make Python already know all FreeCAD modules / workbenches.
+# ENV FREECAD_STARTUP_FILE /.startup.py
+# RUN echo "import FreeCAD" > ${FREECAD_STARTUP_FILE}
+# ENV PYTHONSTARTUP ${FREECAD_STARTUP_FILE}
+
+# FIXME Install this. https://github.com/lycheeverse/lychee/releases/download/nightly/lychee-aarch64-unknown-linux-gnu.tar.gz
+
+# You used Visual Studio Code Server in conjunction with OCP CAD viewer for previewing files in the parts libraries when translating CAD files to code.
+# You had issues getting OCP CAD viewer to work locally, so instead you ran it in this Docker container with a mounted rw volume (see <meblog-src>/makefile.docker).
+# This let me preview files in the browser using Visual Studio Code Server at http://localhost:8081 once the Docker container was running (the website itself is hosted at http://localhost:8080).
+RUN curl -fsSL https://code-server.dev/install.sh | sh
+
+ENV vscode_extension_publisher="ms-python" 
+ENV vscode_extension_name="python"
+RUN vscode_extension_version="2025.1.2025022501" && \
+  echo "Installing vscode extension: $vscode_extension_publisher.$vscode_extension_name:$vscode_extension_version" && \
+  curl -s --compressed -j -b cookies.txt -o ${vscode_extension_publisher}.${vscode_extension_name}.vsix https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${vscode_extension_publisher}/vsextensions/${vscode_extension_name}/${vscode_extension_version}/vspackage && \
+  /usr/bin/code-server --install-extension ${vscode_extension_publisher}.${vscode_extension_name}.vsix && \
+  rm ${vscode_extension_publisher}.${vscode_extension_name}.vsix
+
+ENV vscode_extension_publisher="ms-python" 
+ENV vscode_extension_name="black-formatter"
+RUN vscode_extension_version="2025.1.10511010" && \
+  echo "Installing vscode extension: $vscode_extension_publisher.$vscode_extension_name:$vscode_extension_version" && \
+  curl -s --compressed -j -b cookies.txt -o ${vscode_extension_publisher}.${vscode_extension_name}.vsix https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${vscode_extension_publisher}/vsextensions/${vscode_extension_name}/${vscode_extension_version}/vspackage && \
+  /usr/bin/code-server --install-extension ${vscode_extension_publisher}.${vscode_extension_name}.vsix && \
+  rm ${vscode_extension_publisher}.${vscode_extension_name}.vsix
+
+ENV vscode_extension_publisher="ms-vscode" 
+ENV vscode_extension_name="vs-keybindings"
+RUN vscode_extension_version="0.2.1" && \
+  echo "Installing vscode extension: $vscode_extension_publisher.$vscode_extension_name:$vscode_extension_version" && \
+  curl -s --compressed -j -b cookies.txt -o ${vscode_extension_publisher}.${vscode_extension_name}.vsix https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${vscode_extension_publisher}/vsextensions/${vscode_extension_name}/${vscode_extension_version}/vspackage && \
+  /usr/bin/code-server --install-extension ${vscode_extension_publisher}.${vscode_extension_name}.vsix && \
+  rm ${vscode_extension_publisher}.${vscode_extension_name}.vsix
+
+ENV vscode_extension_publisher="charliermarsh" 
+ENV vscode_extension_name="ruff"
+RUN vscode_extension_version="2025.14.0" && \
+  echo "Installing vscode extension: $vscode_extension_publisher.$vscode_extension_name:$vscode_extension_version" && \
+  curl -s --compressed -j -b cookies.txt -o ${vscode_extension_publisher}.${vscode_extension_name}.vsix https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${vscode_extension_publisher}/vsextensions/${vscode_extension_name}/${vscode_extension_version}/vspackage && \
+  /usr/bin/code-server --install-extension ${vscode_extension_publisher}.${vscode_extension_name}.vsix && \
+  rm ${vscode_extension_publisher}.${vscode_extension_name}.vsix
+
+ENV vscode_extension_publisher="bernhard-42" 
+ENV vscode_extension_name="ocp-cad-viewer"
+RUN vscode_extension_version="2.6.4" && \
+  echo "Installing vscode extension: $vscode_extension_publisher.$vscode_extension_name:$vscode_extension_version" && \
+  curl -s --compressed -j -b cookies.txt -o ${vscode_extension_publisher}.${vscode_extension_name}.vsix https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${vscode_extension_publisher}/vsextensions/${vscode_extension_name}/${vscode_extension_version}/vspackage && \
+  /usr/bin/code-server --install-extension ${vscode_extension_publisher}.${vscode_extension_name}.vsix && \
+  rm ${vscode_extension_publisher}.${vscode_extension_name}.vsix
+
+RUN mkdir -p $HOME/.local/share/code-server/User
+RUN cp /opt/app/meblog/build-utils/docker/vscode.settings.json ${HOME}/.local/share/code-server/User/settings.json
+RUN cp /opt/app/meblog/build-utils/docker/vscode.launch.json ${HOME}/.local/share/code-server/User/launch.json
+
+# You need VNC to access other GUI-based software. 
+RUN mkdir -p $HOME/.vnc
+RUN echo $PASSWORD | vncpasswd -f > $HOME/.vnc/passwd
+RUN cp /opt/app/meblog/build-utils/docker/xstartup ${HOME}/.vnc/xstartup
+RUN chmod 600 $HOME/.vnc/passwd \
+  && chmod 755 $HOME/.vnc/xstartup \
+  && chown -R $USERNAME:$USERNAME $HOME
+
+RUN cd /opt/app/meblog && make setup
+
+RUN apt-get clean \
+  && rm /var/lib/apt/lists/* \
+  /usr/share/doc/* \
+  /usr/share/locale/* \
+  /usr/share/man/* \
+  /usr/share/info/* -fR
+
+ENTRYPOINT ["/opt/app/meblog/build-utils/docker/dockerfile.frontend.entrypoint.sh"]

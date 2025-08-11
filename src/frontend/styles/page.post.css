@@ -1,0 +1,119 @@
+.post .post_title {
+  text-align: center;
+}
+
+.post .post_title h1 {
+  color: var(--post-title-text-color);
+  font-family: Verdana;
+  font-size: 1.5em;
+}
+
+.post .post_title h1 span {
+  display: block;
+  font-family: Georgia;
+  color: var(--post-title-tagline-text-color);
+  font-size: .8em;
+  font-style: italic;
+  letter-spacing: .2em;
+}
+
+.post .one_photo {
+  margin: 0 auto;
+  text-align: center;
+  /*border: .1rem solid var(--image-border-color);*/
+}
+
+.post .first-photo {
+  margin-right: 1rem;
+  z-index: 1; /* Required because of the way slideshows are hidden. */
+}
+
+.post .photo {
+  text-align: center;
+  z-index: 1; /* Required because of the way slideshows are hidden. */
+}
+
+.post .post_math {
+  column-gap: 3%;
+  column-count: 2;
+  column-width: 47%;
+  column-rule: 1px solid #eee;
+  width: 100%;
+  margin: 0 auto;
+  text-align: justify;
+  display: block;
+  line-break: strict;
+}
+
+@-webkit-keyframes blink {
+  from {
+    background: #ddb076;
+    opacity: .5;
+  }
+  to {
+    background: #fff;
+  }
+}
+@-moz-keyframes blink {
+  from {
+    background: #ddb076;
+    opacity: .5;
+  }
+  to {
+    background: #fff;
+  }
+}
+@keyframes blink {
+  from {
+    background: #ddb076;
+    opacity: .5;
+  }
+  to {
+    background: #fff;
+  }
+}
+
+.hash-routed {
+  -webkit-animation: blink 1s ease-in alternate infinite 0s;
+  -moz-animation: blink 1s ease-in alternate infinite 0s;
+  -o-animation: blink 1s ease-in alternate infinite 0s;
+  animation: blink 1s ease-in alternate infinite 0s;
+}
+
+#periodic_table {
+  width: 100%;
+  min-width: 600px;
+}
+
+#periodic_table > div {
+  margin-bottom: 2.5%;
+}
+
+#periodic_table > div > div {
+  width: 5.5%;
+  display: inline-block;
+  margin-right: -7px;
+}
+
+#periodic_table > div > div > div {
+  border: 3px solid black;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  color: black;
+  margin-top: -3px;
+  padding: 20% 0;
+}
+
+.periodic_table_relevant_element {
+  background: gray;
+}
+
+/* TODO http://www.zipcon.net/~swhite/docs/math/math.html */
+/* Larger than mobile screen */
+/* STUB @media (min-width: 40.0rem) { ... } */
+/* Larger than tablet screen */
+/* STUB @media (min-width: 80.0rem) { ... } */
+/* Larger than desktop screen */
+/* STUB @media (min-width: 120.0rem) { ... } */

@@ -1,0 +1,115 @@
+# This file is responsible for citing referenced work and/or software used that is not an NPM/conda package declared in a dependency file.
+# References:
+# * https://citation-file-format.github.io/
+# * https://github.com/citation-file-format/citation-file-format/blob/main/schema-guide.md#referencing-other-work
+# * https://github.com/citation-file-format/citation-file-format/blob/main/schema-guide.md#definitionsreferencetype
+# * https://github.com/citation-file-format/citation-file-format/blob/main/schema-guide.md#definitionsreferenceurl
+# * https://spdx.org/licenses/
+cff-version: 1.2.0
+title: "mainframenzo.com"
+message: "When you wrote this code, only God and you understood what you did. Now only God knows."
+references:
+  # Dev software:
+  - type: software
+    title: "GNU Make"
+    license: "GPL-3.0-only"
+    url: "https://www.gnu.org/software/make"
+  - type: software
+    title: "curl"
+    license: "curl"
+    url: "https://curl.se" 
+  - type: software
+    title: "Node.js"
+    license: "MIT"
+    url: "https://nodejs.org" 
+  - type: software
+    title: "jq"
+    license: "MIT"
+    url: "https://jqlang.github.io/jq" 
+  - type: software
+    title: "unzip"
+    license: "Info-ZIP"
+    url: "https://infozip.sourceforge.net/UnZip.html" 
+  - type: software
+    title: "imagemagick"
+    license-url: "https://imagemagick.org/script/license.php"
+    url: "https://imagemagick.org/" 
+  - type: software
+    title: "ffmpeg"
+    license-url: "https://ffmpeg.org/legal.html" 
+    url: "https://ffmpeg.org/" 
+  - type: software
+    title: "rsync"
+    license-url: "https://rsync.samba.org/GPL.html"
+    url: "https://rsync.samba.org/" 
+  - type: software
+    title: "gzip"
+    license-url: "https://www.gnu.org/software/gzip/"
+    url: "https://www.gnu.org/software/gzip/" 
+  - type: software
+    title: "Ubuntu"
+    license-url: "TODO" 
+    url: "TODO"
+  - type: software
+    title: "Blender"
+    license-url: "https://www.blender.org/about/license/" 
+    url: "https://www.blender.org"
+  - type: software
+    title: "OCP CAD Viewer"
+    license: "Apache-2.0"
+    url: "https://github.com/bernhard-42/vscode-ocp-cad-viewer" 
+  - type: software
+    title: "f3d"
+    license: "BSD-3" 
+    url: "https://github.com/f3d-app/f3d"
+  - type: software
+    title: "CQ Editor"
+    license-url: "TODO" 
+    url: "TODO"
+  - type: software
+    title: "FreeCAD"
+    license-url: "TODO" 
+    url: "TODO"
+  - type: software
+    title: "CalculiX"
+    license-url: "TODO" 
+    url: "http://www.calculix.de/"
+  - type: software
+    title: "gmsh"
+    license-url: "TODO" 
+    url: "http://gmsh.info"
+  - type: software
+    title: "beso"
+    license-url: "TODO" 
+    url: "https://github.com/calculix/beso"
+
+  - type: software
+    title: "AWS CLI"
+    license: Apache-2.0 
+    url: "https://github.com/aws/aws-cli"
+
+  - type: software
+    title: "Online CSV Editor and Generator"
+    license-url: "" 
+    url: "https://tableconvert.com/csv-generator"
+
+  - type: software
+    title: "Docker"
+    license-url: "https://www.docker.com/pricing" 
+    url: "https://www.docker.com"
+  - type: software
+    title: "Virtual Box"
+    license-url: "" 
+    url: ""
+  - type: software
+    title: "Vagrant"
+    license-url: "" 
+    url: ""
+
+  # TODO anything else in docker
+
+  # Declared here because they're installed globally via NPM.
+  - type: software
+    title: "github:tsapporg/ts-npm#f1f6e4c6cead9ae5f8877f25da5ff85382079c5c"
+    license: MIT
+    url: "https://github.com/tsapporg/ts-npm/tree/aws-sample"

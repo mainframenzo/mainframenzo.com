@@ -1,0 +1,56 @@
+<footer class='footer'>
+  <section class='container'>
+    <ul class='footer-list float-right'>
+      <!-- Pulled for now.
+      <li class='footer-item'>
+        <a class='footer-link' href='/resume.html'>Resume</a> 
+      </li>
+      -->
+      <li class='footer-item'>
+        <a class='footer-link' href='/musings.html'>#musings</a> 
+      </li>
+      <li class='footer-item'>
+        <a class='footer-link' href='/software.html'>#software</a> 
+      </li>
+      <!-- 
+        This information is not secret enough to be privately hosted, but it is really just for me.
+        Use the Konami code to make visible.
+      -->
+      <li class='footer-item private'>
+        <a class='footer-link' href='/drawings.html'>#drawings</a> 
+      </li>
+      <li class='footer-item private'>
+        <a class='footer-link' href='/vehicles.html'>#vehicles</a> 
+      </li>
+      <li class='footer-item private'>
+        <a class='footer-link' href='/recordings.html'>#recordings</a> 
+      </li>
+      <!--
+      <li class='footer-item private'>
+        <a class='footer-link' href='/goodbooks.html'>#goodbooks</a> 
+      </li>
+      <li class='footer-item private'>
+        <a class='footer-link' href='/goodfilms.html'>#goodfilms</a> 
+      </li>
+      -->
+    </ul>
+  </section>
+</footer>
+<%- scripts_with_csp_hashes %>
+
+<% if (app_location === 'local') { %>
+  <script src='http://localhost:35729/livereload.js?snipver=1'></script>
+<% } %>
+
+<% if (app_location === 'local') { %>
+<script>
+  // FIXME. See: https://stackoverflow.com/questions/61964265/getting-error-this-document-requires-trustedhtml-assignment-in-chrome
+  if (window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTypes.defaultPolicy) {
+    window.trustedTypes.createPolicy('default', {
+      createHTML: string => string,
+      createScriptURL: string => string,
+      createScript: string => string, 
+    });
+  }
+</script>
+<% } %>

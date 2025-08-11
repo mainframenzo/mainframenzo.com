@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang='en'>
+<%- include(`${process.cwd()}/src/frontend/templates.partials/head`); -%>
+<body>
+  <main class='wrapper'>
+    <%- include(`${process.cwd()}/src/frontend/templates.partials/nav`); -%>
+    <section class='container'>
+      <p class='quote'>"Angel-headed hipsters burning for the starry dynamo in the machinery of the night."</p>
+      <h5 class='title'>Listen</h5>
+      <div class='audio'>
+        <audio controls='controls' src='/audio/about/audio-normalized.ogg'>Your browser does not support audio.</audio>
+      </div>
+      <h5 class='title'>About</h5>
+      <div class='the_deal'>
+        <p>Who am I, dear reader?</p>
+        <image loading='lazy' class='circle_border' src='images/enzo_matrix.jpg' />
+        <%- include(`${process.cwd()}/src/frontend/templates.partials/about`); -%>
+      </div>
+    </section>
+    <br/>
+    <a href='/darkerweb-about.html'>
+      <div class='mascot'>
+        <image loading='lazy' class='palm_tree' src='images/palm_tree.png' />
+      </div>
+    </a>
+    <%- include(`${process.cwd()}/src/frontend/templates.partials/footer`); -%>
+  </main>
+</body>
+</html>

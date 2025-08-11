@@ -1,0 +1,50 @@
+.footer {
+  /*background: var(--bookend-color);*/
+  border-top: .1rem solid var(--border-color);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 4;
+
+  background-color: #ffffff;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0),rgba(0, 0, 0, 0) 5px, rgba(0, 0, 0, 0.05) 5px, rgba(0, 0, 0, 0.05) 6px),
+    repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 5px, rgba(0, 0, 0, 0.05) 5px, rgba(0, 0, 0, 0.05) 6px);
+  background-size: 8px 8px, 8px 8px; 
+}
+
+.footer .footer-list {
+  list-style: none;
+  margin-bottom: 0;
+}
+
+.footer .footer-item {
+  float: left;
+  margin-bottom: 0;
+  margin-left: 2.5rem;
+  position: relative;
+}
+
+.footer .private {
+  display: none;
+}
+
+.footer .footer-link {
+  color: var(--link-text-color);
+  display: inline;
+  font-size: 1.6rem;
+  line-height: 4rem;
+  padding: 0;
+  text-decoration: none;
+}
+
+.footer .footer-link .active {
+  color: var(--link-text-color);
+}
+
+/* Larger than mobile screen */
+/* STUB @media (min-width: 40.0rem) { ... } */
+/* Larger than tablet screen */
+/* STUB @media (min-width: 80.0rem) { ... } */
+/* Larger than desktop screen */
+/* STUB @media (min-width: 120.0rem) { ... } */

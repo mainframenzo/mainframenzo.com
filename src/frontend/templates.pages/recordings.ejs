@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang='en'>
+<%- include(`${process.cwd()}/src/frontend/templates.partials/head`); -%>
+<body>
+  <main class='wrapper'>
+    <%- include(`${process.cwd()}/src/frontend/templates.partials/nav`); -%>
+    <section class='container'>
+      <%
+      if (!recordings || recordings && recordings.length === 0) {
+      %>
+      <h5 class='title'>Recordings</h5>
+      <div class='container'>
+        <div class='row'>
+          <div class='column photo'>
+            <image loading='lazy' src='/images/nothing_to_see.jpg'>
+            <div class='description'><p>No #recordings posts. Nothing to see here.</p></div>
+          </div>
+        </div>
+      </div>
+      <%
+      } else {
+      %>
+      <%- include(`${process.cwd()}/src/frontend/templates.partials/recordings`); -%>
+      <% 
+      }
+      %>
+    </section>
+    <%- include(`${process.cwd()}/src/frontend/templates.partials/footer`); -%>
+  </main>
+</body>
+</html>

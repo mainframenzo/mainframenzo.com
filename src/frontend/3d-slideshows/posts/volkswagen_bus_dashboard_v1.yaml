@@ -1,0 +1,8 @@
+- description: >-
+    The dashboard assembly.
+  filePath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v1/assembly.stl.glb
+  thumbnailPath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v1/assembly.stl-0.png
+- description: >-
+    The main panel. The radio knob holes are in the wrong place.
+  filePath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v1/panel.stl.glb
+  thumbnailPath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v1/panel.stl-0.png

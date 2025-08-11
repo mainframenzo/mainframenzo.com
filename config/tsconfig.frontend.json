@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../dist.frontend",
+    "rootDir": "../src",
+    "types": [
+      "node"
+    ], 
+  },
+  "include": [
+    "../src/@types/*.ts",
+    "../src/frontend/scripts/**/*.ts"
+  ]
+}

@@ -1,0 +1,107 @@
+/* 
+References:
+* https://github.com/leemark/better-simple-slideshow
+*/
+.build-slideshow {
+  display: block; 
+  line-height: 0;
+  margin-bottom: 30px;
+}
+
+.build-slideshow figure {
+  text-align: center;
+}
+/* Larger than mobile screen */
+@media (min-width: 40.0rem) {
+  .build-slideshow figure {
+    margin: 0 auto;
+  }
+}
+
+.build-slideshow figure:first-child {
+  position: relative;
+}
+
+.build-slideshow figure .image-container {
+  position: relative;
+}
+
+/* Larger than mobile screen */
+@media (min-width: 40.0rem) {
+  .build-slideshow figure img {
+    max-height: 500px;
+    max-width: 100%;
+    object-fit: scale-down;
+  }
+}
+
+.build-slideshow .build-slideshow-state {
+  text-align: center;
+}
+
+.build-slideshow .build-slideshow-state p {
+  line-height: 0;
+}
+
+.build-slideshow .prev {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.build-slideshow .next {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.build-slideshow .hide-figure {
+  top: 0;
+  position: absolute;
+}
+
+.build-slideshow .hide-figure-img {
+  opacity: 0;
+  -webkit-transition: opacity 1.2s;
+  transition: opacity 1.2s;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.build-slideshow .hide-figure-figcaption {
+  top: 0;
+  position: absolute;
+  display: none;
+}
+
+.build-slideshow .show {
+  z-index: 2;
+  position: relative;
+}
+
+.build-slideshow .show img {
+  opacity: 1;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  position: relative; 
+}
+
+.build-slideshow .show figcaption {
+  z-index: 3;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+.build-slideshow-next {
+  font-weight: bold;
+  cursor: pointer;
+  float: right;
+  font-size: 20px;
+}
+
+.build-slideshow-prev {
+  font-weight: bold;
+  cursor: pointer;
+  float: left;
+  font-size: 20px;
+}

@@ -1,0 +1,24 @@
+- description: >-
+    The dashboard assembly.
+  filePath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v2/assembly.stl.glb
+  thumbnailPath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v2/assembly.stl-0.png
+- description: >-
+    The main panel. The radio knob holes are <emphasis>still</emphasis> in the wrong place, oy!
+  filePath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v2/panel.stl.glb
+  thumbnailPath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v2/panel.stl-0.png
+- description: >-
+    The "new tech" mount.
+  filePath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v2/new_tech_mount.stl.glb
+  thumbnailPath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v2/new_tech_mount.stl-0.png
+- description: >-
+    The speaker mount.
+  filePath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v2/speaker_mount.stl.glb
+  thumbnailPath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v2/speaker_mount.stl-0.png
+- description: >-
+    The radio faceplate.
+  filePath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v2/radio_faceplate.stl.glb
+  thumbnailPath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v2/radio_faceplate.stl-0.png
+- description: >-
+    The ashtray block.
+  filePath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v2/ashtray_block.stl.glb
+  thumbnailPath: ./src/frontend/public/generated/volkswagen_bus_dashboard/v2/ashtray_block.stl-0.png

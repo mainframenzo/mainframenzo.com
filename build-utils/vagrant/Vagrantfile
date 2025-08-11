@@ -1,0 +1,61 @@
+# This Vagrantfile is responsible for defining a VM environment to use for building the frontend.
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # See: https://portal.cloud.hashicorp.com/vagrant/discover
+  config.vm.box = "generic/ubuntu2204"
+  #config.vm.box_version = "202407.23.0"
+  config.vm..arch = "arm64"
+
+  config.vm.provider "virtualbox" do |virtualbox|
+    virtualbox.gui = true
+    virtualbox.memory = 2048
+    virtualbox.cpus = 2
+    # On MacOS (Apple M3): The graphics controller does not support the given feature.
+    #virtualbox.customize ["modifyvm", :id, "--accelerate3d", "on"]
+    virtualbox.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+    virtualbox.customize ["modifyvm", :id, "--hwvirtex", "on"]
+    virtualbox.customize ["modifyvm", :id, "--ioapic", "on"]
+    virtualbox.customize ["modifyvm", :id, "--vram", "128"]
+    virtualbox.customize ["modifyvm", :id, "--audio", "none"]
+    virtualbox.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+  end
+
+  config.vm.network "public_network", bridge: "en0: Wi-Fi"
+  config.vm.synced_folder "../../", "/mainframenzo.com", :mount_options => ['dmode=774','fmode=775']
+  config.vm.provision "shell", path: "setup.sh"
+
+  # https://www.arthurkoziel.com/running-virt-manager-and-libvirt-on-macos/
+  # https://github.com/vagrant-libvirt/vagrant-libvirt/blob/master/example_box/Vagrantfile
+  # Options for Libvirt Vagrant provider.
+  config.vm.provider :libvirt do |libvirt|
+    # A hypervisor name to access. Different drivers can be specified, but
+    # this version of provider creates KVM machines only. Some examples of
+    # drivers are KVM (QEMU hardware accelerated), QEMU (QEMU emulated),
+    # Xen (Xen hypervisor), lxc (Linux Containers),
+    # esx (VMware ESX), vmwarews (VMware Workstation) and more. Refer to
+    # documentation for available drivers (http://libvirt.org/drivers.html).
+    libvirt.driver = "kvm"
+
+    # The name of the server, where Libvirtd is running.
+    # libvirt.host = "localhost"
+
+    # If use ssh tunnel to connect to Libvirt.
+    libvirt.connect_via_ssh = false
+
+    # The username and password to access Libvirt. 
+    # Password is not used when connecting via ssh.
+    libvirt.username = "root"
+    #libvirt.password = "secret"
+
+    # Libvirt storage pool name.
+    # Box image and instance snapshots will be stored under this.
+    libvirt.storage_pool_name = "default"
+
+    # Set a prefix for the machines that"s different than the project dir name.
+    libvirt.default_prefix = "mainframenzo"
+  end
+end

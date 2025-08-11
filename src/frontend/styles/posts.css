@@ -1,0 +1,51 @@
+.posts {
+  padding-bottom: 10em;
+}
+
+.posts .post_count {
+  height: 1em;
+  width: 100%;
+  border-bottom: 1.5em solid var(--posts-count-color-border);
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+.posts .post_count h2 {
+  font: bold 100% 'Century Schoolbook', Georgia, Times, serif;
+  font-size: 2em;
+  line-height: 60%; 
+  color: var(--posts-count-text-color);
+}
+
+.posts .post_list .post_item {
+  margin-bottom: 1rem;
+}
+
+.posts .post_list .post_item .post_info {
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 1em;
+}
+
+/* Make Mac font smaller for Linux parity. */
+.mac.gecko .posts .post_list .post_item .post_info { 
+  font-size: .8em;
+}
+
+.posts .post_list .post_item .post_info a {
+  color: var(--link-text-color);
+  text-decoration: none;
+}
+
+.posts .post_list .post_item .post_info a:hover {
+  text-decoration: underline;
+}
+
+.posts .post_list .post_item .post_info span {
+  display: block;
+  color: var(--posts-info-metadata-text-color);
+  font-family: Monaco, 'Courier New', monospace;
+  font-size: 80%;
+}

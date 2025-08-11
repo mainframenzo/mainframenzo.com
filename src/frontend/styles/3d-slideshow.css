@@ -1,0 +1,72 @@
+/* 
+References:
+* https://github.com/leemark/better-simple-slideshow
+*/
+.threed-content-data {
+  display: none;
+}
+
+.threed-content {
+  display: none;
+}
+
+model-viewer {
+  width: 100%;
+  min-height: 400px;
+  max-height: 600px;
+  border: 1px solid var(--border-color);
+  background: linear-gradient(#ffffff, #ada996);
+  margin-top: -15px; /* FIXME model-viewer adding styles? */
+}
+
+.threed-slideshow {
+  display: block; 
+  line-height: 0;
+}
+
+.threed-slideshow figure {
+  width: 100%;
+  text-align: center;
+}
+
+.threed-slideshow figure:first-child {
+  position: relative;
+}
+
+.threed-slideshow figure .image-container {
+  position: relative;
+}
+
+.threed-slideshow figure img {
+  max-height: 500px;
+  max-width: 100%;
+  object-fit: scale-down;
+}
+
+.threed-slideshow .threed-slideshow-state {
+  text-align: center;
+  padding-bottom: 12px;
+}
+
+.threed-slideshow .threed-slideshow-state p {
+  line-height: 0;
+}
+
+.threed-slideshow .center-text {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.threed-slideshow-next {
+  font-weight: bold;
+  cursor: pointer;
+  float: right;
+  font-size: 20px;
+}
+
+.threed-slideshow-prev {
+  font-weight: bold;
+  cursor: pointer;
+  float: left;
+  font-size: 20px;
+}

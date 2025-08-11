@@ -1,0 +1,45 @@
+# This file is responsible for defining Docker related developer commands.
+include makefile.inc
+
+# Include environment configuration.
+ifneq (,$(wildcard ./config/.env))
+	include ./config/.env
+	export
+endif
+
+base_image := public.ecr.aws/ubuntu/ubuntu:22.04_stable
+frontend_image_name := meblog-frontend
+
+# On MacOS (Apple M3) - required.
+platform_flag := --platform linux/amd64
+
+docker/setup:
+	docker pull "$(base_image)"
+
+# We use the .gitignore file as a common "dockerignore" file.
+# This occasionaly bites us, but more pros than cons.
+	cp .gitignore ./build-utils/docker/dockerfile.frontend.dockerignore
+
+	DOCKER_BUILDKIT=1 docker build -f ./build-utils/docker/dockerfile.frontend --progress=plain $(platform_flag) \
+		--build-arg EXTEND="$(base_image)" -t "$(frontend_image_name):latest" . &> ./build-utils/logs/docker.build.frontend.log
+
+docker/develop/website:
+	docker run -it --rm $(platform_flag) \
+		-v $(shell pwd)/:/opt/app/meblog/:rw \
+		-p 5901:5901 \
+		-p 8080:8080 \
+		-p 8081:8081 \
+		--privileged \
+		-e GENERATE_UNIQUE=false -e app_location="local" -e build_parts_libraries="$(build_parts_libraries)" \
+		"$(frontend_image_name):latest"
+
+docker/shell:
+	docker run -it --rm $(platform_flag) \
+		-v $(shell pwd)/:/opt/app/meblog/:rw \
+		-p 5901:5901 \
+		-p 8080:8080 \
+		-p 8081:8081 \
+		--privileged \
+		-e GENERATE_UNIQUE=false -e app_location="local" -e build_parts_libraries="$(build_parts_libraries)" \
+		--entrypoint /bin/bash \
+		"$(frontend_image_name):latest"

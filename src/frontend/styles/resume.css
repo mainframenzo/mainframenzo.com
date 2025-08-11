@@ -1,0 +1,14 @@
+.resume {
+  padding: 1.2rem;
+}
+
+.resume_list {
+  margin-top: -2rem;
+}
+
+/* Larger than mobile screen */
+@media (min-width: 40.0rem) { 
+  .job {
+    padding-right: .5rem !important;
+  }
+}

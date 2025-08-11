@@ -1,0 +1,94 @@
+# This file is responsible for defining meblog Python dependencies. 
+# Python is used to help in the design of #thingsivemade.
+# FIXME Given the number of dependencies, it might make sense for each tool we use to have its own env,
+#  because this was a pain in the ass to get working.
+# FIXME Only specify direct imports (and the direct imports of dependencies you took in) - 
+#  you took this list from a requirements.txt dump of an early env you got working.
+# References:
+# * https://build123d.readthedocs.io/en/latest/installation.html#special-notes-on-apple-silicon-installs
+# * https://github.com/FreeCAD/FreeCAD/blob/main/conda/environment.devenv.yml
+name: meblog
+channels:
+  - conda-forge
+  - cadquery
+  - defaults
+dependencies:
+# With FreeCAD in particular, upgrading the Python version may cause issues. See: https://github.com/FreeCAD/FreeCAD/issues/19585
+  #- python=3.10.13
+  - python=3.11.2
+  - cadquery=master
+  - pip=24.2
+  - pip:
+    # Drawing/rendering dependencies for parts libraries.
+    #- anytree==2.12.1
+    - build123d==0.9.1
+    #- cachetools==5.5.0
+    #- certifi==2024.8.30
+    #- dearpygui==1.5.1
+    # See: https://github.com/gumyr/build123d/issues/866#issuecomment-2614214329
+    - cadquery-ocp>7.8
+    - cadquery-ocp-stubs>7.8
+    - cadquery<7.8
+# FIXME Can't seem to install bpy because system Python version conflict and/or FreeCAD needing 3.10 but Blender 4.2.0 needing 3.11.
+# If you comment this dependency out, "conda activate meblog", then install manually, it installs fine.
+# Work-around is to copy installed Blender Python libs to <meblog-src>/bpy anyways,
+#  because even if this installs, it still doesn't let me use Blender outside of Blender.
+    - bpy==4.2.0 # Used for rendering parts libraries with Blender et. al.
+    - fake-bpy-module-4.2==20250130 # Used to get Blender types for development.
+    #- ezdxf==1.4.1 # Used to convert .svg to .dxf files for importing into build123d.
+    #- matplotlib==3.10.1 # ^
+    #- ipython==8.27.0
+    - numpy>=2,<3
+    #- numpy-quaternion==2023.0.4
+    #- ocp_tessellate==2.3.3
+    - ocp-tessellate==3.0.10 # Required by build123d.
+    #- ocpsvg==0.2.1
+    - ocp-vscode==2.6.4 # Used as a build123d development tool.
+    #- orjson==3.10.7
+    #- partcad-cli==0.6.37
+    #- plotly==5.24.1
+    #- py-lib3mf==2.3.1
+    #- pycrash==0.0.17
+    #- requests==2.32.3
+    #- scipy==1.14.1
+    - slientruss3d==2.0.3
+    #- svgelements==1.9.6
+    #- svgpathtools==1.6.1
+    #- svgwrite==1.4.3
+    #- trianglesolver==1.2
+    - trimesh==4.4.9
+    #- urllib3==2.2.2
+    #- webcolors==24.8.0
+    #- websockets==13.0.1
+    - pillow==11.1.0
+    - pyrender==0.1.43
+    - PySide6==6.8.2.1 
+    - mathutils==3.3.0
+    
+    # FEA dependencies.
+
+    # FIXME Installing dl4to4ocp as a dependency did not work (conflicting dependency versions),
+    #  so you pulled into <meblog-src>/parts-library-tools and added its dependencies below.
+    #- git+https://github.com/yeicor-3d/dl4to4ocp
+    #- git+https://github.com/dl4to/dl4to
+    - pyvista>=0.44.0 
+    #- kaleido==0.4.2 Yanked!
+    - kaleido==0.4.0rc5
+    - pyglet>=1.5.28
+    - jupyter==1.0.0
+    - ipywidgets>=8.1.2
+    #- git+https://github.com/cheind/sdftoolbox # For dual contouring iso-surface extraction.
+    - pysdf>=0.1.9 # For generating SDFs from meshes.
+
+    # FIXME Installing sdftoolbox as a dependency did not work (conflicting dependency versions),
+    #  so you pulled into <meblog-src>/parts-library-tools and added its dependencies below.
+    - matplotlib >= 3.5
+    - imageio >= 2.19
+
+    # FIXME Installing bd_warehouse as a dependency did not work (conflicting dependency versions),
+    #  so you pulled into <meblog-src>/parts-library-tools and added its dependencies below.
+    #- git+https://github.com/gumyr/bd_warehouse
+    - typing_extensions>=4.4.0,<5
+
+    # Electronics dependencies. 
+    - schemdraw==0.20
