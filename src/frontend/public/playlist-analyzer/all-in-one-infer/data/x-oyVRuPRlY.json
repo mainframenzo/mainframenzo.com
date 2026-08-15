@@ -1,0 +1,62 @@
+{
+  "path": "/home/mainframenzo/Desktop/dev/meblog-media/x-oyVRuPRlY.webm",
+  "bpm": 59,
+  "beats": [0.59,1.6,2.57,3.59],
+  "downbeats": [
+    3.59
+  ],
+  "beat_positions": [2,3,4,1],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 0.16,
+      "label": "start"
+    },
+    {
+      "start": 0.16,
+      "end": 49.91,
+      "label": "intro"
+    },
+    {
+      "start": 49.91,
+      "end": 67.49,
+      "label": "intro"
+    },
+    {
+      "start": 67.49,
+      "end": 80.27,
+      "label": "verse"
+    },
+    {
+      "start": 80.27,
+      "end": 101.65,
+      "label": "verse"
+    },
+    {
+      "start": 101.65,
+      "end": 143.32,
+      "label": "verse"
+    },
+    {
+      "start": 143.32,
+      "end": 159.12,
+      "label": "verse"
+    },
+    {
+      "start": 159.12,
+      "end": 186.4,
+      "label": "verse"
+    },
+    {
+      "start": 186.4,
+      "end": 206.38,
+      "label": "chorus"
+    },
+    {
+      "start": 206.38,
+      "end": 218.17,
+      "label": "chorus"
+    }
+  ],
+  "activation_fps": null
+}
