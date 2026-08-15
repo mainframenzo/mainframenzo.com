@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": false,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
+    "module": "ESNext",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "types": [
+      "vite/client",
+      "node"
+    ],
+    "skipLibCheck": true,
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  // FIXME "src/frontend/**/*" ?
+  "exclude": [
+    ".npm",
+    "node_modules",
+    "dist.frontend",
+    "dist.middleware.aunty-bots",
+    "dist.vscode-extension",
+    "dist.firefox-extension",
+    "lib",
+    "src/frontend/tests.unit",
+    "src/pen-test", // FIXME Remove.
+    "src/load-test" // FIXME Remove.
+  ]
+}

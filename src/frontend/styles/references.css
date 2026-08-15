@@ -1,0 +1,34 @@
+article {
+  counter-reset: references;
+}
+
+a[aria-describedby="reference-label"] {
+  counter-increment: references;
+  text-decoration: none;
+  color: inherit;
+  cursor: default;
+  outline: none;
+}
+
+a[aria-describedby="reference-label"]::before {
+  content: '[' counter(references) ']'; 
+  vertical-align: super; 
+  font-size: 0.5em; 
+  margin-left: 2px; 
+  color: blue; 
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+a[aria-describedby="reference-label"]:focus::after {
+  outline: thin dotted;
+  outline-offset: 2px;
+}
+
+footer :target {
+  background: yellow;
+}
+
+[aria-label="Back to content"] {
+  font-size: 0.8em;
+}

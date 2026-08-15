@@ -1,0 +1,61 @@
+openapi: 3.0.1
+info:
+  title: API
+  version: 0.0.0
+servers:
+  - url: "{url}"
+    variables:
+      apiURL:
+        default: ""
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth: null
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
+  schemas:
+    Model1:
+      type: object
+      properties:
+        prop1:
+          type: string
+      required:
+        - prop1
+    Model2:
+      type: object
+      properties:
+        prop2:
+          type: string
+      required:
+        - prop2
+paths:
+  /model1:
+    get:
+      operationId: getModel1
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prop1:
+                    type: string
+                required:
+                  - prop1
+  /model2:
+    get:
+      operationId: getModel2
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prop2:
+                    type: string
+                required:
+                  - prop2

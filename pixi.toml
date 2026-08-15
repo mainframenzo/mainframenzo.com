@@ -1,0 +1,142 @@
+# This file is responsible for defining meblog Python dependencies.
+[workspace]
+name = "meblog"
+version = "0.1.0"
+description = "Python tooling for the development of #thingsivemade"
+channels = ["conda-forge", "cadquery"]
+platforms = ["linux-64"]
+
+
+[system-requirements]
+linux = "4.18"
+libc = "2.41"
+
+
+[dependencies]
+python = "3.11.*"
+pip = "25.*"
+[pypi-dependencies]
+numpy = ">=1.26,<3"
+trimesh = "==4.4.9"
+#pillow = "==11.1.0"
+pyrender = "==0.1.43"
+#pyside6 = "==6.8.2.1"
+#pyside6 = ">=6.6,<6.8"
+mathutils = "==3.3.0"
+typing_extensions = ">=4.4,<5"
+schemdraw = "==0.20"
+ocp-vscode = "==2.9.0"
+
+
+[feature.assembly-to-stl.activation.env]
+LD_LIBRARY_PATH = "$CONDA_PREFIX/lib"
+[feature.assembly-to-stl.dependencies]
+python = "3.11.*"
+pip = "25.*"
+libexpat = ">=2.6"
+[feature.assembly-to-stl.pypi-dependencies]
+build123d = "==0.9.1"
+#build123d = "==0.10.0"
+cadquery-ocp = ">=7.8,<7.9"
+#cadquery-ocp-stubs = "==7.9.3.1"
+
+
+[feature.assembly-parts-to-stls.activation.env]
+LD_LIBRARY_PATH = "$CONDA_PREFIX/lib"
+[feature.assembly-parts-to-stls.dependencies]
+python = "3.11.*"
+pip = "25.*"
+libexpat = ">=2.6"
+[feature.assembly-parts-to-stls.pypi-dependencies]
+build123d = "==0.9.1"
+#build123d = "==0.10.0"
+cadquery-ocp = ">=7.8,<7.9"
+#cadquery-ocp-stubs = "==7.9.3.1"
+
+
+[feature.assembly-to-gifs.dependencies]
+python = "3.11.*"
+pip = "25.*"
+#cadquery = ">=2.7,<2.8"
+[feature.assembly-to-gifs.pypi-dependencies]
+bpy = "==4.2.0"
+fake-bpy-module-4-2 = "==20250130"
+build123d = "==0.9.1"
+#build123d = "==0.10.0"
+cadquery-ocp = ">=7.8,<7.9"
+#cadquery-ocp-stubs = "==7.9.3.1"
+
+
+[feature.fea.dependencies]
+python = "3.11.*"
+pip = "25.*"
+[feature.fea.pypi-dependencies]
+slientruss3d = "==2.0.3"
+pyvista = ">=0.44.0"
+kaleido = "==0.4.0rc5" # kaleido 0.4.2 was yanked; pinning the last working release candidate.
+pyglet = ">=1.5.28"
+jupyter = "==1.0.0"
+ipywidgets = ">=8.1.2"
+pysdf = ">=0.1.9"
+matplotlib = ">=3.5"
+imageio = ">=2.19"
+# FIXME dl4to4ocp and dl4to pulled in manually due to conflicting deps - see parts-library-tools.
+# FIXME sdftoolbox pulled in manually due to conflicting deps - see parts-library-tools.
+
+
+[feature.one-offs-pcsn2.dependencies]
+python = "3.11.*"
+pip = "25.*"
+packaging = "==23.2"
+setuptools = "==75.8.0"
+[feature.one-offs-pcsn2.pypi-dependencies]
+freemocap = "==1.8.2"
+opencv-contrib-python = "==4.8.1.78" # FIXME freemocap still requires fixing this pinned opencv version.
+bpy = "==4.2.0"
+fake-bpy-module-4-2 = "==20250130"
+
+
+[feature.stl-to-glb.activation.env]
+LD_LIBRARY_PATH = "$CONDA_PREFIX/lib"
+[feature.stl-to-glb.dependencies]
+python = "3.11.*"
+pip = "25.*"
+libexpat = ">=2.6"
+[feature.stl-to-glb.pypi-dependencies]
+bpy = "==4.2.0"
+fake-bpy-module-4-2 = "==20250130"
+build123d = "==0.9.1"
+#build123d = "==0.10.0"
+cadquery-ocp = ">=7.8,<7.9"
+#cadquery-ocp-stubs = "==7.9.3.1"
+
+
+[feature.stl-to-photorealistic-pngs.dependencies]
+python = "3.11.*"
+pip = "25.*"
+[feature.stl-to-photorealistic-pngs.pypi-dependencies]
+bpy = "==4.2.0"
+fake-bpy-module-4-2 = "==20250130"
+vtk = "==9.3.1"
+
+
+[feature.freecad.dependencies]
+python = "3.10.13.*" # FreeCAD requires Python 3.10 - see https://github.com/FreeCAD/FreeCAD/issues/19585
+pip = "24.*"
+cadquery = "==2.7.0"
+[feature.freecad.pypi-dependencies]
+freecad-stubs = "==1.0.20"
+
+
+[environments]
+default = { features = [], solve-group = "py311" }
+
+assembly-to-stl = { features = ["default", "assembly-to-stl"], solve-group = "assembly-to-stl" }
+assembly-parts-to-stls = { features = ["default", "assembly-parts-to-stls"], solve-group = "assembly-parts-to-stls" }
+assembly-to-gifs = { features = ["assembly-to-gifs"], solve-group = "assembly-to-gifs" }
+fea = { features = ["fea"], solve-group = "fea" }
+one-offs-pcsn2 = { features = ["one-offs-pcsn2"], solve-group = "one-offs-pcsn2" }
+stl-to-glb = { features = ["stl-to-glb"], solve-group = "stl-to-glb" }
+stl-to-photorealistic-pngs = { features = ["stl-to-photorealistic-pngs"], solve-group = "stl-to-photorealistic-pngs" }
+
+freecad = { features = ["freecad"], no-default-feature = true, solve-group = "freecad" }

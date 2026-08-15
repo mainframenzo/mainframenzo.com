@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang='en'>
+<%- include(`${process.cwd()}/src/frontend/templates.partials/head`); -%>
+<body>
+  <main class='wrapper' id='login-page'>
+    <%- include(`${process.cwd()}/src/frontend/templates.partials/nav`); -%>
+    <section class='container'>
+      <form action='<%= api_url %>/api/auth/login?nojs=true' method='post'>
+        <div class='row'>
+          <div class='column' id='username-container'>
+            <label for='username'>Username</label>
+            <br/>
+            <input
+              type='text'
+              id='username'
+              name='username'
+              placeholder='Hambino'
+              required
+              autocomplete='off'
+            >
+            <span class='error-message'>Please enter a valid username.</span>
+          </div>
+          <br/>
+          <div class='column'>
+            <label for='password'>Password</label>
+            <br/>
+            <input
+              type='password'
+              id='password'
+              name='password'
+              placeholder='Joshua'
+              required
+              autocomplete='off'
+            >
+            <span class='error-message'>It's in that place that you put that thing one time.</span>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column'>
+            <div id='login-error'></div>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column'>
+            <hr/>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column'>
+            <button type='submit' id='login-button' class='float-right'>Login</button>
+          </div>
+        </div>
+      </form>
+    </section>
+    <%- include(`${process.cwd()}/src/frontend/templates.partials/footer`); -%>
+  </main>
+</body>
+</html>

@@ -1,0 +1,1 @@
+Test files for media utilities tests were pulled from https://github.com/ianare/exif-samples .

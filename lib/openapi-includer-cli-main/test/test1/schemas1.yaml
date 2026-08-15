@@ -1,0 +1,2 @@
+Model1:
+  $ref: ./schema.model1.yaml

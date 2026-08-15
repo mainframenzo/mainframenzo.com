@@ -1,0 +1,366 @@
+/api/ops:
+  get:
+    operationId: getOpsDashboard
+    parameters:
+      - name: render
+        in: query
+        description: Render on-the-fly rather than returning HTML from cache. Good for testing.
+        required: false
+        schema:
+          type: string
+      - name: metricWindow
+        in: query
+        description: 1m, 5m, 15m, 1h, 3h, 6h, 12h, 1d, 3d, 1w, 2w, 1mo...defaults to 1d.
+        required: false
+        schema:
+          type: string
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          text/html:
+            schema:
+              type: string
+
+/api/ops/monitor-stat/arp-cache:
+  get:
+    operationId: getMonitorStatArpCache
+    description: Returns the current ARP cache entries from the `arp` command.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/network-bandwidth:
+  get:
+    operationId: getMonitorStatBandwidth
+    description: Raw TX/RX byte counters per interface from `/proc/net/dev`.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/cpu-info:
+  get:
+    operationId: getMonitorStatCpuInfo
+    description: CPU details from `lscpu` as key-value pairs.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/cpu-intensive-processes:
+  get:
+    operationId: getMonitorStatCpuIntensiveProcesses
+    description: Top 15 processes sorted by CPU usage.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/cpu-temp:
+  get:
+    operationId: getMonitorStatCpuTemp
+    description: >
+      Current CPU temperature in degrees Celsius. Returns a number on
+      supported hardware, or an empty array if unavailable.
+    tags: [CPU]
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/cpu-utilization:
+  get:
+    operationId: getMonitorStatCpuUtilization
+    description: >
+      Current CPU utilization as a percentage (0–100), sampled over
+      a 1-second window.
+    tags: [CPU]
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/cron-history:
+  get:
+    operationId: getMonitorStatCronHistory
+    description: Last 50 CRON entries from `/var/log/syslog`.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/current_ram:
+  get:
+    operationId: getMonitorStatCurrentRam
+    description: Total, used, and available RAM in MB from `/proc/meminfo`.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/disk-partitions:
+  get:
+    operationId: getMonitorStatDiskPartitions
+    description: Disk usage per partition from `df -Ph`.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/docker-processes:
+  get:
+    operationId: getMonitorStatDockerProcesses
+    description: Top processes per running Docker container.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/download-transfer-rate:
+  get:
+    operationId: getMonitorStatDownloadTransferRate
+    description: >
+      Current inbound (RX) transfer rate in KB/s per network interface,
+      sampled over a 1-second window.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/general-info:
+  get:
+    operationId: getMonitorStatGeneralInfo
+    description: OS, hostname, uptime, and server time.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/io-stats:
+  get:
+    operationId: getMonitorStatIoStats
+    description: Per-device I/O stats from `/proc/diskstats`.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/ip-addresses:
+  get:
+    operationId: getMonitorStatIpAddresses
+    description: >
+      IP addresses for all local network interfaces plus the
+      detected external IP address.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/load-avg:
+  get:
+    operationId: getMonitorStatLoadAvg
+    description: >
+      1, 5, and 15 minute load averages from `/proc/loadavg`,
+      normalised by the number of CPU cores.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/logged-in-users:
+  get:
+    operationId: getMonitorStatLoggedInUsers
+    description: Active sessions from the `w` command.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/memory-info:
+  get:
+    operationId: getMonitorStatMemoryInfo
+    description: Full contents of `/proc/meminfo` as key-value pairs.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/network-connections:
+  get:
+    operationId: getMonitorStatNetworkConnections
+    description: Unique remote addresses and connection counts from `netstat -ntu`.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/number-of-cpu-cores:
+  get:
+    operationId: getMonitorStatNumberOfCpuCores
+    description: Count of logical CPU cores from `/proc/cpuinfo`.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/ram-intensive-processes:
+  get:
+    operationId: getMonitorStatRamIntensiveProcesses
+    description: Top 15 processes sorted by memory usage.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/recent-account-logins:
+  get:
+    operationId: getMonitorStatRecentAccountLogins
+    description: Logins from the past 365 days via `lastlog`.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/scheduled-crons:
+  get:
+    operationId: getMonitorStatScheduledCrons
+    description: >
+      All scheduled cron jobs from `/etc/crontab`, `/etc/cron.d/*`,
+      and each user's crontab.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/swap:
+  get:
+    operationId: getMonitorStatSwap
+    description: Swap partition information from `/proc/swaps`.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/upload-transfer-rate:
+  get:
+    operationId: getMonitorStatUploadTransferRate
+    description: >
+      Current outbound (TX) transfer rate in KB/s per network interface,
+      sampled over a 1-second window.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml
+
+/api/ops/monitor-stat/user-accounts:
+  get:
+    operationId: getMonitorStatUserAccounts
+    description: >
+      All user accounts from `/etc/passwd`, classified as either
+      system (UID ≤ 499) or regular users.
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml

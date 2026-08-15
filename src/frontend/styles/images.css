@@ -1,0 +1,43 @@
+.mascot {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.mascot .palm_tree {
+  margin-left: -.7em;
+  max-height: 12rem;
+}
+
+.circle_border {
+  clip-path: circle();
+  max-height: 200px;
+  margin-bottom: 2rem;
+  margin-left: 25%;
+  width: 50%;
+}
+
+.description {
+  text-align: center;
+}
+
+/* FIXME Not used ATM.
+/* .dear-reader-mode {
+  height: 30px;
+  margin-top: 12px;
+}
+
+.dear-reader-mode:hover {
+  cursor: pointer;
+} */
+
+.doubleclick {
+  cursor:n-resize;
+}
+
+/* Source: https://icons8.com/icons/set/32-x-32-fullscreen */
+.can-fullscreen {
+  cursor: url('/images/can-fullscreen-cursor.png') 16 16, zoom-in;
+  max-width: 100%;
+  height: auto;
+}
+

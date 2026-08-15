@@ -1,0 +1,46 @@
+{
+  "@comment": "This file was generated from /home/mainframenzo/Desktop/dev/ts-npm/npm*.ts .",
+  "dependencies": {
+    "glob": "10.3.10",
+    "ts-command-line-args": "2.5.1",
+    "ts-deepmerge": "6.2.0",
+    "ts-npm": "file:",
+    "tslib": "2.4.0",
+    "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "@types/glob": "8.1.0",
+    "@types/node": "18.16.0",
+    "concurrently": "7.5.0",
+    "cross-env": "5.2.1",
+    "del": "5.0.0",
+    "esbuild": "0.16.7",
+    "nodemon": "2.0.20",
+    "onchange": "7.1.0",
+    "shx": "0.3.4",
+    "ts-node": "10.9.1",
+    "tslib": "2.4.0",
+    "typescript": "5.2.2"
+  },
+  "name": "ts-npm",
+  "version": "0.0.0",
+  "description": "Manage package.json files in Typescript npm*.ts files.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mainframenzo/ts-npm"
+  },
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {},
+  "bin": {
+    "ts-npm": "./ts-npm.sh"
+  },
+  "files": [
+    "./src/",
+    "./dist/",
+    "./ts-npm.sh",
+    "./tsconfig.json",
+    "./config/"
+  ]
+}

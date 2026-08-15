@@ -1,0 +1,35 @@
+- description: >-
+    The original dashboard.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v1/img_1.jpg
+
+- description: >-
+    Did the original dashboard not have a properly sized hole for modern radios?
+    The jagged cuts are surely not factory?
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v1/img_2.jpg
+
+- description: >-
+    The original gauge cluster. It is hard to see, but a temperature gauge was added during the Subaru engine conversion.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v1/img_3.jpg
+
+- description: >-
+    The ashtray cover was missing when I purchased the bus.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v1/img_4.jpg
+
+- description: >-
+    There was technically a v0 but it's only deserving of a single photo.
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v1/img_0.jpg
+
+- description: >-
+    <emphasis>Whoopsies</emphasis>, forgot to take photos of the install :)
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v1/img_5.jpg
+
+- description: >-
+    The v1 design called for new gauges, but I never got around to purchasing them;
+    I was particularly attached to the old speedometer...metric is a novelty around these parts!
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v1/img_6.jpg
+
+- description: >-
+    The plastic radio plate that came with the "new" vintage radio looked cheap, 
+      but I took a liking to the radio itself - its bluetooth "just worked".
+    I opted not to make a custom radio face plate for v1 because I wanted to be sure the radio would last before I committed to it!
+  filePath: ./src/frontend/public/images/posts/volkswagen_bus_dashboard/v1/img_7.jpg

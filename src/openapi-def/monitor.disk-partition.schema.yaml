@@ -1,0 +1,21 @@
+type: object
+required: [file_system, size, used, avail, used%, mounted]
+properties:
+  file_system:
+    type: string
+    example: /dev/sda1
+  size:
+    type: string
+    example: 100G
+  used:
+    type: string
+    example: 42G
+  avail:
+    type: string
+    example: 58G
+  used%:
+    type: string
+    example: 43%
+  mounted:
+    type: string
+    example: /

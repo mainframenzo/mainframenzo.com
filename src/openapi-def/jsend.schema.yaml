@@ -1,0 +1,22 @@
+type: object
+properties:
+  status: 
+    type: string
+    enum: ["ok", "error"]
+  message:
+    type: string
+  # FIXME Not sure how to spec conditional data that should be certain methods: https://community.smartbear.com/t5/Swagger-Open-Source-Tools/Defining-conditional-attributes-in-OpenAPI/td-p/222410, or if it requires two schemas to type properly?
+  data:
+    oneOf:
+      - type: string # Not really used, but could happen?
+      - type: object
+      - type: array
+        items:
+          type: object
+          additionalProperties: true
+  headers:
+    type: object
+    additionalProperties: true
+required:
+  - status
+  - message

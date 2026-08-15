@@ -1,0 +1,23 @@
+/api/media/download-playlist-song/{playlistId}/{songId}:
+  get:
+    operationId: downloadPlaylistSong
+    parameters:
+      - in: path
+        name: playlistId
+        schema:
+          type: string
+          #enum: [m3u] FIXME Type '"m3u"' is not assignable to type 'never'
+        required: true
+      - in: path
+        name: songId
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes:
+                - ./jsend.schema.yaml

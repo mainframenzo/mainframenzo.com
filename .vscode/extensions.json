@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "eeyore.yapf",
+    "redhat.vscode-yaml",
+    "tamasfe.even-better-toml",
+    "usernamehw.errorlens",
+    "skellock.just",
+    "hashicorp.terraform",
+    "undefined_publisher.meblog-post-header-validator",
+    "digitalbrainstem.javascript-ejs-support"
+  ]
+}

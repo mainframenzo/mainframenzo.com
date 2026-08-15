@@ -1,0 +1,76 @@
+# This file has been @deprecated, and this functionality has been moved to a justfile.
+# This code remains in case you ever want to deploy to AWS again, 
+#  because the AWS infra dev tasks were not migrated from make to just.
+#
+# This file is responsible for defining Docker related developer commands.
+include makefile.inc
+
+# Include environment configuration.
+ifneq (,$(wildcard ./config/.env))
+	include ./config/.env
+	export
+endif
+
+base_image := public.ecr.aws/ubuntu/ubuntu:22.04_stable
+meblog_image_name := meblog
+
+# On MacOS (Apple M3) - required.
+platform_flag := --platform linux/amd64
+
+# Used locally to push the development container image to a local container registry.
+# You sync this registry to Amazon S3 for your cloud-based CICD environment.
+push-to-local-registry:
+	docker tag $(meblog_image_name):latest localhost:5000/$(meblog_image_name):latest
+	docker push localhost:5000/$(meblog_image_name):latest
+
+# Used to build the development container image.
+docker/setup:
+	docker pull "$(base_image)"
+
+# You use the .gitignore file as a common "dockerignore" file.
+# This occasionaly bites us, but more pros than cons.
+	cp .gitignore ./build-utils/docker/dockerfile.meblog.dockerignore
+
+	DOCKER_BUILDKIT=1 docker build -f ./build-utils/docker/dockerfile.meblog --progress=plain $(platform_flag) \
+		--build-arg EXTEND="$(base_image)" -t "$(meblog_image_name):latest" . &> ./build-utils/logs/docker.build.meblog.log
+
+# Used during CICD to pull the development container image from Amazon S3 using a registry running in the CICD environment.
+pull-from-local-registry:
+	docker pull localhost:5000/$(meblog_image_name):latest
+
+# You specify the entrypoint so you can use your updated one if changes have been made since you last built the container image.
+docker/develop/website:
+	docker run -it --rm $(platform_flag) \
+		-v $(shell pwd)/:/opt/app/meblog/:rw \
+		-p 5901:5901 \
+		-p 8080:8080 \
+		-p 8081:8081 \
+		--privileged \
+		-e GENERATE_UNIQUE=false -e app_location="local" -e build_parts_libraries="$(build_parts_libraries)" \
+		--entrypoint /opt/app/meblog/build-utils/docker/dockerfile.meblog.entrypoint.develop.sh \
+		"$(meblog_image_name):latest"
+
+# You specify the entrypoint so you can piggy-back off the same local development container image.
+# You also make sure to mount the source dir so that the build in the guest OS (Docker container) affects the files of the host OS (AWS CodeBuild).
+# We'll need to have those files on the host OS to actually update the website.
+docker/build/from-cicd:
+	docker run --rm $(platform_flag) \
+		-v $(src_dir)/:/opt/app/meblog/:rw \
+		-p 5901:5901 \
+		-p 8080:8080 \
+		-p 8081:8081 \
+		--privileged \
+		-e GENERATE_UNIQUE=false -e stage=$(stage) -e publish_stage=$(publish_stage) -e app_location="$(app_location)" -e generate_images_of_parts_libraries=$(generate_images_of_parts_libraries) \
+		--entrypoint /opt/app/meblog/build-utils/docker/entrypoint.cicd.sh \
+		"localhost:5000/$(meblog_image_name):latest"
+
+docker/shell:
+	docker run -it --rm $(platform_flag) \
+		-v $(shell pwd)/:/opt/app/meblog/:rw \
+		-p 5901:5901 \
+		-p 8080:8080 \
+		-p 8081:8081 \
+		--privileged \
+		-e GENERATE_UNIQUE=false -e app_location="local" \
+		--entrypoint /bin/bash \
+		"$(meblog_image_name):latest"

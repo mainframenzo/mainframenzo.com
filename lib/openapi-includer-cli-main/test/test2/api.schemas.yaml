@@ -1,0 +1,6 @@
+Model1:
+  $includes: 
+    - ./model1.schema.yaml
+Model2:
+  $includes: 
+    - ./model2.schema.yaml

@@ -1,0 +1,10 @@
+/model1:
+  get:
+    operationId: getModel1
+    responses:
+      '200':
+        content:
+          application/json:
+            schema:
+              $includes: 
+                - './model1.schema.yaml'

@@ -1,0 +1,57 @@
+# This file has been @deprecated - you've moved to pixi.
+#
+# This file is responsible for defining meblog Python dependencies.
+# Python is used to help in the design of #thingsivemade.
+# FIXME Given the number of dependencies, it might make sense for each tool you use to have its own env,
+#  because this was a pain in the ass to get working.
+# FIXME Only specify direct imports (and the direct imports of dependencies you took in) -
+#  you took this list from a requirements.txt dump of an early env you got working.
+# References:
+# * https://build123d.readthedocs.io/en/latest/installation.html#special-notes-on-apple-silicon-installs
+# * https://github.com/FreeCAD/FreeCAD/blob/main/conda/environment.devenv.yml
+name: meblog
+channels:
+  - conda-forge
+  - cadquery
+  #- defaults
+dependencies:
+# With FreeCAD in particular, upgrading the Python version may cause issues. See: https://github.com/FreeCAD/FreeCAD/issues/19585
+  #- python=3.10.13
+  - python=3.11.2
+  #- cadquery=master
+  - pip=25.2
+  - pip:
+    # Drawing/rendering dependencies for parts libraries.
+    #- anytree==2.12.1
+    - build123d==0.9.1
+    #- cachetools==5.5.0
+    #- certifi==2024.8.30
+    #- dearpygui==1.5.1
+    # See: https://github.com/gumyr/build123d/issues/866#issuecomment-2614214329
+    #- cadquery-ocp>7.8 # FIXME https://github.com/gumyr/build123d/issues/956
+    #- cadquery-ocp-stubs>7.8
+    #- cadquery<7.8
+# FIXME Can't seem to install bpy because system Python version conflict and/or FreeCAD needing 3.10 but Blender 4.2.0 needing 3.11.
+# If you comment this dependency out, "conda activate meblog", then install manually, it installs fine.
+# Work-around is to copy installed Blender Python libs to <meblog-src>/bpy anyways,
+#  because even if this installs, it still doesn't let me use Blender outside of Blender.
+    - bpy==4.2.0 # Used for rendering parts libraries with Blender et. al.
+    - fake-bpy-module-4.2==20250130 # Used to get Blender types for development.
+    #- ezdxf==1.4.1 # Used to convert .svg to .dxf files for importing into build123d.
+    - numpy>=2,<3
+    #- ocp-tessellate==3.0.10 # Required by build123d.
+    #- ocpsvg==0.2.1
+    - ocp-vscode==2.9.0 # Used as a build123d development tool.
+    - trimesh==4.4.9
+    - pillow==11.1.0
+    - pyrender==0.1.43
+    - PySide6==6.8.2.1
+    - mathutils==3.3.0
+
+    # FIXME Installing bd_warehouse as a dependency did not work (conflicting dependency versions),
+    #  so you pulled into <meblog-src>/parts-library-tools and added its dependencies below.
+    #- git+https://github.com/gumyr/bd_warehouse
+    - typing_extensions>=4.4.0,<5
+
+    # Electronics dependencies.
+    - schemdraw==0.20

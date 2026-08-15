@@ -1,0 +1,12 @@
+type: object
+required: [binary, location, installed]
+properties:
+  binary:
+    type: string
+    example: node
+  location:
+    type: string
+    example: /usr/bin/node
+  installed:
+    type: boolean
+    example: true

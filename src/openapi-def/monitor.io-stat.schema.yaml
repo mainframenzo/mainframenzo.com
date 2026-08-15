@@ -1,0 +1,18 @@
+type: object
+required: [device, reads, writes, in_prog., time]
+properties:
+  device:
+    type: string
+    example: sda
+  reads:
+    type: string
+    example: "148291"
+  writes:
+    type: string
+    example: "52443"
+  in_prog:
+    type: string
+    example: "0"
+  time:
+    type: string
+    example: "94820"

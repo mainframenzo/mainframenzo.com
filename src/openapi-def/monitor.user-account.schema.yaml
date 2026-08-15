@@ -1,0 +1,13 @@
+type: object
+required: [type, user, home]
+properties:
+  type:
+    type: string
+    enum: [system, user]
+    example: user
+  user:
+    type: string
+    example: alice
+  home:
+    type: string
+    example: /home/alice

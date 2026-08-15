@@ -1,0 +1,21 @@
+type: object
+required: [addr, hw_type, hw_addr, mask]
+properties:
+  addr:
+    type: string
+    description: Hostname or IP address
+    example: gateway.local
+  hw_type:
+    type: string
+    description: Hardware type
+    example: ether
+  # FIXME invalid property hw_addr. Expected Schema Object or boolean, got Array
+  #hw_addr.: 
+  hw_addr:
+    type: string
+    description: MAC address
+    example: "aa:bb:cc:dd:ee:ff"
+  mask:
+    type: string
+    description: Network mask
+    example: "*"

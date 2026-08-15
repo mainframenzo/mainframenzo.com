@@ -1,0 +1,8 @@
+type: object
+description: Key-value map of lscpu output fields
+additionalProperties:
+  type: string
+example:
+  Architecture: x86_64
+  CPU(s): "8"
+  Thread(s) per core: "2"

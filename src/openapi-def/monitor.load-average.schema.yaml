@@ -1,0 +1,15 @@
+type: object
+required: ["1_min_avg", "5_min_avg", "15_min_avg"]
+properties:
+  1_min_avg:
+    type: number
+    description: 1-minute load average normalised by core count
+    example: 23.5
+  5_min_avg:
+    type: number
+    description: 5-minute load average normalised by core count
+    example: 18.2
+  15_min_avg:
+    type: number
+    description: 15-minute load average normalised by core count
+    example: 14.7

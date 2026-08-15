@@ -1,0 +1,15 @@
+type: object
+required: [OS, Hostname, Uptime, Server Time]
+properties:
+  OS:
+    type: string
+    example: Ubuntu 22.04.3 LTS 5.15.0-91-generic
+  Hostname:
+    type: string
+    example: my-server
+  Uptime:
+    type: string
+    example: "3 days 4 hours and 22 minutes"
+  Server Time:
+    type: string
+    example: "Mon Jan 15 03:00:00 UTC 2024"

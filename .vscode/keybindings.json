@@ -1,0 +1,8 @@
+[
+  // FIXME You can't get programs to honor your custom fucking keyboard shorcuts in Ubuntu. 
+  {
+    "key": "alt+c",
+    "command": "editor.action.clipboardCopyAction",
+    "when": "editorTextFocus"
+  } 
+]

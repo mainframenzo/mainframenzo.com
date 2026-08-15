@@ -1,0 +1,6 @@
+"Quantity","Type","File","Description","Name","Link","Cost ($USD)","Notes"
+"1","part","panel.py",".1"" 6061 Aluminium","Panel","N/A","182.55","Material purchased by company that did laser-cutting. It was a mistake to go with .1"" aluminium - much, much cheaper to get .125""."
+"1","part","N/A","UltraGauge EM Plus v1.4","OBDII Reader","https://ultra-gauge.com/ultragauge/index.htm","84.00","Purchased previously for v1."
+"2","part","N/A","1"" x 1"" x 1/8"" Aluminum Angle 6061-T6","Dashboard-to-Dashboard Mount","https://www.onlinemetals.com/en/buy/aluminum/1-x-1-x-0-125-aluminum-angle-6061-t6-extruded-structural/pid/971","4.76","Cut to 12"". Free - hand on hand."
+"1","fastener","N/A","#8 x 1 Self Drilling Screws for Metal with Rubber Washer, Steel Zinc Plated, Hex Washer Head, Self Tapping, #3 Drill Point, Pack of 100","#8 Self-tapping Screws","https://www.amazon.com/dp/B083DQKJYD?th=1","19.99","Only needed a partial amount."
+"1","part","N/A","1"" x 1"" x 1/8"" Aluminum T-Bar 6063-T52-Extruded","Dashboard Bottom Lip","https://www.onlinemetals.com/en/buy/aluminum/1-x-1-x-0-125-aluminum-t-bar-6063-t52-extruded/pid/21873","30.85","Cut to panel length. Used to fill gap since panel was not quite tall enough. Free - hand on hand."

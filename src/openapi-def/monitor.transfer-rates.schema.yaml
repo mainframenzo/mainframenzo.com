@@ -1,0 +1,7 @@
+type: object
+description: Map of network interface name to KB/s transfer rate
+additionalProperties:
+  type: integer
+example:
+  eth0: 128
+  lo: 0

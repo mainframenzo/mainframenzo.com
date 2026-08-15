@@ -1,0 +1,19 @@
+# This file has been @deprecated - you've moved to pixi.
+#
+# This file is responsible for defining this meblog tool's Python dependencies.
+# Python is used to help in the design of #thingsivemade.
+name: meblog-assembly-to-gifs
+channels:
+  - conda-forge
+  - cadquery
+dependencies:
+  - python=3.11.2
+  - pip=25.2
+  - pip:
+    - bpy==4.2.0
+    - fake-bpy-module-4.2==20250130
+    - build123d==0.9.1
+    # See: https://github.com/gumyr/build123d/issues/866#issuecomment-2614214329
+    - cadquery-ocp>7.8 # FIXME https://github.com/gumyr/build123d/issues/956
+    - cadquery-ocp-stubs>7.8
+    # - cadquery Is needed, but it's installed via `make install/conda`. See there for details.

@@ -1,0 +1,775 @@
+# 100% AI-generated. Garbage? You dunno. FIXME Need to look at https://github.com/octokit/webhooks/blob/main/payload-schemas/api.github.com/push/event.schema.json and see if you can grab the other schemas easily.
+type: object
+properties:
+  ref:
+    type: string
+    description: The full Git ref that was pushed, e.g. "refs/heads/main" or "refs/tags/v1.0.0".
+    example: "refs/heads/main"
+  before:
+    type: string
+    description: The SHA of the most recent commit on the ref before the push.
+    example: "a1b2c3d4e5f67890abcdef1234567890abcdef12"
+  after:
+    type: string
+    description: The SHA of the most recent commit on the ref after the push.
+    example: "f6e5d4c3b2a10987654321fedcba987654321fed"
+  created:
+    type: boolean
+    description: Whether this push created the ref.
+    example: false
+  deleted:
+    type: boolean
+    description: Whether this push deleted the ref.
+    example: false
+  forced:
+    type: boolean
+    description: Whether this was a force push.
+    example: false
+  base_ref:
+    type: string
+    nullable: true
+    description: The base ref of the push, if applicable.
+    example: null
+  compare:
+    type: string
+    description: URL to compare the before and after commits.
+    example: "https://github.com/octocat/Hello-World/compare/abc123...def456"
+  commits:
+    type: array
+    description: An array of commit objects describing the pushed commits. Empty for deletions.
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The SHA of the commit.
+          example: "f6e5d4c3b2a10987654321fedcba987654321fed"
+        tree_id:
+          type: string
+          description: The SHA of the commit's tree.
+          example: "9f3d1c2e4b5a6d7e8f90a1b2c3d4e5f678901234"
+        distinct:
+          type: boolean
+          description: Whether this commit is distinct from any that have been pushed before.
+          example: true
+        message:
+          type: string
+          description: The commit message.
+          example: "Fix bug in authentication flow"
+        timestamp:
+          type: string
+          description: The ISO 8601 timestamp of the commit.
+          example: "2024-01-15T10:30:00Z"
+        url:
+          type: string
+          description: URL that points to the commit API resource.
+          example: "https://api.github.com/repos/octocat/Hello-World/commits/f6e5d4c3"
+        author:
+          # Uses Committer shape: name (required), email (nullable), date? (optional), username? (optional)
+          type: object
+          description: The git author of the commit.
+          properties:
+            name:
+              type: string
+              example: "Monalisa Octocat"
+            email:
+              # CORRECTED: nullable — Committer interface defines email as string | null
+              type: string
+              nullable: true
+              example: "monalisa@octocat.com"
+            date:
+              # ADDED: optional field present on Committer interface
+              type: string
+              example: "2024-01-15T10:30:00Z"
+            username:
+              # ADDED: optional field present on Committer interface
+              type: string
+              example: "octocat"
+          required: [name]
+        committer:
+          type: object
+          description: The git committer of the commit.
+          properties:
+            name:
+              type: string
+              example: "GitHub"
+            email:
+              # CORRECTED: nullable — Committer interface defines email as string | null
+              type: string
+              nullable: true
+              example: "noreply@github.com"
+            date:
+              type: string
+              example: "2024-01-15T10:30:00Z"
+            username:
+              type: string
+              example: "web-flow"
+          required: [name]
+        added:
+          type: array
+          description: Array of files added in this commit.
+          items:
+            type: string
+          example: ["src/new-file.ts"]
+        removed:
+          type: array
+          description: Array of files removed in this commit.
+          items:
+            type: string
+          example: ["src/old-file.ts"]
+        modified:
+          type: array
+          description: Array of files modified in this commit.
+          items:
+            type: string
+          example: ["src/auth.ts", "README.md"]
+  head_commit:
+    # CONFIRMED: nullable: true is correct — null when push deletes the ref
+    type: object
+    nullable: true
+    description: The most recent commit on the ref after the push. Null if the push deleted the ref.
+    properties:
+      id:
+        type: string
+        example: "f6e5d4c3b2a10987654321fedcba987654321fed"
+      tree_id:
+        type: string
+        example: "9f3d1c2e4b5a6d7e8f90a1b2c3d4e5f678901234"
+      distinct:
+        type: boolean
+        example: true
+      message:
+        type: string
+        example: "Fix bug in authentication flow"
+      timestamp:
+        type: string
+        example: "2024-01-15T10:30:00Z"
+      url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/commits/f6e5d4c3"
+      author:
+        type: object
+        properties:
+          name:
+            type: string
+            example: "Monalisa Octocat"
+          email:
+            type: string
+            nullable: true
+            example: "monalisa@octocat.com"
+          date:
+            type: string
+            example: "2024-01-15T10:30:00Z"
+          username:
+            type: string
+            example: "octocat"
+        required: [name]
+      committer:
+        type: object
+        properties:
+          name:
+            type: string
+            example: "GitHub"
+          email:
+            type: string
+            nullable: true
+            example: "noreply@github.com"
+          date:
+            type: string
+            example: "2024-01-15T10:30:00Z"
+          username:
+            type: string
+            example: "web-flow"
+        required: [name]
+      added:
+        type: array
+        items:
+          type: string
+        example: ["src/new-file.ts"]
+      removed:
+        type: array
+        items:
+          type: string
+        example: []
+      modified:
+        type: array
+        items:
+          type: string
+        example: ["src/auth.ts"]
+  pusher:
+    # CONFIRMED: not a User object — only name + email (git-level identity)
+    type: object
+    description: >
+      The git-level identity that performed the push. Note: this is NOT a full GitHub User
+      object — it only contains name and email (no id, login, avatar_url, etc.).
+    properties:
+      name:
+        type: string
+        description: The username of the pusher.
+        example: "octocat"
+      email:
+        # CORRECTED: nullable — can be absent/null for bots or deploy keys
+        type: string
+        nullable: true
+        description: The email address of the pusher.
+        example: "octocat@github.com"
+    required: [name]
+  sender:
+    type: object
+    description: The GitHub user that triggered the event. Full User object.
+    properties:
+      login:
+        type: string
+        example: "octocat"
+      id:
+        type: integer
+        example: 1
+      node_id:
+        type: string
+        example: "MDQ6VXNlcjE="
+      name:
+        # ADDED: optional field present on User interface (name?: string)
+        type: string
+        example: "Monalisa Octocat"
+      email:
+        # ADDED: optional nullable field on User interface (email?: string | null)
+        type: string
+        nullable: true
+        example: "octocat@github.com"
+      avatar_url:
+        type: string
+        example: "https://github.com/images/error/octocat_happy.gif"
+      gravatar_id:
+        type: string
+        example: ""
+      url:
+        type: string
+        example: "https://api.github.com/users/octocat"
+      html_url:
+        type: string
+        example: "https://github.com/octocat"
+      followers_url:
+        type: string
+        example: "https://api.github.com/users/octocat/followers"
+      following_url:
+        type: string
+        example: "https://api.github.com/users/octocat/following{/other_user}"
+      gists_url:
+        type: string
+        example: "https://api.github.com/users/octocat/gists{/gist_id}"
+      starred_url:
+        type: string
+        example: "https://api.github.com/users/octocat/starred{/owner}{/repo}"
+      subscriptions_url:
+        type: string
+        example: "https://api.github.com/users/octocat/subscriptions"
+      organizations_url:
+        type: string
+        example: "https://api.github.com/users/octocat/orgs"
+      repos_url:
+        type: string
+        example: "https://api.github.com/users/octocat/repos"
+      events_url:
+        type: string
+        example: "https://api.github.com/users/octocat/events{/privacy}"
+      received_events_url:
+        type: string
+        example: "https://api.github.com/users/octocat/received_events"
+      type:
+        type: string
+        enum: [User, Bot, Organization]
+        example: "User"
+      site_admin:
+        type: boolean
+        example: false
+    required: [login, id, node_id, avatar_url, gravatar_id, url, html_url, followers_url,
+               following_url, gists_url, starred_url, subscriptions_url, organizations_url,
+               repos_url, events_url, received_events_url, type, site_admin]
+  repository:
+    type: object
+    description: The repository the push was made to.
+    properties:
+      id:
+        type: integer
+        description: Unique identifier of the repository.
+        example: 123456789
+      node_id:
+        type: string
+        example: "MDEwOlJlcG9zaXRvcnkxMjM0NTY3ODk="
+      name:
+        type: string
+        description: The name of the repository.
+        example: "Hello-World"
+      full_name:
+        type: string
+        description: The full name of the repository, including the owner.
+        example: "octocat/Hello-World"
+      private:
+        type: boolean
+        description: Whether the repository is private or public.
+        example: false
+      owner:
+        # CORRECTED: owner is a full User object per Repository interface
+        type: object
+        description: The owner of the repository. Full User object.
+        properties:
+          login:
+            type: string
+            example: "octocat"
+          id:
+            type: integer
+            example: 1
+          node_id:
+            type: string
+            example: "MDQ6VXNlcjE="
+          name:
+            type: string
+            example: "Monalisa Octocat"
+          email:
+            type: string
+            nullable: true
+            example: null
+          avatar_url:
+            type: string
+            example: "https://github.com/images/error/octocat_happy.gif"
+          gravatar_id:
+            type: string
+            example: ""
+          url:
+            type: string
+            example: "https://api.github.com/users/octocat"
+          html_url:
+            type: string
+            example: "https://github.com/octocat"
+          followers_url:
+            type: string
+            example: "https://api.github.com/users/octocat/followers"
+          following_url:
+            type: string
+            example: "https://api.github.com/users/octocat/following{/other_user}"
+          gists_url:
+            type: string
+            example: "https://api.github.com/users/octocat/gists{/gist_id}"
+          starred_url:
+            type: string
+            example: "https://api.github.com/users/octocat/starred{/owner}{/repo}"
+          subscriptions_url:
+            type: string
+            example: "https://api.github.com/users/octocat/subscriptions"
+          organizations_url:
+            type: string
+            example: "https://api.github.com/users/octocat/orgs"
+          repos_url:
+            type: string
+            example: "https://api.github.com/users/octocat/repos"
+          events_url:
+            type: string
+            example: "https://api.github.com/users/octocat/events{/privacy}"
+          received_events_url:
+            type: string
+            example: "https://api.github.com/users/octocat/received_events"
+          type:
+            type: string
+            enum: [User, Bot, Organization]
+            example: "User"
+          site_admin:
+            type: boolean
+            example: false
+      html_url:
+        type: string
+        example: "https://github.com/octocat/Hello-World"
+      description:
+        type: string
+        nullable: true
+        example: "This your first repo!"
+      fork:
+        type: boolean
+        example: false
+      url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World"
+      forks_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/forks"
+      keys_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/keys{/key_id}"
+      collaborators_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/collaborators{/collaborator}"
+      teams_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/teams"
+      hooks_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/hooks"
+      issue_events_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/issues/events{/number}"
+      events_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/events"
+      assignees_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/assignees{/user}"
+      branches_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/branches{/branch}"
+      tags_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/tags"
+      blobs_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/git/blobs{/sha}"
+      git_tags_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/git/tags{/sha}"
+      git_refs_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/git/refs{/sha}"
+      trees_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/git/trees{/sha}"
+      statuses_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/statuses/{sha}"
+      languages_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/languages"
+      stargazers_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/stargazers"
+      contributors_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/contributors"
+      subscribers_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/subscribers"
+      subscription_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/subscription"
+      commits_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/commits{/sha}"
+      git_commits_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/git/commits{/sha}"
+      comments_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/comments{/number}"
+      issue_comment_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/issues/comments{/number}"
+      contents_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/contents/{+path}"
+      compare_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/compare/{base}...{head}"
+      merges_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/merges"
+      archive_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/{archive_format}{/ref}"
+      downloads_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/downloads"
+      issues_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/issues{/number}"
+      pulls_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/pulls{/number}"
+      milestones_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/milestones{/number}"
+      notifications_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/notifications{?since,all,participating}"
+      labels_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/labels{/name}"
+      releases_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/releases{/id}"
+      deployments_url:
+        type: string
+        example: "https://api.github.com/repos/octocat/Hello-World/deployments"
+      created_at:
+        # CONFIRMED: oneOf integer|string is correct — Repository uses `number | string`
+        oneOf:
+          - type: integer
+            description: Unix timestamp (used in webhook push payloads).
+          - type: string
+        example: 1296068472
+      updated_at:
+        type: string
+        example: "2011-01-26T19:14:43Z"
+      pushed_at:
+        # CORRECTED: also nullable — Repository interface uses `number | string | null`
+        oneOf:
+          - type: integer
+            description: Unix timestamp (used in webhook push payloads).
+          - type: string
+          - type: "null"
+        example: 1296068472
+      git_url:
+        type: string
+        example: "git://github.com/octocat/Hello-World.git"
+      ssh_url:
+        type: string
+        example: "git@github.com:octocat/Hello-World.git"
+      clone_url:
+        type: string
+        example: "https://github.com/octocat/Hello-World.git"
+      svn_url:
+        type: string
+        example: "https://svn.github.com/octocat/Hello-World"
+      homepage:
+        type: string
+        nullable: true
+        example: "https://github.com"
+      size:
+        type: integer
+        description: Repository size in kilobytes.
+        example: 108
+      stargazers_count:
+        type: integer
+        example: 80
+      watchers_count:
+        type: integer
+        example: 80
+      language:
+        type: string
+        nullable: true
+        example: "TypeScript"
+      has_issues:
+        type: boolean
+        example: true
+      has_projects:
+        type: boolean
+        example: true
+      has_downloads:
+        type: boolean
+        example: true
+      has_wiki:
+        type: boolean
+        example: true
+      has_pages:
+        type: boolean
+        example: false
+      has_discussions:
+        # CORRECTED: optional (has_discussions?: boolean) per Repository interface
+        type: boolean
+        example: false
+      forks_count:
+        type: integer
+        example: 9
+      mirror_url:
+        type: string
+        nullable: true
+        example: null
+      archived:
+        type: boolean
+        example: false
+      disabled:
+        # CORRECTED: optional (disabled?: boolean) per Repository interface
+        type: boolean
+        example: false
+      open_issues_count:
+        type: integer
+        example: 0
+      license:
+        type: object
+        nullable: true
+        properties:
+          key:
+            type: string
+            example: "mit"
+          name:
+            type: string
+            example: "MIT License"
+          spdx_id:
+            type: string
+            example: "MIT"
+          url:
+            type: string
+            nullable: true
+            example: "https://api.github.com/licenses/mit"
+          node_id:
+            type: string
+            example: "MDc6TGljZW5zZW1pdA=="
+      # ADDED: merge strategy fields — all optional per Repository interface
+      allow_squash_merge:
+        type: boolean
+        example: true
+      allow_merge_commit:
+        type: boolean
+        example: true
+      allow_rebase_merge:
+        type: boolean
+        example: true
+      allow_auto_merge:
+        type: boolean
+        example: false
+      allow_forking:
+        type: boolean
+        example: true
+      allow_update_branch:
+        type: boolean
+        example: false
+      use_squash_pr_title_as_default:
+        type: boolean
+        example: false
+      squash_merge_commit_message:
+        type: string
+        example: "COMMIT_MESSAGES"
+      squash_merge_commit_title:
+        type: string
+        example: "COMMIT_OR_PR_TITLE"
+      merge_commit_message:
+        type: string
+        example: "PR_TITLE"
+      merge_commit_title:
+        type: string
+        example: "MERGE_MESSAGE"
+      delete_branch_on_merge:
+        type: boolean
+        example: false
+      is_template:
+        type: boolean
+        example: false
+      web_commit_signoff_required:
+        type: boolean
+        example: false
+      topics:
+        type: array
+        items:
+          type: string
+        example: ["octocat", "api"]
+      visibility:
+        type: string
+        enum: [public, private, internal]
+        example: "public"
+      forks:
+        type: integer
+        example: 9
+      open_issues:
+        type: integer
+        example: 0
+      watchers:
+        type: integer
+        example: 80
+      default_branch:
+        type: string
+        description: The default branch of the repository.
+        example: "main"
+      stargazers:
+        # CONFIRMED: optional (stargazers?: number) per Repository interface
+        type: integer
+        example: 80
+      master_branch:
+        # CONFIRMED: optional (master_branch?: string) per Repository interface
+        type: string
+        description: Alias for default_branch, may appear in push-specific payloads.
+        example: "main"
+      permissions:
+        # ADDED: optional per Repository interface
+        type: object
+        properties:
+          pull:
+            type: boolean
+          push:
+            type: boolean
+          admin:
+            type: boolean
+          maintain:
+            type: boolean
+          triage:
+            type: boolean
+        required: [pull, push, admin]
+      public:
+        # ADDED: optional per Repository interface
+        type: boolean
+        example: true
+      organization:
+        # ADDED: optional string field (not object) on Repository interface
+        type: string
+        description: The organization login name as a string on the repository object.
+        example: "octocat-org"
+  organization:
+    # CONFIRMED: optional, present for org-owned repos
+    type: object
+    description: Present when the repository belongs to an organization.
+    properties:
+      login:
+        type: string
+        example: "octocat-org"
+      id:
+        type: integer
+        example: 9876543
+      node_id:
+        type: string
+        example: "MDEyOk9yZ2FuaXphdGlvbjk4NzY1NDM="
+      url:
+        type: string
+        example: "https://api.github.com/orgs/octocat-org"
+      html_url:
+        # CORRECTED: optional (html_url?: string) per Organization interface
+        type: string
+        example: "https://github.com/octocat-org"
+      repos_url:
+        type: string
+        example: "https://api.github.com/orgs/octocat-org/repos"
+      events_url:
+        type: string
+        example: "https://api.github.com/orgs/octocat-org/events"
+      hooks_url:
+        type: string
+        example: "https://api.github.com/orgs/octocat-org/hooks"
+      issues_url:
+        type: string
+        example: "https://api.github.com/orgs/octocat-org/issues"
+      members_url:
+        type: string
+        example: "https://api.github.com/orgs/octocat-org/members{/member}"
+      public_members_url:
+        type: string
+        example: "https://api.github.com/orgs/octocat-org/public_members{/member}"
+      avatar_url:
+        type: string
+        example: "https://github.com/images/error/octocat_happy.gif"
+      description:
+        type: string
+        nullable: true
+        example: "An organization for testing"
+  installation:
+    # CONFIRMED: optional, present for GitHub App deliveries
+    # CORRECTED: only id + node_id — this is InstallationLite, not full Installation
+    type: object
+    description: >
+      Present when the event is triggered via a GitHub App installation.
+      InstallationLite shape — only id and node_id, not the full Installation object.
+    properties:
+      id:
+        type: integer
+        description: The ID of the installation.
+        example: 12345678
+      node_id:
+        type: string
+        example: "MDIzOkludGVncmF0aW9uSW5zdGFsbGF0aW9uMTIzNDU2Nzg="
+    required: [id, node_id]
+required:
+  - ref
+  - before
+  - after
+  - created
+  - deleted
+  - forced
+  - compare
+  - commits
+  - head_commit
+  - repository
+  - pusher
+  - sender

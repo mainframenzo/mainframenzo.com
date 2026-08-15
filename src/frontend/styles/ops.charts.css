@@ -1,0 +1,53 @@
+.pie-chart-container {
+  position: relative;
+  width: 100%;
+}
+
+canvas .pie-chart {
+  width: 100% !important;
+}
+
+.pie-chart-el {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.pie-chart-el__container {
+  position: relative;
+  width: 100%;
+}
+
+.pie-chart-el__container .pie-chart-el__canvas {
+  width: 100% !important;
+}
+
+.bar-chart-el {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.bar-chart-el__container {
+  position: relative;
+  width: 100%;
+}
+
+.bar-chart-el__container .bar-chart-el__canvas {
+  width: 100% !important;
+}
+
+.line-chart-el {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.line-chart-el__container {
+  position: relative;
+  width: 100%;
+}
+
+.line-chart-el__container .line-chart-el__canvas {
+  width: 100% !important;
+}

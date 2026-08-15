@@ -1,0 +1,40 @@
+<head>
+  <meta charset='UTF-8'/>
+  <meta name='viewport' content='width=device-width, initial-scale=1'/>
+  <meta content='Mainframe Enzo Blog' name='description'/>
+  <meta name='format-detection' content='telephone=no,date=no,address=no,email=no,url=no'/>
+  <meta name='msapplication-tap-highlight' content='no'/>
+  <title>Mainframe Enzo's Blog</title>
+  <script>
+    if (window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTypes.defaultPolicy) {
+      window.trustedTypes.createPolicy('default', {
+        createHTML: string => string,
+        createScriptURL: string => string,
+        createScript: string => string,
+      });
+    }
+  </script>
+  <%- include(`${process.cwd()}/src/frontend/templates.partials/icons`); -%>
+  <link rel='stylesheet' href='../src/frontend/styles/index.css'/>
+  <script type='text/javascript'>
+    var app_stage = '<%= app_stage %>';
+    console.debug('app_stage', app_stage);
+
+    var publish_stage = '<%= publish_stage %>';
+    console.debug('publish_stage', publish_stage);
+
+    var app_location = '<%= app_location %>';
+    console.debug('app_location', app_location);
+
+    var api_url = '<%= api_url %>'; // Different when the backend is running in Docker behind nginx and we're hitting https://localhost on our host OS to get to this page.
+    console.debug('api_url', api_url);
+  </script>
+  <noscript>
+    <style type='text/css'>
+      .hide-when-javascript-disabled {
+        display: none;
+        visibility: 0;
+      }
+    </style>
+  </noscript>
+</head>

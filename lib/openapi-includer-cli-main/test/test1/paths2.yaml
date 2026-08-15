@@ -1,0 +1,3 @@
+/model2:
+  get:
+    $ref: ./api.model2.get.yaml

@@ -1,0 +1,175 @@
+.bom {
+  margin-top: -3rem;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 2rem;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+table .bom {
+  border-collapse: collapse;
+  width: auto;
+  min-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.bom tr {
+  font-size: 1.4rem;
+}
+
+.bom td {
+  white-space: nowrap;
+  padding: 1.2rem 1.5rem;
+}
+.bom td:hover {
+  overflow: visible;
+  white-space: normal;
+  height: auto;
+  border-bottom: 2px solid gray;
+}
+
+/* Search provied by Grid.js. */
+.gridjs-input {
+  margin-bottom: 30px;
+}
+
+/* Chrome-only hack set via JavaScript. */
+.chrome .bom td {
+  overflow: auto;
+  white-space: normal;
+  overflow-x: hidden;
+}
+.chrome .bom td:hover {
+  overflow: hidden;
+}
+
+.bom-legend-container p {
+  display: inline;
+  position: relative;
+  margin-top: -.64rem;
+}
+
+.bom-legend {
+  padding: 5px;
+}
+
+.bom-legend ol {
+  padding-top: 5px;
+}
+
+.bom-legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 0;
+  margin-bottom: 8px;
+}
+
+.bom-legend-part,
+.bom-legend-fastener,
+.bom-legend-service,
+.bom-legend-tool,
+.bom-legend-disposable {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+
+.bom-legend-part {
+  border: 1px solid #eee;
+}
+
+.bom-legend-fastener {
+  background: var(--bom-fastener-color);
+}
+
+.bom-legend-service {
+  background: var(--bom-service-color);
+}
+
+.bom-legend-tool {
+  background: var(--bom-tool-color);
+}
+
+.bom-legend-disposable {
+  background: var(--bom-disposable-color);
+}
+
+.bom-fastener {
+  background: var(--bom-fastener-color);
+}
+
+.bom-service {
+  background: var(--bom-service-color);
+}
+
+.bom-tool {
+  background: var(--bom-tool-color);
+}
+
+.bom-disposable {
+  background: var(--bom-disposable-color);
+}
+
+.bom-legend-text {
+  display: inline;
+  position: relative;
+  top: -5px;
+}
+
+/* Mobile only */
+@media (max-width: 40.0rem) {
+  .bom {
+    display: block;
+  }
+}
+
+/* Larger than mobile screen */
+@media (min-width: 40.0rem) {
+  .bom-legend-container {
+    margin-bottom: 5rem;
+  }
+
+  .bom-legend {
+    display: inline;
+  }
+
+  .bom-legend li {
+    display: inline;
+    margin-right: 10px;
+    margin-bottom: 0;
+  }
+}
+
+/*
+Only apply the truncate and hover-to-expand trick on devices wide
+ enough to have real hover (desktop/pointer:fine), so mobile just scrolls freely.
+*/
+@media (hover: hover) and (pointer: fine) {
+  .bom td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 10rem;
+  }
+
+  .bom td:hover {
+    overflow: visible;
+    white-space: normal;
+    height: auto;
+    border-bottom: 2px solid gray;
+    position: relative;
+    z-index: 1;
+    background: white;
+  }
+}
+
+/*
+On touch devices, don't truncate.
+Columns take natural width, user scrolls horizontally to see everything.
+*/
+@media (hover: none) {
+  .bom td {
+    max-width: none;
+  }
+}

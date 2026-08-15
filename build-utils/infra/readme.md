@@ -1,0 +1,1 @@
+You just to get out of makefiles as quickly as possible and defer infra business logic to the shell scripts in this directory, but now that you've switched to just _mostly_ just write shell scripts directly inside the justfiles. Woot.

@@ -1,0 +1,7 @@
+type: object
+description: Full /proc/meminfo key-value map
+additionalProperties:
+  type: string
+example:
+  MemTotal: "16330752 kB"
+  MemFree: "4096 kB"

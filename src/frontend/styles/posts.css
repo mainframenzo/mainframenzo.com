@@ -1,0 +1,60 @@
+.posts {
+  padding-bottom: 6rem;
+}
+
+.posts .post_count {
+  width: 100%;
+  border-bottom: 1.5em solid var(--posts-count-color-border);
+  text-align: center;
+  height: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.posts .post_count h2 {
+  font: bold 100% 'Century Schoolbook', Georgia, Times, serif;
+  font-size: 2em;
+  line-height: 60%;
+  color: var(--posts-count-text-color);
+}
+
+.posts .post_list .post_item {
+  margin-bottom: 1rem;
+}
+
+.linux.gecko .posts .post_list .post_item .post_info {
+  font-size: 1.6rem;
+}
+.posts .post_list .post_item .post_info {
+  letter-spacing: .15rem;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 2.2rem;
+}
+
+.posts .post_list .post_item .post_info a {
+  color: var(--link-and-header-color);
+  text-decoration: none;
+}
+.posts .post_list .post_item .post_info a:hover {
+  text-decoration: underline;
+}
+
+/* FIXME Something coming through wonky here. */
+.linux.gecko .posts .post_list .post_item .post_info span {
+  font-size: 1.3rem;
+}
+.posts .post_list .post_item .post_info span {
+  display: block;
+  color: var(--posts-info-metadata-text-color);
+  font-family: Monaco, 'Courier New', monospace;
+  font-size: 1.9rem;
+}
+
+.posts .underline-hr {
+  background: var(--text-emphasis-border-color);
+  width: 19rem;
+  height: .2rem;
+  margin: 0 auto;
+  margin-bottom: .5rem;
+}

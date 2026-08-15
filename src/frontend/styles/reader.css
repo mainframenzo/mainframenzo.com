@@ -1,0 +1,31 @@
+#custom-reader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fbf0e3; /* Warm Sepia Background */
+  color: #5b4636;
+  overflow-y: scroll;
+  z-index: 99999;
+  font-family: Georgia, serif;
+}
+
+.reader-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+.exit-btn {
+  position: sticky;
+  top: 20px;
+  padding: 10px 15px;
+  background: #5b4636;
+  color: #fbf0e3;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}

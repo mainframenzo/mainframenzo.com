@@ -1,0 +1,18 @@
+type: object
+required: [filename, type, size, used, priority]
+properties:
+  filename:
+    type: string
+    example: /dev/sda2
+  type:
+    type: string
+    example: partition
+  size:
+    type: string
+    example: "8388604"
+  used:
+    type: string
+    example: "102400"
+  priority:
+    type: string
+    example: "-2"

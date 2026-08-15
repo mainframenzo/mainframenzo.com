@@ -1,0 +1,26 @@
+<div class='posts'>
+  <div class='mascot'>
+    <image loading='lazy' class='palm_tree' src='images/palm_tree.png' />
+  </div>
+  <div class='post_count'>
+    <h2><%= playlists.length %></h2>
+  </div>
+  <div class='post_list'>
+    <%
+    if (playlists) {
+      playlists.forEach(function(post) {
+    %>
+    <div class='post_item'>
+      <div class='row'>
+        <div class='column post_info'>
+          <a href='/posts/<%= post.postInfo.title %>.html'><%= post.postInfo.title %></a><span><%= post.postInfo.publishedOn %></span>
+          <hr class='underline-hr'/>
+        </div>
+      </div>
+    </div>
+    <%
+      });
+    }
+    %>
+  </div>
+</div>

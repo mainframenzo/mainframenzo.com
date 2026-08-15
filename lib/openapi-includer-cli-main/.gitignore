@@ -1,0 +1,5 @@
+**node_modules
+
+# Ignore generated files from test.
+src/test/**/out/* 
+!src/test/**/out/gitkeep

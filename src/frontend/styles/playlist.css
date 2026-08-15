@@ -1,0 +1,154 @@
+.playlist-songs {
+  list-style: none !important;
+}
+
+.playlist-songs figure {
+  margin-top: 0 !important;
+  font-size: 1.2rem;
+  margin-left: 0;
+  margin-right: 0;
+}
+.playlist-songs figure:hover {
+  color: black !important; /* FIXME */
+}
+
+.playlist > ol {
+  padding-left: 0rem !important;
+}
+
+.playlist-songs li {
+  margin-top: 0 !important;
+  margin-top: .5em !important;
+}
+
+.playlist-songs hr {
+  margin-bottom: 0;
+}
+
+.playlist-songs figure,
+  .playlist-songs ol,
+  .playlist-songs li,
+  .playlist-songs p {
+  margin-bottom: 0 !important;
+}
+
+.analyses-shown-state-checkbox {
+  display: none !important;
+}
+
+.toggleable-analyses::before {
+  content: '▲';
+}
+.analyses-shown-state-checkbox:checked ~ p .toggleable-analyses::before {
+  content: '▼';
+}
+
+.toggleable-analyses {
+  color: black;
+  cursor: pointer;
+  font-size: 2rem;
+  display: inline;
+  padding-right: 1rem;
+}
+.toggleable-analyses:hover {
+  color: var(--link-color);
+}
+
+.analyses-container {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease;
+  padding: 0 15px;
+  margin-bottom: 1rem;
+  border: 1px solid var(--image-border-color);
+}
+.analyses-shown-state-checkbox:checked ~ .analyses-container {
+  opacity: 1;
+  max-height: 800px;
+  overflow-y: scroll;
+  transform: translateY(0);
+  padding: 15px;
+}
+
+.playlist-player {
+  display: grid;
+  place-items: left;
+}
+
+.audio .playlist-audio {
+  width: 77.5%;
+  float: left;
+}
+
+.song {
+  cursor: pointer;
+}
+
+.song:hover {
+  color: var(--link-and-header-color);
+}
+
+.playlist-prev {
+  margin-left: .4rem;
+}
+
+.playlist-progress {
+
+}
+
+.playlist-volume {
+
+}
+
+/*
+.playlist-songs figure {
+  margin-bottom: 0 !important;
+}
+
+.playlist-songs p {
+  font-size: 2rem !important;
+}
+
+.playlist-songs figcaption {
+  font-size: 1.8rem !important;
+}
+*/
+
+#pocket-symphonies-playlist.playlist > active-table {
+  width: 100%;
+  overflow-x: auto; /* Adds a horizontal scrollbar only when content overflows */
+  -webkit-overflow-scrolling: touch; /* Ensures smooth momentum scrolling on iOS devices */
+}
+
+#pocket-symphonies-playlist.playlist > active-table > table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap; /* Optional: prevents text inside cells from wrapping to a new line */
+}
+
+/* FIXME Table
+position: sticky;
+left: 0;
+background: white; but only for the cells in that first column1. maybe
+
+
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th:first-child,
+td:first-child {
+  position: sticky;
+  left: 0;
+  background-color: #ffffff;
+  z-index: 1;
+}
+*/

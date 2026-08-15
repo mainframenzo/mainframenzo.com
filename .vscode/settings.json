@@ -1,0 +1,55 @@
+{
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "files.eol": "\n",
+  "files.associations": {
+    "makefile*": "makefile",
+    "*.sh": "shellscript",
+    "*.just": "just",
+    "*.tf": "terraform"
+  },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "makefile.configureOnOpen": false,
+  "explorer.autoReveal": false,
+  "editor.inlineSuggest.enabled": false,
+  "github.copilot.enable": {
+    "*": false
+  },
+  "chat.disableAIFeatures": true,
+  "[ejs]": {
+    "editor.formatOnSave": false
+  },
+  "[html]": {
+    "editor.formatOnSave": false
+  },
+  "[css]": {
+    "editor.formatOnSave": false
+  },
+  "css.format.preserveNewLines": true,
+  "[typescript]": {
+    "editor.formatOnSave": false
+  },
+  "[python]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.defaultFormatter": "eeyore.yapf",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "always",
+      "source.organizeImports": "always"
+    }
+  },
+  "[yaml]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[toml]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "terminal.integrated.defaultProfile.osx": "bash",
+  "terminal.integrated.defaultProfile.linux": "bash"
+}

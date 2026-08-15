@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# This file has been @deprecated.
+# This code remains in case you ever want to deploy to AWS again.
+#
+# This file is responsible for removing all AWS CloudWatch log groups and streams for a stage.
+# References:
+# * https://github.com/AntoOnline/bash-script-aws-cloudwatch-delete-log-groups/blob/main/delete-cw-log-groups.shhttps://github.com/AntoOnline/bash-script-aws-cloudwatch-delete-log-groups/blob/main/delete-cw-log-groups.sh
+set -euxo pipefail
+
+if [ "$#" -ne 5 ]; then
+  echo "Must pass aws_cfn_prefix, app_stage, deploy_id, region, and aws_cli_profile_arg as parameters, exiting"
+  exit 1
+fi
+
+aws_cfn_prefix="$1"
+app_stage="$2"
+deploy_id="$3"
+region="$4"
+aws_cli_profile_arg="$5"
+
+describe_log_groups_response=$(aws logs describe-log-groups --query 'logGroups[*].logGroupName' --output table --region $region $aws_cli_profile_arg | awk '{print $2}' | grep -v ^$ | grep -v DescribeLogGroups | grep "$aws_cfn_prefix-${app_stage}" | grep "$deploy_id")
+
+for name in ${describe_log_groups_response}; do
+	echo "deleting log group ${name}"
+	aws logs delete-log-group --log-group-name "${name}" --region $region $aws_cli_profile_arg && echo "removed log group" || echo "failed to remove log group"
+done

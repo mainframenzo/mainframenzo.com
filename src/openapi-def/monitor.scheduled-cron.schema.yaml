@@ -1,0 +1,24 @@
+type: object
+required: [min, hrs, day, month, wkday, user, CMD]
+properties:
+  min:
+    type: string
+    example: "0"
+  hrs:
+    type: string
+    example: "3"
+  day:
+    type: string
+    example: "*"
+  month:
+    type: string
+    example: "*"
+  wkday:
+    type: string
+    example: "*"
+  user:
+    type: string
+    example: root
+  CMD:
+    type: string
+    example: /usr/bin/backup.sh

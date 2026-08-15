@@ -1,0 +1,71 @@
+# This file has been @deprecated, but some of this functionality has not been moved to a justfile.
+# This code remains in case you ever want to deploy to AWS again,
+#  because the AWS infra dev tasks were not migrated from make to just.
+#
+# This file is responsible for defining auditing tasks.
+include makefile.inc
+
+# Include environment configuration.
+ifneq (,$(wildcard ./config/.env))
+	include ./config/.env
+	export
+endif
+
+# Repolinter is ran locally as part of the sample release process.
+repolinter_rules_path := /Users/$(shell whoami)/Downloads/amazon-ospo-ruleset.json
+
+# FIXME No longer have access to this.
+# Fortify is ran locally as part of the sample release process.
+# fortify_install_path := /Applications/Fortify/Fortify_SCA_and_Apps_22.1.1
+# fortify_license_path := /Users/$(shell whoami)/Downloads/fortify.license
+
+scan:
+	make lint/repo
+	make scan/licenses
+	make scan/links
+#make scan/source
+	make scan/media
+	make aws_cfn_prefix=$(aws_cfn_prefix) stage=main scan/cloudformation-templates
+
+lint/repo:
+	NODE_OPTIONS=max-old-space-size=127284016 node $(shell pwd)/node_modules/repolinter/bin/repolinter.js lint --dryRun -r $(repolinter_rules_path) \
+		--allowPaths $(shell pwd)/src \
+		.
+scan/licenses:
+# License notes:
+# * Packages jackspeak@3.4.3, package-json-from-dist@1.0.1, path-scurry@1.11.1 specify the BlueOak-1.0.0 license, see: https://blueoakcouncil.org/license/1.0.0
+# * Package qrcode-terminal@0.12.0 specifies the Apache 2.0 license, see: https://www.apache.org/licenses/LICENSE-2.0.html
+	make generate-license-report
+	npx license-checker-rseidelsohn --summary --onlyAllow '$(allowed_licenses)' --excludePackages 'meblog@0.0.2;jackspeak@3.4.3;package-json-from-dist@1.0.1;path-scurry@1.11.1'
+# FIXME Add conda https://gist.github.com/sverhoeven/441e78fa208d0c05cc334b16320d34d0
+generate-license-report:
+	npx license-report --output=csv --fields=name --fields=licenseType --delimiter=" - "
+# FIXME Add conda.
+scan/links:
+	@echo "FIXME Doesn't work quite right. See: https://github.com/lycheeverse/lychee/issues/1646"
+#lychee ./dist.frontend --exclude-link-local
+# FIXME No longer have access to this.
+# scan/source:
+# 	$(fortify_install_path)/bin/sourceanalyzer -b FrontendTypeScript $(shell pwd)/src/frontend/**/*.ts --exclude node_modules --verbose
+# 	$(fortify_install_path)/bin/sourceanalyzer -b InfraTypeScript $(shell pwd)/src/infra.aws/**/*.ts --exclude node_modules --verbose
+scan/cloudformation-templates:
+# FIXME See CICD stack definition for why it's not getting scanned.
+	make -f makefile.infra cdk_action=synth cdk_nag=true stage="$(stage)" publish_stage="dev" deploy/cicd
+
+	make -f makefile.infra cdk_action=synth cdk_nag=true stage="$(stage)" deploy/routing
+
+	make -f makefile.infra cdk_action=synth cdk_nag=true stage="$(stage)" publish_stage="dev" deploy/cert
+	make -f makefile.infra cdk_action=synth cdk_nag=true stage="$(stage)" publish_stage="dev" deploy/frontend-waf
+	make -f makefile.infra cdk_action=synth cdk_nag=true stage="$(stage)" publish_stage="dev" deploy/frontend
+	make -f makefile.infra cdk_action=synth cdk_nag=true stage="$(stage)" publish_stage="dev" deploy/ops
+
+	make -f makefile.infra cdk_action=synth cdk_nag=true stage="$(stage)" publish_stage="prod" deploy/cert
+	make -f makefile.infra cdk_action=synth cdk_nag=true stage="$(stage)" publish_stage="prod" deploy/frontend
+	make -f makefile.infra cdk_action=synth cdk_nag=true stage="$(stage)" publish_stage="prod" deploy/frontend-waf
+	make -f makefile.infra cdk_action=synth cdk_nag=true stage="$(stage)" publish_stage="prod" deploy/ops
+scan/media:
+	@echo "FIXME scan media for unwanted metadata"
+#  metascan --dir $(pwd)/src --r
+# https://github.com/maccali/Metascan.CLI
+# locations=$(shell cat file_metadata_report.csv | grep "https://www.google.com" | wc -l)
+#  expect to be "       0"

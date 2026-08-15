@@ -1,0 +1,50 @@
+{
+  "@comment": "This file was generated from /home/mainframenzo/Desktop/dev/openapi-includer-cli/npm*.ts .",
+  "dependencies": {
+    "ts-command-line-args": "2.5.1",
+    "yaml": "2.3.1",
+    "flat": "mainframenzo/forkof.flat#master",
+    "ts-deepmerge": "6.2.0"
+  },
+  "devDependencies": {
+    "typescript": "5.2.2",
+    "@types/node": "18.11.18",
+    "ts-node": "10.9.1",
+    "tslib": "2.4.0",
+    "shx": "0.3.4",
+    "del": "5.0.0",
+    "cross-env": "5.2.1",
+    "concurrently": "7.5.0",
+    "nodemon": "2.0.20",
+    "onchange": "7.1.0",
+    "esbuild": "0.16.7",
+    "@babel/cli": "7.23.0",
+    "@babel/core": "7.23.2",
+    "@babel/preset-typescript": "7.23.2",
+    "@babel/preset-env": "7.23.2",
+    "postject": "1.0.0-alpha.6",
+    "openapi-typescript": "6.2.8",
+    "@openapi-ts/backend": "2.0.5"
+  },
+  "name": "openapi-includer-cli",
+  "version": "0.0.0",
+  "description": "Add `$include` keyword support to OpenAPI to include other file content that `$ref` does not support.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mainframenzo/openapi-includer-cli"
+  },
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {},
+  "bin": {
+    "openapi-includer-cli": "./openapi-includer-cli.sh"
+  },
+  "files": [
+    "./src/",
+    "./dist/",
+    "./openapi-includer-cli.sh",
+    "./tsconfig.json",
+    "./config/"
+  ]
+}

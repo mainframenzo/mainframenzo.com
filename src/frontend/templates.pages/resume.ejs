@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <%- include(`${process.cwd()}/src/frontend/templates.partials/head`); -%>
+<body>
+  <main class='wrapper'>
+    <%- include(`${process.cwd()}/src/frontend/templates.partials/nav`); -%>
+    <section class='container'>
+      <p class='quote'>"I'm your huckleberry."</p>
+      <p class='flourish'></p>
+      <h5>Resume</h5>
+      <p>As this website is <a href='/about.html' target='_blank'>anonymous-ish</a> and <em>public</em>, I have <em>omitted</em> or <em>blurred</em> various details <parenthetical>(an "HR-friendly" version is available upon request).</parenthetical>
+      And - perhaps obviously - this format helped me convey the information below more honestly, rather than couched in couth, dear reader. <!-- Cheers to retiring <a href='https://en.wikipedia.org/wiki/Corporate_jargon' target='_blank'>corporate jargon</a>.--></p>
+      <!-- FIXME
+      <h5>Listen</h5>
+      <div class='audio'>
+        <audio controls='controls' src='/audio/resume.m4a'>Your browser does not support audio.</audio>
+      </div>
+      -->
+      <br/>
+      <h5>Jobs</h5>
+      <!-- FIXME
+      <div class='download-dropdown'>
+        <span><image loading='lazy' src='images/icon_download.svg' /></span>
+        <div class='download-dropdown-content'>
+          <p>.pdf</p>
+          <p>.docx</p>
+          <p>.png</p>
+        </div>
+      </div>
+      -->
+      <div class='container resume'>
+        <div class='row'>
+          <div class='column column-40 job'>
+            <p><b>Consultant</b><br/>Startup<br/><i>1 year</i><br/>#livekit #ai #bluecollar<br/>#unity #python #csharp #swift #go #livekit #fastapi #supabase</p>
+          </div>
+          <div class='column column-60'>
+            <p>I worked on an MVP for an AI-powered Angie's List. During that time I delivered infra and software related to:</p>
+            <ul class='resume_list'>
+              <li>Mobile app</li>
+              <li>Backend</li>
+              <li>AI/ML room scanning with LiveKit agent assistance</li>
+              <li>WebRTC room scan recording and guassian splatting workflows</li>
+              <li>LLM pipeline (Ingest, Train, Post-RL, Evaluate, Compare)</li>
+              <li>RAG pipeline</li>
+              <li>MCP</li>
+            </ul>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'>
+            <p><b>Lead Consultant</b><br/>Government Contractor<br/><i>1 year</i><br/>#dod #ai #digitaltwin #ai #simulation<br/>#unity #python #csharp</p>
+          </div>
+          <div class='column column-60'>
+            <p>I worked for a government contractor trying to break into the commerical space. During that time I delivered:</p>
+            <ul class='resume_list'>
+              <li>Tiered LLM evaluation for SUT - Flying-adjacent research labratory</li>
+              <li>Paint line digital twin - Small Commercial Co</li>
+            </ul>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'>
+            <p><b>Solutions Architect</b><br/>Big Tech Corpo<br/><i>3 years</i><br/>#spatial #dam #plm #simulation #devops #unity #unreal #gui #backend #containers #k8s #genai #ai<br/>#typescript #python #rust</p>
+          </div>
+          <div class='column column-60'>
+            <div class='container'>
+              <div class='row'>
+                <div class='column photo'>
+                  <image src='/images/resume_solutions_architect.jpg'>
+                  <div class='description'>
+                    <p>Enterpise Architecture<br/><a href='https://www.leanix.net/en/blog/enterprise-architecture-made-easy' target='_blank'>Source</a></p></div>
+                </div>
+              </div>
+            </div>
+            <p>In this role I helped customers solve problems to win their business, which meant their workloads moved to our cloud.
+            Folks in this role varied in technical ability, with solutions provided to customers ranging from "guidance-oriented" to "software-oriented"; I focused on the latter, since it included delivering cloud workload architectures <emphasis>and</emphasis> application + workload implementations.
+            <br/>
+            <br/>
+            I delivered, on average, one large body of technical work per quarter <parenthetical>(to mostly XL customers)</parenthetical>:
+            </p>
+            <ul class='resume_list'>
+              <li>IdP auth - Big Blow Things Up Co <parenthetical>(yawn)</parenthetical></li>
+              <li>Digital asset management prototypes - Big Destroy the Environment Companies <parenthetical>(multiple companies! so much destruction!)</parenthetical></li>
+              <li>Design generator tooling - Big Car Co <parenthetical>(AI grumble grumble)</parenthetical></li>
+              <li>Virtual Visit - Big Non-profit Medical Co <parenthetical>(would you want to interact with robots instead of humans? me neither)</parenthetical></li>
+              <li>ThinkBox Deadline integration - Big Beverage Co</li>
+              <li>Spatial VMs <parenthetical>(VMs with automated Unity/Unreal Engine builds)</parenthetical> - Internal Team <parenthetical>(boring, but useful)</parenthetical></li>
+              <li><a href='https://github.com/mainframenzo/forkof.berkeley-room-designer' target='_blank'>Berkeley Room Designer</a> <parenthetical>(software for generating and editing room configurations)</parenthetical></li>
+              <li><a href='https://github.com/awslabs/visual-asset-management-system' target='_blank'>VAMS</a> contributions</li>
+            </ul>
+            <p>While technical work <em>delivered</em> mattered in this role, a large chunk of my time was spent talking to customers, first trying to understand their business problems, then seeing if we could help solve them <parenthetical>(not always the case)</parenthetical>.</p>
+            <p>There were also other, business-oriented aspects of this role - things like 2x2s, et. al. - where I contributed strategic guidance for shaping the business based on customer feedback <parenthetical>(nothing like hearing the sweet, sweet sound of an MBA's voice telling you that what the customer wants only matters if 10x revenue is returned!)</parenthetical>.</p>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'>
+            <p><b>Professional Services Consultant</b><br/>Big Tech Corpo<br/><i>2 years</i><br/>#spatial #iot #virtualproduction #geospatial #simulation #unity #unreal #gaming #mobile #gui #backend #containers<br/>#csharp #kotlin #java #objectivec #swift #cplusplus #typescript #python</p>
+          </div>
+          <div class='column column-60'>
+            <p>It was like consulting for yourself, except Big Tech Corpo would find work for you, then charge obscene amounts for it :)
+            <br/>
+            <br/>
+            I was assigned to one customer project, on average, per quarter <parenthetical>(though there was a long-standing engagement with Big Virtual Production Studio that I was also assigned to, fielding requests as they came in)</parenthetical>.
+            I lead design and development and usually managed 2 development teams - ours and the customer's. During this time I or we delivered:
+            <ul class='resume_list'>
+              <li>Satellite array communication algorithms vizualizer - Satellite TelCo <parenthetical>(the sqlite/async/threading logic <a href='https://github.com/mainframenzo/unity-sqlite-threading-example' target='_blank'>pulled out</a> as a code sample)</parenthetical></li>
+              <li>Nation-wide OCR form processing - Big Insurance Co</li>
+              <li>Distributed Unreal rendering - Big Virtual Production Studio</li>
+              <li>Virtual Production Studio cloud IT <parenthetical>(created/deployed/managed NICE DCV workstations, fileshares, scheduled business logic, Unity/Unreal containerization work, automated Unreal Editor builds from source, et. al.)</parenthetical> - Big Virtual Production Studio</li>
+              <li>iOS coaching-aid application for 4D, camera-based, sport pose analyses using real-time inference - Dying Business Intelligence Co</li>
+              <li>iOS Big Tech Corpo streaming video service sample application - Internal Team</li>
+              <li>Cloud XR cloud infrastructure, VR Android application, and VR headset onboarding processes used in employee training - Really Big Oil & Gas Co</li>
+              <li>iOS/Android Unity/Unreal plugins to "Login with Jeff's Superstore" - Big In-Game-Purchase-Focused Game Studio</li>
+            </ul>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Self-employed</b><br/>Self<br/><i>6 months</i><br/>#differentbigtechcorpocloud<br/>#python</p></div>
+          <div class='column column-60'>
+            <p>I took a consulting gig while working on my own venture. I spent time profiling, improving, and testing PhD-written energy forecasting software for Very Small Energy Co.</p>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Sabbatical</b><br/>Self<br/><i>1.5 years</i><br/>#design<br/>#scala</p></div>
+          <div class='column column-60'>
+            <p>I took a sabbatical. It was wonderful. I spent most of the time building a "Mid-century meets Mad Max" off-grid-ish home I had been designing for years. I also tried to go back to school for a Masters degree <parenthetical>(remotely)</parenthetical>, but did not enjoy the program's structure <parenthetical>(I am an autodidact, go figure)</parenthetical>. I did not touch software for the first six months, but came back to it refreshed and excited.
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>SDE II</b><br/>Big Tech Corpo<br/><i>4 years</i><br/>#spatial #iot #distributedsystems #unity #gui #backend<br/>#java #c #python #typescript #javascript</p></div>
+          <div class='column column-60'>
+            <p>I worked on two large cloud service offerings, being present from the beginning of each respective product’s conceptualization through public launch and into maintenance:</p>
+            <ul class='resume_list'>
+              <li>Cloud-based 3D IDE as-a-service - GUI and 3D asset ingestion pipeline</li>
+              <li>IoT as-a-service - low-level state machine for control of desired vs actual state of <parenthetical>(sometimes offline)</parenthetical> devices, MQTT SDKs, distributed pub/sub</li>
+            </ul>
+            <p>I worked on multiple components of each service and did typical SDE work, which consisted of:</p>
+            <ul class='resume_list'>
+              <li>Understanding the problem - R&D / business requirements gathering</li>
+              <li>Design and review - 1 page documents</li>
+              <li>Build - actual hands-on keyboard work for feature development and validation</li>
+              <li>Operational readiness - integration with billing and metrics</li>
+              <li>On-call - hell on earth</li>
+              <li>Post-on-call - log diving, debugging, analysis</li>
+              <li>Customer interaction - forums</li>
+            </ul>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Resident Hacker</b><br/>Small Tech Co<br/><i>5 years</i><br/><a href='https://www.youtube.com/watch?v=8w3wmQAMoxQ' target='_blank'>#pivot</a> #iot #embedded #nosql #gui #backend<br/>#scala #java #litcoffee #ruby #php</p></p></div>
+          <div class='column column-60'>
+            <p>Small Tech Co was sold to Big Tech Corpo after five years - success? I would end up wearing many hats over the years as the company pivoted <parenthetical>(again and again)</parenthetical> and my role evolved. Some of the ground I covered:
+            <ul class='resume_list'>
+              <li>Designed and developed IoT platform integration software for embedded hardware</li>
+              <li>Designed and developed UDP/TCP protocol bridges for customers which enabled use of our IoT platform with their existing hardware/software</li>
+              <li>Built native mobile/desktop <parenthetical>(iOS/Android/Nokia/Mac)</parenthetical> and web applications on top of our IoT platform for customers, e.g. <a href='https://sendum.com/findum-software/' target='_blank'>Findum</a> and the company's own IoT "Fabric"
+              <li>Published Android author</li>
+              <li>Managed Cassandra database ring and developed internal plugins</li>
+              <li>Implemented IoT platform monitoring and metrics</li>
+              <li>Built out technology exhibits for a Soccer and American Football Team</li>
+              <li>Developed Craigslist bots</li>
+            </ul>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Software Developer</b><br/>Small Tech Co w/ Big Big Money<br/><i>1 year</i><br/>#fullstack #iot<br/>#javascript</p></div>
+          <div class='column column-60'><p>I worked on a number of features for a personal life manager of sorts, a web application tailored to <parenthetical>(and ideated by)</parenthetical> high net-worth individuals.
+            The application was a "one-stop solution" for things you would expect Richy Riches to manage - properties <parenthetical>(and components of those properties)</parenthetical>, assets, liabilities, et. al. I delivered:</p>
+            <ul class='resume_list'>
+              <li>Financial provider integration</li>
+              <li>Assets and liabilities management</li>
+              <li>Property access management <parenthetical>(RPC comms to hardware on-site)</parenthetical></li>
+            </ul>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Software Developer</b><br/>Small Tech Co w/ Big Money<br/><i>1 year</i><br/>#fullstack #voip<br/>#java #javascript</p></div>
+          <div class='column column-60'><p>I worked on a VOIP-based call center application that utilized some newer features of Twilio.</p></div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Production Engineer</b><br/>Medium-sized Aerospace Co<br/><i>1 year</i><br/>#cad<br/>#labview</p></div>
+          <div class='column column-60'>
+            <p>I worked on various in-house designed and built rotary-actuated components of cool stuff <parenthetical>(not-quite-space-but-realy-high!)</parenthetical> and less cool stuff <parenthetical>(things that go boom)</parenthetical>. My duties included:
+            <ul class='resume_list'>
+              <li>Investigating, documenting, and proposing solutions to component failures</li>
+              <li>Designing and implementing assembly line tools/processes to aid production quality issues <parenthetical>(also, why were these issues?)</parenthetical></li>
+              <li>First-run production builds of components</li>
+              <li>Designing and implementing acceptance test procedures for prototype components <parenthetical>(and accompanying LabView software)</parenthetical></li>
+              <li>Design reviews for manufacturability and productionization</li>
+            </ul>
+            <p>And even though the camera that came back from the ISS said "do not touch", I did it anyways, because now I can say, "I touched something that has been in space!"</p>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Bachelors of Science in Mechanical Engineering (mathematics minor)</b><br/>State School<br/><i>5 years</i></p></div>
+          <div class='column column-60'>
+            <p>A job, but in reverse: you work, but instead of getting payed, <em>you</em> pay.
+            <br/>
+            <br>State School was not my first accepted choice, but it was the most <em>affordable</em> one. And it was in a big city, far, far away from the corn fields of other, more expensive schools, and this made it the <emphasis>best</emphasis> choice, in retrospect.</p>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>IT</b><br/>ACCC<br/><i>2.5 years</i><br/>#itcrowd</p></div>
+          <div class='column column-60'>
+            <div class='container'>
+              <div class='row'>
+                <div class='column photo'>
+                  <image src='/images/resume_it.jpg'>
+                  <div class='description'>
+                    <p>IT Crowd Still<br/><a href='https://ar.inspiredpencil.com/pictures-2023/it-crowd-meme' target='_blank'>Source</a></p></div>
+                </div>
+              </div>
+            </div>
+            <p>I worked for the IT department at State School. Duties included computer lab management and maintenance, printer jams, <parenthetical>(more)</parenthetical> printer jams, and fielding tech support phone calls.</p></div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>IT</b><br/>State School Police Department<br/><i>1 month</i><br/>#woopsies</p></div>
+          <div class='column column-60'><p>I picked a really, really bad time to get arrested.</p></div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Pizza Deliverer</b><br/>Average Pizza Co<br/><i>1 month</i></p></div>
+          <div class='column column-60'><p>I destroyed my car, the job destroyed me, and the pizza was <em>average</em>. But I did learn a few tricks about circumventing the city I was living in!</p></div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Car Detailer</b><br/>Used Auto Sales<br/><i>1 year</i><br/>#2fast2furious</p></div>
+          <div class='column column-60'><p>I worked for slightly shady folks that bought cars from <parenthetical>(what appeared to be)</parenthetical> hoarders, provided minor fixes to them, then buffed, polished, and detailed to a picturesque shine.</p></div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Factotum</b><br/>Hockey Rink<br/><i>1 year</i><br/>#iwanttodrivethezamboni #ducksflytogether</p></div>
+          <div class='column column-60'>
+            <p>I just wanted to drive the zamboni, but they would not let me <parenthetical>(in restrospect, I would have not either)</parenthetical>.
+            I managed the rink's parking garage <parenthetical>(city rink)</parenthetical>, cleaned endless amounts of windows with newspaper, was a scorekeeper for the men's league games, taught kids how to skate, and helped the barkeep close down the bar.</p>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Field Supervisor</b><br/>Park District<br/><i>1 softball season</i><br/>#ibelieveinthechurchofbaseball</p></div>
+          <div class='column column-60'>
+            <p>I setup and tore down the bases and lights at a number of local fields, while also "fielding" minor requests for band-aids and cold packs.
+            On Friday nights, I kept the lights on at the "good field" after all the games were done, and we made the most of our very own <em>sandlot</em>.</p></div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Carpet Cleaner</b><br/>Carpet Cleaner Co<br/><i>1 day</i><br/>#neveragain</p></div>
+          <div class='column column-60'><p>I worked for a <parenthetical>(now)</parenthetical> ex's father cleaning carpets for cash. It was the beginning and end of my carpet cleaning career.</p></div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Server</b><br/>Defunct Restaurant Chain<br/><i>1 summer</i><br/>#neveragain</p></div>
+          <div class='column column-60'><p>I worked as a server at a chain-y pie restaurant with average food. Everyone's birthday gifts that summer were "free" pies.</p></div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Apprentice R&I Tech</b><br/>Collision Center<br/><i>5 years</i><br/>#bluecollar</p></div>
+          <div class='column column-60'>
+            <p>I provided small fixes <parenthetical>(remove, repair/replace, paint)</parenthetical> to damaged cars, slowly making myself more useful over the years, eventually doing automobile restoration work on the side. They also made me sweep the floors.</p>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='column column-40 job'><p><b>Retail Associate</b><br/>Hockey Pro Shop<br/><i>3 years</i><br/>#firstjob</p></div>
+          <div class='column column-60'><p>I sharpened skates, repaired them, cleaned things, fit folks for equipment, and managed the register. I lost half an eyebrow when another teenager decided that the flamethrower and compressed air were a good combo <parenthetical>(luckily, it grew back)</parenthetical>.</p></div>
+        </div>
+      </div>
+    </section>
+    <%- include(`${process.cwd()}/src/frontend/templates.partials/footer`); -%>
+  </main>
+</body>
+</html>

@@ -1,0 +1,53 @@
+#login-page {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+#username-container {
+  margin-bottom: 1.5em;
+}
+
+#login-error {
+  color: var(--error-color);
+  margin: 0 auto;
+  text-align: center;
+}
+
+#login-button {
+  width: 100%;
+  background: var(--link-and-header-color);
+  font-size: 1.5rem; /* FIXME Move to button style. */
+}
+#login-button:hover:not(:disabled) {
+  background: var(--text-color);
+}
+#login-button:active:not(:disabled) {
+  transform: scale(0.985);
+}
+#login-button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Larger than mobile screen */
+@media (min-width: 40rem) {
+  #login-page {
+    padding-left: 2em;
+    padding-right: 2em;
+    display: grid;
+    place-items: center;
+    height: 80vh;
+  }
+
+  #username-container {
+    padding-right: .5em;
+  }
+
+  #login-button {
+    width: 100%;
+  }
+
+  #username-container {
+    margin-bottom: 2.5em;
+  }
+}

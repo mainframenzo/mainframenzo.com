@@ -1,0 +1,19 @@
+/api/cicd/start:
+  post:
+    operationId: startCICD
+    security: [] # Firewall + secret in body is how this operation is restricted.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $includes:
+              - ./github.webhook.push.schema.yaml
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes: 
+                - ./jsend.schema.yaml

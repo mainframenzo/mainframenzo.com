@@ -1,0 +1,128 @@
+
+#cloud-config
+# This file is responsible for configuring load test infra - a single VM - for the dev publish stage.
+package_update: true
+#package_upgrade: true
+package_reboot_if_required: false
+
+packages:
+  - curl
+  - git
+  - git-lfs
+  - tar
+  - unzip
+  - apt-transport-https
+  - ca-certificates
+  - unattended-upgrades
+  - software-properties-common
+  - gnupg
+  - lsb-release
+  - snapd
+  - auditd
+  - at
+  - dnsutils
+  - nginx
+  - ufw
+  - fail2ban
+  - jq
+  # The Node.js backend isn't a compiled binary so you need more Node.js dependencies than you'd like.
+  # - build-essential # Required by a Node.js dep.
+  # - libimagequant-dev # Required by a Node.js dep.
+  # - libjpeg-dev # Required by a Node.js dep.
+  # - libpng-dev # Required by a Node.js dep.
+  # - autoconf # Required by a Node.js dep.
+
+groups:
+  - docker
+
+
+# Add default auto-created user (root?) to docker group.
+system_info:
+  default_user:
+    groups: [docker]
+
+
+write_files:
+  - content: |
+      export PATH=$PATH:/snap/bin
+    path: /etc/profile.d/snap-path.sh
+    permissions: '0644'
+
+  - path: /opt/app/meblog.env
+    permissions: '0600'
+    owner: root:root
+    content: |
+      export app_stage="${app_stage}"
+      export publish_stage="${publish_stage}"
+      export app_location="${app_location}"
+
+      export meblog_private_repo_name="${meblog_private_repo_name}"
+
+      export github_token="${github_token}"
+
+  - path: /opt/meblog-vm-setup.sh
+    permissions: '0755'
+    owner: root:root
+    content: |
+      #!/usr/bin/env bash
+      set -euxo pipefail
+
+      . /opt/app/meblog.env
+      echo "init meblog load test vm $(date)"
+      export DEBIAN_FRONTEND=noninteractive
+      export HOME="/root"
+      export PATH=$PATH:/snap/bin
+      printenv
+
+      set +e
+      export state=$(cat /opt/app/vm-state)
+      set -e
+
+      # You originally had this "state" in place to debug snap-installed just SIGTERM issues.
+      # You kept it because it provided a way to start making the installs idempotent (in case of failure somewhere, re-run).
+      if [[ "$state" == "" ]]; then
+        mkdir -p /opt/app
+
+        echo '/opt/meblog-vm-setup.sh >> /var/log/meblog-vm-setup.log 2>&1' | at now + 1 minute
+        echo "scheduled" > /opt/app/vm-state
+
+        exit
+      fi
+
+      if [[ "$state" == "done" ]]; then
+        echo "do not run setup script again"
+        exit
+      fi
+
+      echo "running" > /opt/app/vm-state
+      echo "run setup script"
+
+      # You used this to debug SIGTERM events that were killing just tasks (ausearch -k SIGTERM_kill -i).
+      # Keep around, useful!
+      auditctl -a exit,always -F arch=b64 -S kill -k SIGTERM_kill
+      auditctl -l
+
+      # Install task runner. Old version is on apt, snap-installed version does not work expectedly with SIGTERM events (signal propagation).
+      curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to /usr/local/bin
+
+      # Clone the latest source.
+      mkdir -p /opt/app/meblog && cd /opt/app/meblog
+
+      git clone https://${github_token}@github.com/mainframenzo/${meblog_private_repo_name}.git .
+
+      git lfs install --force && git lfs pull
+
+      cd /opt/app/meblog
+
+      # Most of the dirty work is contained within the task runner.
+      # Now that we've got the latest source code and last public release downloaded,
+      #  start your engines and get the website up.
+      just -f ./.justfiles/infra.just --working-directory . configure-load-test-vm "${app_stage}" "${publish_stage}"
+
+      echo "done" > /opt/app/vm-state
+
+      # Disable cloud-init on reboot - do not run this logic again.
+      touch /etc/cloud/cloud-init.disabled
+
+runcmd:
+  - nohup /opt/meblog-vm-setup.sh > /var/log/meblog-vm-setup.log 2>&1 &

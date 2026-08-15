@@ -1,0 +1,39 @@
+# This file is responsible for defining shared developer commands across all packages,
+#  including the package this is copied from, _ts-app-devkit.
+# It gets copied into all TSAPP packages during setup.
+# You can run `make packages/copy-shared-files` after updating this file in the _ts-app-devkit package 
+#  to update downstream shared dependencies for TSAPP packages.
+
+superclean:
+	npx shx rm -f ./package-lock.json
+	npx shx rm -f ./package.json
+	npx shx rm -rf node_modules
+	find ./packages -name "node_modules" -type d -prune -exec rm -rf '{}' +
+
+package:
+	npx shx rm -rf ./dist
+	npx tsc --project ./config/tsconfig.package.json
+	npx esbuild ./src/index.ts \
+		--platform=node --bundle --target=node20 --outfile=./dist/index.js
+	npx babel ./dist --out-dir ./dist --presets=@babel/preset-typescript,@babel/preset-env
+
+tests:
+	for test in ./test/test.*.ts; do \
+		echo "$$test"; \
+		node \
+			--experimental-specifier-resolution=node --experimental-modules --no-warnings \
+			--loader ts-node/esm $$test; \
+	done
+
+package/cli:
+	make -f makefile.shared package
+#npx pkg ./dist/index.js --out-path=./dist/ --targets=latest-linux-x64,latest-macos-x64,latest-macos-arm64
+
+	echo '{"main":"./dist/index.js","output":"./dist/sea-prep.blob","disableExperimentalSEAWarning":true}' >> /tmp/sea-config.json
+	node --experimental-sea-config /tmp/sea-config.json
+
+	# Linux x64
+	cp "$(shell which node)" ./dist/index-linux-x64
+	npx postject ./dist/index-linux-x64 NODE_SEA_BLOB ./dist/sea-prep.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2
+
+	rm -f ./dist/sea-prep.blob

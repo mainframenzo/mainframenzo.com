@@ -1,0 +1,15 @@
+# This file has been @deprecated - you've moved to pixi.
+#
+# This file is responsible for defining this meblog tool's Python dependencies.
+# Python is used to help in the design of #thingsivemade.
+name: meblog-stl-to-photorealistic-pngs
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11.2
+  - pip=25.2
+  - pip:
+    - bpy==4.2.0
+    - fake-bpy-module-4.2==20250130
+    - numpy>=1.25.2,<2.6.0
+    - vtk==9.3.1

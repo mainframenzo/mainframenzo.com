@@ -1,0 +1,118 @@
+# This file is responsible for defining the entrypoint of the OpenAPI spec used for:
+# * API Definition
+# * Generating TypeScript types used in the backend
+# * Backend HTTP request routing
+# * Frontend HTTP client generation
+# You can use this tool https://editor.swagger.io/ to help debug api.yaml and generated _api.yaml errors.
+# This YAML has a new keyword, $includes, which lets you more easily reference other YAMLS _in the same directory_. See: https://github.com/mainframenzo/openapi-includer-cli
+openapi: '3.0.1'
+
+info:
+  title: 'API'
+  version: 'v0'
+
+servers:
+- url: "{apiURL}"
+  variables:
+    apiURL:
+      default: 'http://localhost:8081/'
+
+paths:
+  $includes:
+    - ./auth.paths.yaml
+    - ./cicd.paths.yaml
+    - ./media.paths.yaml
+    - ./ops.paths.yaml
+
+# Almost all API routes require a bearer token.
+# The few routes that don't will override this globally set requirement using "[]".
+security:
+  - bearerAuth: []
+
+# Components are used for generating TypesScript types.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    IJSendResponse:
+      $includes:
+        - ./jsend.schema.yaml
+
+    ILoginRequest:
+      $includes:
+        - ./auth.login.request.schema.yaml
+    ILoginResponse:
+      $includes:
+        - ./auth.login.response.schema.yaml
+
+    IGithubWebhookPush:
+      $includes:
+        - ./github.webhook.push.schema.yaml
+
+    IMonitorArpCacheEntry:
+      $includes:
+        - ./monitor.arp-cache-entry.schema.yaml
+    IMonitorBandwidthEntry:
+      $includes:
+        - ./monitor.bandwidth-entry.schema.yaml
+    IMonitorApplicationEntry:
+      $includes:
+        - ./monitor.application-entry.schema.yaml
+    IMonitorCpuInfo:
+      $includes:
+        - ./monitor.cpuinfo.schema.yaml
+    IMonitorProcessEntry:
+      $includes:
+        - ./monitor.process-entry.schema.yaml
+    IMonitorDockerProcessEntry:
+      $includes:
+        - ./monitor.docker-process-entry.schema.yaml
+    IMonitorCronHistoryEntry:
+      $includes:
+        - ./monitor.cron-history-entry.schema.yaml
+    IMonitorRamInfo:
+      $includes:
+        - ./monitor.ram-info.schema.yaml
+    IMonitorDiskPartition:
+      $includes:
+        - ./monitor.disk-partition.schema.yaml
+    IMonitorTransferRates:
+      $includes:
+        - ./monitor.transfer-rates.schema.yaml
+    IMonitorGeneralInfo:
+      $includes:
+        - ./monitor.general-info.schema.yaml
+    IMonitorIoStat:
+      $includes:
+        - ./monitor.io-stat.schema.yaml
+    IMonitorIpAddress:
+      $includes:
+        - ./monitor.ip-address.schema.yaml
+    IMonitorNetworkConnection:
+      $includes:
+        - ./monitor.network-connection.schema.yaml
+    IMonitorLoadAverage:
+      $includes:
+        - ./monitor.load-average.schema.yaml
+    ILoggedInUser:
+      $includes:
+        - ./monitor.logged-in-user.schema.yaml
+    IMonitorMemoryInfo:
+      $includes:
+        - ./monitor.memory-info.schema.yaml
+    IMonitorRecentLogin:
+      $includes:
+        - ./monitor.recent-login.schema.yaml
+    IMonitorScheduledCron:
+      $includes:
+        - ./monitor.scheduled-cron.schema.yaml
+    IMonitorSwapPartition:
+      $includes:
+        - ./monitor.swap-partition.schema.yaml
+    IMonitorUserAccount:
+      $includes:
+        - ./monitor.user-account.schema.yaml

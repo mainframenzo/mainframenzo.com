@@ -1,0 +1,12 @@
+type: object
+required: [user, from, when]
+properties:
+  user:
+    type: string
+    example: alice
+  from:
+    type: string
+    example: 192.168.1.50
+  when:
+    type: string
+    example: "10:32"

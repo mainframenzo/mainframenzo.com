@@ -1,0 +1,15 @@
+type: object
+required: [total, used, available]
+properties:
+  total:
+    type: number
+    description: Total RAM in MB
+    example: 15953.4
+  used:
+    type: number
+    description: Used RAM in MB
+    example: 8192.0
+  available:
+    type: number
+    description: Available RAM in MB
+    example: 7761.4

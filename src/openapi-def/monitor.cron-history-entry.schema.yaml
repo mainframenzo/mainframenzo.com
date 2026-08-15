@@ -1,0 +1,12 @@
+type: object
+required: [time, user, message]
+properties:
+  time:
+    type: string
+    example: "Jan 15 03:00"
+  user:
+    type: string
+    example: root
+  message:
+    type: string
+    example: "(root) CMD (/usr/bin/backup.sh)"

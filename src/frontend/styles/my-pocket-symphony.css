@@ -1,0 +1,58 @@
+my-pocket-symphony {
+  display: block;
+  position: relative;
+  width: 100%;
+  font-family: inherit;
+}
+
+.my-pocket-symphony-container {
+  position: relative;
+  width: 100%;
+}
+
+.my-pocket-symphony-container .stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.my-pocket-symphony-container .stat-chip {
+  font-size: 0.7rem;
+  color: #374151;
+  background: #f3f4f6;
+  border-radius: 9999px;
+  padding: 0.15rem 0.6rem;
+}
+
+.my-pocket-symphony-container .timeline-host {
+  width: 100%;
+}
+
+.my-pocket-symphony-container .timeline-host .vis-labelset .vis-label {
+  font-size: 0.75rem;
+}
+
+.my-pocket-symphony-container .timeline-host .vis-label.section-row .vis-inner {
+  font-weight: 600;
+  color: #111827;
+}
+
+.my-pocket-symphony-container .timeline-host .vis-item.section {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+  color: #111827;
+  font-weight: 600;
+}
+
+.my-pocket-symphony-container .timeline-host .vis-item.instrument-spoken-word { background: #f3f4f6; border-color: #6b7280; }
+.my-pocket-symphony-container .timeline-host .vis-item.instrument-piano { background: #ede9fe; border-color: #7c3aed; }
+.my-pocket-symphony-container .timeline-host .vis-item.instrument-guitar { background: #fef3c7; border-color: #d97706; }
+.my-pocket-symphony-container .timeline-host .vis-item.instrument-lead-vocal-m { background: #dbeafe; border-color: #2563eb; }
+.my-pocket-symphony-container .timeline-host .vis-item.instrument-lead-vocal-f { background: #fce7f3; border-color: #db2777; }
+.my-pocket-symphony-container .timeline-host .vis-item.instrument-choir-adult { background: #dcfce7; border-color: #16a34a; }
+.my-pocket-symphony-container .timeline-host .vis-item.instrument-choir-children { background: #ccfbf1; border-color: #0d9488; }
+.my-pocket-symphony-container .timeline-host .vis-item.instrument-backing-oohs { background: #fae8ff; border-color: #a21caf; }
+.my-pocket-symphony-container .timeline-host .vis-item.instrument-claps-perc { background: #ffe4e6; border-color: #e11d48; }
+.my-pocket-symphony-container .timeline-host .vis-item.instrument-horns { background: #ffedd5; border-color: #ea580c; }
+.my-pocket-symphony-container .timeline-host .vis-item.instrument-strings { background: #e0e7ff; border-color: #4f46e5; }

@@ -1,0 +1,31 @@
+openapi: '3.0.1'
+
+info:
+  title: 'API'
+  version: '0.0.0'
+
+servers:
+- url: "{url}"
+  variables:
+    apiURL:
+      default: ''
+
+paths:
+  $includes:
+    - ./model1.paths.yaml
+    - ./model2.paths.yaml
+
+security:
+  - bearerAuth: []
+
+components:
+
+  securitySchemes:
+    bearerAuth:
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
+  
+  schemas:
+    $includes:
+      - ./api.schemas.yaml

@@ -1,0 +1,54 @@
+<div class='posts'>
+  <div class='mascot'>
+    <image loading='lazy' class='palm_tree' src='images/palm_tree.png' />
+  </div>
+  <div class='post_count'>
+    <h2 id='bookmarks-count'><%= bookmarks.length %></h2>
+  </div>
+  <div class='bookmarks'>
+    <!-- FIXME add clear button. -->
+    <input type='search' id='bookmarks-filter' class='bookmarks-filter' autocomplete='off' placeholder='Search bookmarks'/>
+    <div id='bookmarks-filter-empty' class='bookmarks-filter-text bookmarks-filter-empty'></div>
+    <%
+    var bookmarkCategories = [];
+    bookmarks.forEach(function(bookmark) {
+      var bookmarkCategory = bookmark.folderPath[1];
+
+      if (bookmarkCategories.indexOf(bookmarkCategory) === -1) {
+        bookmarkCategories.push(bookmarkCategory);
+      }
+    });
+    %>
+    <div class='category-pills'>
+      <%
+      bookmarkCategories.forEach(function(bookmarkCategory) {
+      %>
+      <button class='category-pill' data-category='<%= bookmarkCategory %>'><%= bookmarkCategory %></button>
+      <%
+      });
+      %>
+    </div>
+    <div class='flourish'></div>
+    <ol>
+    <%
+    bookmarks.forEach(function(bookmark) {
+    %>
+    <li data-category='<%= bookmark.folderPath[1] %>'>
+      <figure>
+        <p class='bookmark'><%= bookmark.folderPath[1] %> / <b><%= bookmark.title %></b></p>
+        <p><a href='<%= bookmark.url %>' target='_blank'><%= bookmark.url %></a></p>
+        <%
+        if (bookmark.notes) {
+        %>
+        <p><%= bookmark.notes %></p>
+        <%
+        }
+        %>
+      </figure>
+      <hr/>
+    </li>
+    <%
+    });
+    %>
+  </ol>
+</div>

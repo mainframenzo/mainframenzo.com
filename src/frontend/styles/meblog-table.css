@@ -1,0 +1,41 @@
+meblog-table {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+meblog-table .meblog-table-container {
+  position: relative;
+  width: 100%;
+}
+
+meblog-table table.meblog-table th,
+meblog-table table.meblog-table td {
+  padding-left: 10px;
+}
+
+meblog-table table.meblog-table {
+  border-radius: 2px;
+}
+
+meblog-table table.meblog-table tbody tr:nth-child(even) {
+  background-color: #eeeeee7a;
+}
+
+meblog-table .meblog-table-container .datatable-container {
+  position: relative;
+}
+meblog-table .meblog-table-container .datatable-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #fff;
+}
+
+meblog-table .meblog-table-container .datatable-top {
+  display: flex;
+  justify-content: flex-start;
+}
+meblog-table .meblog-table-container .datatable-search {
+  order: -1;
+  margin-right: auto;
+}

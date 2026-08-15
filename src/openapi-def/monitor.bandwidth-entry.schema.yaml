@@ -1,0 +1,14 @@
+type: object
+required: [interface, tx, rx]
+properties:
+  interface:
+    type: string
+    example: eth0
+  tx:
+    type: integer
+    description: Bytes transmitted
+    example: 123456
+  rx:
+    type: integer
+    description: Bytes received
+    example: 654321

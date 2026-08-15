@@ -1,0 +1,7 @@
+operationId: getModel2
+responses:
+  '200':
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Model2'

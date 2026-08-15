@@ -1,0 +1,12 @@
+type: object
+required: [user, ip, date]
+properties:
+  user:
+    type: string
+    example: alice
+  ip:
+    type: string
+    example: 192.168.1.50
+  date:
+    type: string
+    example: "Mon Jan 15 10:32:00 +0000 2024"

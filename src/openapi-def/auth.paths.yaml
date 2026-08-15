@@ -1,0 +1,30 @@
+/api/auth/login:
+  post:
+    operationId: login
+    parameters:
+      - name: nojs
+        in: query
+        description: For form POSTs. Redirects user back to login page w/ error - JavaScript disabled is not supported for login.
+        required: false
+        schema:
+          type: string
+    security: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $includes:
+              - ./auth.login.request.schema.yaml
+        application/x-www-form-urlencoded:
+          schema:
+            $includes:
+              - ./auth.login.request.schema.yaml
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $includes: 
+                - ./jsend.schema.yaml

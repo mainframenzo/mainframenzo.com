@@ -1,0 +1,32 @@
+type: object
+required: [cname, pid, user, rss, vsz, cmd]
+properties:
+  cname:
+    type: string
+    description: Docker container name
+    example: my-app
+  pid:
+    type: integer
+    example: 1234
+  user:
+    type: string
+    example: root
+  cpu%:
+    type: number
+    description: CPU usage percentage
+    example: 12.5
+  mem%:
+    type: number
+    description: Memory usage percentage
+    example: 3.2
+  rss:
+    type: integer
+    description: Resident set size in KB
+    example: 204800
+  vsz:
+    type: integer
+    description: Virtual memory size in KB
+    example: 512000
+  cmd:
+    type: string
+    example: node

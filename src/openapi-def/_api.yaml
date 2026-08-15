@@ -1,0 +1,3090 @@
+openapi: 3.0.1
+info:
+  title: API
+  version: v0
+servers:
+  - url: "{apiURL}"
+    variables:
+      apiURL:
+        default: http://localhost:8081/
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    IJSendResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - ok
+            - error
+        message:
+          type: string
+        data:
+          oneOf:
+            - type: string
+            - type: object
+            - type: array
+              items:
+                type: object
+                additionalProperties: true
+        headers:
+          type: object
+          additionalProperties: true
+      required:
+        - status
+        - message
+    ILoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+      required:
+        - username
+        - password
+    ILoginResponse:
+      type: object
+      properties:
+        bearer_token:
+          type: string
+      required:
+        - bearer_token
+    IGithubWebhookPush:
+      type: object
+      properties:
+        ref:
+          type: string
+          description: The full Git ref that was pushed, e.g. "refs/heads/main" or
+            "refs/tags/v1.0.0".
+          example: refs/heads/main
+        before:
+          type: string
+          description: The SHA of the most recent commit on the ref before the push.
+          example: a1b2c3d4e5f67890abcdef1234567890abcdef12
+        after:
+          type: string
+          description: The SHA of the most recent commit on the ref after the push.
+          example: f6e5d4c3b2a10987654321fedcba987654321fed
+        created:
+          type: boolean
+          description: Whether this push created the ref.
+          example: false
+        deleted:
+          type: boolean
+          description: Whether this push deleted the ref.
+          example: false
+        forced:
+          type: boolean
+          description: Whether this was a force push.
+          example: false
+        base_ref:
+          type: string
+          nullable: true
+          description: The base ref of the push, if applicable.
+          example: null
+        compare:
+          type: string
+          description: URL to compare the before and after commits.
+          example: https://github.com/octocat/Hello-World/compare/abc123...def456
+        commits:
+          type: array
+          description: An array of commit objects describing the pushed commits. Empty for
+            deletions.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The SHA of the commit.
+                example: f6e5d4c3b2a10987654321fedcba987654321fed
+              tree_id:
+                type: string
+                description: The SHA of the commit's tree.
+                example: 9f3d1c2e4b5a6d7e8f90a1b2c3d4e5f678901234
+              distinct:
+                type: boolean
+                description: Whether this commit is distinct from any that have been pushed
+                  before.
+                example: true
+              message:
+                type: string
+                description: The commit message.
+                example: Fix bug in authentication flow
+              timestamp:
+                type: string
+                description: The ISO 8601 timestamp of the commit.
+                example: 2024-01-15T10:30:00Z
+              url:
+                type: string
+                description: URL that points to the commit API resource.
+                example: https://api.github.com/repos/octocat/Hello-World/commits/f6e5d4c3
+              author:
+                type: object
+                description: The git author of the commit.
+                properties:
+                  name:
+                    type: string
+                    example: Monalisa Octocat
+                  email:
+                    type: string
+                    nullable: true
+                    example: monalisa@octocat.com
+                  date:
+                    type: string
+                    example: 2024-01-15T10:30:00Z
+                  username:
+                    type: string
+                    example: octocat
+                required:
+                  - name
+              committer:
+                type: object
+                description: The git committer of the commit.
+                properties:
+                  name:
+                    type: string
+                    example: GitHub
+                  email:
+                    type: string
+                    nullable: true
+                    example: noreply@github.com
+                  date:
+                    type: string
+                    example: 2024-01-15T10:30:00Z
+                  username:
+                    type: string
+                    example: web-flow
+                required:
+                  - name
+              added:
+                type: array
+                description: Array of files added in this commit.
+                items:
+                  type: string
+                example:
+                  - src/new-file.ts
+              removed:
+                type: array
+                description: Array of files removed in this commit.
+                items:
+                  type: string
+                example:
+                  - src/old-file.ts
+              modified:
+                type: array
+                description: Array of files modified in this commit.
+                items:
+                  type: string
+                example:
+                  - src/auth.ts
+                  - README.md
+        head_commit:
+          type: object
+          nullable: true
+          description: The most recent commit on the ref after the push. Null if the push
+            deleted the ref.
+          properties:
+            id:
+              type: string
+              example: f6e5d4c3b2a10987654321fedcba987654321fed
+            tree_id:
+              type: string
+              example: 9f3d1c2e4b5a6d7e8f90a1b2c3d4e5f678901234
+            distinct:
+              type: boolean
+              example: true
+            message:
+              type: string
+              example: Fix bug in authentication flow
+            timestamp:
+              type: string
+              example: 2024-01-15T10:30:00Z
+            url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/commits/f6e5d4c3
+            author:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Monalisa Octocat
+                email:
+                  type: string
+                  nullable: true
+                  example: monalisa@octocat.com
+                date:
+                  type: string
+                  example: 2024-01-15T10:30:00Z
+                username:
+                  type: string
+                  example: octocat
+              required:
+                - name
+            committer:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: GitHub
+                email:
+                  type: string
+                  nullable: true
+                  example: noreply@github.com
+                date:
+                  type: string
+                  example: 2024-01-15T10:30:00Z
+                username:
+                  type: string
+                  example: web-flow
+              required:
+                - name
+            added:
+              type: array
+              items:
+                type: string
+              example:
+                - src/new-file.ts
+            removed:
+              type: array
+              items:
+                type: string
+              example: []
+            modified:
+              type: array
+              items:
+                type: string
+              example:
+                - src/auth.ts
+        pusher:
+          type: object
+          description: >
+            The git-level identity that performed the push. Note: this is NOT a
+            full GitHub User object — it only contains name and email (no id,
+            login, avatar_url, etc.).
+          properties:
+            name:
+              type: string
+              description: The username of the pusher.
+              example: octocat
+            email:
+              type: string
+              nullable: true
+              description: The email address of the pusher.
+              example: octocat@github.com
+          required:
+            - name
+        sender:
+          type: object
+          description: The GitHub user that triggered the event. Full User object.
+          properties:
+            login:
+              type: string
+              example: octocat
+            id:
+              type: integer
+              example: 1
+            node_id:
+              type: string
+              example: MDQ6VXNlcjE=
+            name:
+              type: string
+              example: Monalisa Octocat
+            email:
+              type: string
+              nullable: true
+              example: octocat@github.com
+            avatar_url:
+              type: string
+              example: https://github.com/images/error/octocat_happy.gif
+            gravatar_id:
+              type: string
+              example: ""
+            url:
+              type: string
+              example: https://api.github.com/users/octocat
+            html_url:
+              type: string
+              example: https://github.com/octocat
+            followers_url:
+              type: string
+              example: https://api.github.com/users/octocat/followers
+            following_url:
+              type: string
+              example: https://api.github.com/users/octocat/following{/other_user}
+            gists_url:
+              type: string
+              example: https://api.github.com/users/octocat/gists{/gist_id}
+            starred_url:
+              type: string
+              example: https://api.github.com/users/octocat/starred{/owner}{/repo}
+            subscriptions_url:
+              type: string
+              example: https://api.github.com/users/octocat/subscriptions
+            organizations_url:
+              type: string
+              example: https://api.github.com/users/octocat/orgs
+            repos_url:
+              type: string
+              example: https://api.github.com/users/octocat/repos
+            events_url:
+              type: string
+              example: https://api.github.com/users/octocat/events{/privacy}
+            received_events_url:
+              type: string
+              example: https://api.github.com/users/octocat/received_events
+            type:
+              type: string
+              enum:
+                - User
+                - Bot
+                - Organization
+              example: User
+            site_admin:
+              type: boolean
+              example: false
+          required:
+            - login
+            - id
+            - node_id
+            - avatar_url
+            - gravatar_id
+            - url
+            - html_url
+            - followers_url
+            - following_url
+            - gists_url
+            - starred_url
+            - subscriptions_url
+            - organizations_url
+            - repos_url
+            - events_url
+            - received_events_url
+            - type
+            - site_admin
+        repository:
+          type: object
+          description: The repository the push was made to.
+          properties:
+            id:
+              type: integer
+              description: Unique identifier of the repository.
+              example: 123456789
+            node_id:
+              type: string
+              example: MDEwOlJlcG9zaXRvcnkxMjM0NTY3ODk=
+            name:
+              type: string
+              description: The name of the repository.
+              example: Hello-World
+            full_name:
+              type: string
+              description: The full name of the repository, including the owner.
+              example: octocat/Hello-World
+            private:
+              type: boolean
+              description: Whether the repository is private or public.
+              example: false
+            owner:
+              type: object
+              description: The owner of the repository. Full User object.
+              properties:
+                login:
+                  type: string
+                  example: octocat
+                id:
+                  type: integer
+                  example: 1
+                node_id:
+                  type: string
+                  example: MDQ6VXNlcjE=
+                name:
+                  type: string
+                  example: Monalisa Octocat
+                email:
+                  type: string
+                  nullable: true
+                  example: null
+                avatar_url:
+                  type: string
+                  example: https://github.com/images/error/octocat_happy.gif
+                gravatar_id:
+                  type: string
+                  example: ""
+                url:
+                  type: string
+                  example: https://api.github.com/users/octocat
+                html_url:
+                  type: string
+                  example: https://github.com/octocat
+                followers_url:
+                  type: string
+                  example: https://api.github.com/users/octocat/followers
+                following_url:
+                  type: string
+                  example: https://api.github.com/users/octocat/following{/other_user}
+                gists_url:
+                  type: string
+                  example: https://api.github.com/users/octocat/gists{/gist_id}
+                starred_url:
+                  type: string
+                  example: https://api.github.com/users/octocat/starred{/owner}{/repo}
+                subscriptions_url:
+                  type: string
+                  example: https://api.github.com/users/octocat/subscriptions
+                organizations_url:
+                  type: string
+                  example: https://api.github.com/users/octocat/orgs
+                repos_url:
+                  type: string
+                  example: https://api.github.com/users/octocat/repos
+                events_url:
+                  type: string
+                  example: https://api.github.com/users/octocat/events{/privacy}
+                received_events_url:
+                  type: string
+                  example: https://api.github.com/users/octocat/received_events
+                type:
+                  type: string
+                  enum:
+                    - User
+                    - Bot
+                    - Organization
+                  example: User
+                site_admin:
+                  type: boolean
+                  example: false
+            html_url:
+              type: string
+              example: https://github.com/octocat/Hello-World
+            description:
+              type: string
+              nullable: true
+              example: This your first repo!
+            fork:
+              type: boolean
+              example: false
+            url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World
+            forks_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/forks
+            keys_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/keys{/key_id}
+            collaborators_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/collaborators{/collaborator}
+            teams_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/teams
+            hooks_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/hooks
+            issue_events_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/issues/events{/number}
+            events_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/events
+            assignees_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/assignees{/user}
+            branches_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/branches{/branch}
+            tags_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/tags
+            blobs_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/git/blobs{/sha}
+            git_tags_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/git/tags{/sha}
+            git_refs_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/git/refs{/sha}
+            trees_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/git/trees{/sha}
+            statuses_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/statuses/{sha}
+            languages_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/languages
+            stargazers_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/stargazers
+            contributors_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/contributors
+            subscribers_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/subscribers
+            subscription_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/subscription
+            commits_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/commits{/sha}
+            git_commits_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/git/commits{/sha}
+            comments_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/comments{/number}
+            issue_comment_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/issues/comments{/number}
+            contents_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/contents/{+path}
+            compare_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/compare/{base}...{head}
+            merges_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/merges
+            archive_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/{archive_format}{/ref}
+            downloads_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/downloads
+            issues_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/issues{/number}
+            pulls_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/pulls{/number}
+            milestones_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/milestones{/number}
+            notifications_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/notifications{?since,all,participating}
+            labels_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/labels{/name}
+            releases_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/releases{/id}
+            deployments_url:
+              type: string
+              example: https://api.github.com/repos/octocat/Hello-World/deployments
+            created_at:
+              oneOf:
+                - type: integer
+                  description: Unix timestamp (used in webhook push payloads).
+                - type: string
+              example: 1296068472
+            updated_at:
+              type: string
+              example: 2011-01-26T19:14:43Z
+            pushed_at:
+              oneOf:
+                - type: integer
+                  description: Unix timestamp (used in webhook push payloads).
+                - type: string
+                - type: "null"
+              example: 1296068472
+            git_url:
+              type: string
+              example: git://github.com/octocat/Hello-World.git
+            ssh_url:
+              type: string
+              example: git@github.com:octocat/Hello-World.git
+            clone_url:
+              type: string
+              example: https://github.com/octocat/Hello-World.git
+            svn_url:
+              type: string
+              example: https://svn.github.com/octocat/Hello-World
+            homepage:
+              type: string
+              nullable: true
+              example: https://github.com
+            size:
+              type: integer
+              description: Repository size in kilobytes.
+              example: 108
+            stargazers_count:
+              type: integer
+              example: 80
+            watchers_count:
+              type: integer
+              example: 80
+            language:
+              type: string
+              nullable: true
+              example: TypeScript
+            has_issues:
+              type: boolean
+              example: true
+            has_projects:
+              type: boolean
+              example: true
+            has_downloads:
+              type: boolean
+              example: true
+            has_wiki:
+              type: boolean
+              example: true
+            has_pages:
+              type: boolean
+              example: false
+            has_discussions:
+              type: boolean
+              example: false
+            forks_count:
+              type: integer
+              example: 9
+            mirror_url:
+              type: string
+              nullable: true
+              example: null
+            archived:
+              type: boolean
+              example: false
+            disabled:
+              type: boolean
+              example: false
+            open_issues_count:
+              type: integer
+              example: 0
+            license:
+              type: object
+              nullable: true
+              properties:
+                key:
+                  type: string
+                  example: mit
+                name:
+                  type: string
+                  example: MIT License
+                spdx_id:
+                  type: string
+                  example: MIT
+                url:
+                  type: string
+                  nullable: true
+                  example: https://api.github.com/licenses/mit
+                node_id:
+                  type: string
+                  example: MDc6TGljZW5zZW1pdA==
+            allow_squash_merge:
+              type: boolean
+              example: true
+            allow_merge_commit:
+              type: boolean
+              example: true
+            allow_rebase_merge:
+              type: boolean
+              example: true
+            allow_auto_merge:
+              type: boolean
+              example: false
+            allow_forking:
+              type: boolean
+              example: true
+            allow_update_branch:
+              type: boolean
+              example: false
+            use_squash_pr_title_as_default:
+              type: boolean
+              example: false
+            squash_merge_commit_message:
+              type: string
+              example: COMMIT_MESSAGES
+            squash_merge_commit_title:
+              type: string
+              example: COMMIT_OR_PR_TITLE
+            merge_commit_message:
+              type: string
+              example: PR_TITLE
+            merge_commit_title:
+              type: string
+              example: MERGE_MESSAGE
+            delete_branch_on_merge:
+              type: boolean
+              example: false
+            is_template:
+              type: boolean
+              example: false
+            web_commit_signoff_required:
+              type: boolean
+              example: false
+            topics:
+              type: array
+              items:
+                type: string
+              example:
+                - octocat
+                - api
+            visibility:
+              type: string
+              enum:
+                - public
+                - private
+                - internal
+              example: public
+            forks:
+              type: integer
+              example: 9
+            open_issues:
+              type: integer
+              example: 0
+            watchers:
+              type: integer
+              example: 80
+            default_branch:
+              type: string
+              description: The default branch of the repository.
+              example: main
+            stargazers:
+              type: integer
+              example: 80
+            master_branch:
+              type: string
+              description: Alias for default_branch, may appear in push-specific payloads.
+              example: main
+            permissions:
+              type: object
+              properties:
+                pull:
+                  type: boolean
+                push:
+                  type: boolean
+                admin:
+                  type: boolean
+                maintain:
+                  type: boolean
+                triage:
+                  type: boolean
+              required:
+                - pull
+                - push
+                - admin
+            public:
+              type: boolean
+              example: true
+            organization:
+              type: string
+              description: The organization login name as a string on the repository object.
+              example: octocat-org
+        organization:
+          type: object
+          description: Present when the repository belongs to an organization.
+          properties:
+            login:
+              type: string
+              example: octocat-org
+            id:
+              type: integer
+              example: 9876543
+            node_id:
+              type: string
+              example: MDEyOk9yZ2FuaXphdGlvbjk4NzY1NDM=
+            url:
+              type: string
+              example: https://api.github.com/orgs/octocat-org
+            html_url:
+              type: string
+              example: https://github.com/octocat-org
+            repos_url:
+              type: string
+              example: https://api.github.com/orgs/octocat-org/repos
+            events_url:
+              type: string
+              example: https://api.github.com/orgs/octocat-org/events
+            hooks_url:
+              type: string
+              example: https://api.github.com/orgs/octocat-org/hooks
+            issues_url:
+              type: string
+              example: https://api.github.com/orgs/octocat-org/issues
+            members_url:
+              type: string
+              example: https://api.github.com/orgs/octocat-org/members{/member}
+            public_members_url:
+              type: string
+              example: https://api.github.com/orgs/octocat-org/public_members{/member}
+            avatar_url:
+              type: string
+              example: https://github.com/images/error/octocat_happy.gif
+            description:
+              type: string
+              nullable: true
+              example: An organization for testing
+        installation:
+          type: object
+          description: >
+            Present when the event is triggered via a GitHub App installation.
+            InstallationLite shape — only id and node_id, not the full
+            Installation object.
+          properties:
+            id:
+              type: integer
+              description: The ID of the installation.
+              example: 12345678
+            node_id:
+              type: string
+              example: MDIzOkludGVncmF0aW9uSW5zdGFsbGF0aW9uMTIzNDU2Nzg=
+          required:
+            - id
+            - node_id
+      required:
+        - ref
+        - before
+        - after
+        - created
+        - deleted
+        - forced
+        - compare
+        - commits
+        - head_commit
+        - repository
+        - pusher
+        - sender
+    IMonitorArpCacheEntry:
+      type: object
+      required:
+        - addr
+        - hw_type
+        - hw_addr
+        - mask
+      properties:
+        addr:
+          type: string
+          description: Hostname or IP address
+          example: gateway.local
+        hw_type:
+          type: string
+          description: Hardware type
+          example: ether
+        hw_addr:
+          type: string
+          description: MAC address
+          example: aa:bb:cc:dd:ee:ff
+        mask:
+          type: string
+          description: Network mask
+          example: "*"
+    IMonitorBandwidthEntry:
+      type: object
+      required:
+        - interface
+        - tx
+        - rx
+      properties:
+        interface:
+          type: string
+          example: eth0
+        tx:
+          type: integer
+          description: Bytes transmitted
+          example: 123456
+        rx:
+          type: integer
+          description: Bytes received
+          example: 654321
+    IMonitorApplicationEntry:
+      type: object
+      required:
+        - binary
+        - location
+        - installed
+      properties:
+        binary:
+          type: string
+          example: node
+        location:
+          type: string
+          example: /usr/bin/node
+        installed:
+          type: boolean
+          example: true
+    IMonitorCpuInfo:
+      type: object
+      description: Key-value map of lscpu output fields
+      additionalProperties:
+        type: string
+      example:
+        Architecture: x86_64
+        CPU(s): "8"
+        Thread(s) per core: "2"
+    IMonitorProcessEntry:
+      type: object
+      required:
+        - pid
+        - user
+        - rss
+        - vsz
+        - cmd
+      properties:
+        pid:
+          type: integer
+          example: 1234
+        user:
+          type: string
+          example: root
+        cpu%:
+          type: number
+          description: CPU usage percentage
+          example: 12.5
+        mem%:
+          type: number
+          description: Memory usage percentage
+          example: 3.2
+        rss:
+          type: integer
+          description: Resident set size in KB
+          example: 204800
+        vsz:
+          type: integer
+          description: Virtual memory size in KB
+          example: 512000
+        cmd:
+          type: string
+          example: node
+    IMonitorDockerProcessEntry:
+      type: object
+      required:
+        - cname
+        - pid
+        - user
+        - rss
+        - vsz
+        - cmd
+      properties:
+        cname:
+          type: string
+          description: Docker container name
+          example: my-app
+        pid:
+          type: integer
+          example: 1234
+        user:
+          type: string
+          example: root
+        cpu%:
+          type: number
+          description: CPU usage percentage
+          example: 12.5
+        mem%:
+          type: number
+          description: Memory usage percentage
+          example: 3.2
+        rss:
+          type: integer
+          description: Resident set size in KB
+          example: 204800
+        vsz:
+          type: integer
+          description: Virtual memory size in KB
+          example: 512000
+        cmd:
+          type: string
+          example: node
+    IMonitorCronHistoryEntry:
+      type: object
+      required:
+        - time
+        - user
+        - message
+      properties:
+        time:
+          type: string
+          example: Jan 15 03:00
+        user:
+          type: string
+          example: root
+        message:
+          type: string
+          example: (root) CMD (/usr/bin/backup.sh)
+    IMonitorRamInfo:
+      type: object
+      required:
+        - total
+        - used
+        - available
+      properties:
+        total:
+          type: number
+          description: Total RAM in MB
+          example: 15953.4
+        used:
+          type: number
+          description: Used RAM in MB
+          example: 8192
+        available:
+          type: number
+          description: Available RAM in MB
+          example: 7761.4
+    IMonitorDiskPartition:
+      type: object
+      required:
+        - file_system
+        - size
+        - used
+        - avail
+        - used%
+        - mounted
+      properties:
+        file_system:
+          type: string
+          example: /dev/sda1
+        size:
+          type: string
+          example: 100G
+        used:
+          type: string
+          example: 42G
+        avail:
+          type: string
+          example: 58G
+        used%:
+          type: string
+          example: 43%
+        mounted:
+          type: string
+          example: /
+    IMonitorTransferRates:
+      type: object
+      description: Map of network interface name to KB/s transfer rate
+      additionalProperties:
+        type: integer
+      example:
+        eth0: 128
+        lo: 0
+    IMonitorGeneralInfo:
+      type: object
+      required:
+        - OS
+        - Hostname
+        - Uptime
+        - Server Time
+      properties:
+        OS:
+          type: string
+          example: Ubuntu 22.04.3 LTS 5.15.0-91-generic
+        Hostname:
+          type: string
+          example: my-server
+        Uptime:
+          type: string
+          example: 3 days 4 hours and 22 minutes
+        Server Time:
+          type: string
+          example: Mon Jan 15 03:00:00 UTC 2024
+    IMonitorIoStat:
+      type: object
+      required:
+        - device
+        - reads
+        - writes
+        - in_prog.
+        - time
+      properties:
+        device:
+          type: string
+          example: sda
+        reads:
+          type: string
+          example: "148291"
+        writes:
+          type: string
+          example: "52443"
+        in_prog:
+          type: string
+          example: "0"
+        time:
+          type: string
+          example: "94820"
+    IMonitorIpAddress:
+      type: object
+      required:
+        - interface
+        - ip
+      properties:
+        interface:
+          type: string
+          example: eth0
+        ip:
+          type: string
+          example: 192.168.1.100
+    IMonitorNetworkConnection:
+      type: object
+      required:
+        - connections
+        - address
+      properties:
+        connections:
+          type: integer
+          description: Number of connections to this address
+          example: 4
+        address:
+          type: string
+          example: 93.184.216.34:443
+    IMonitorLoadAverage:
+      type: object
+      required:
+        - 1_min_avg
+        - 5_min_avg
+        - 15_min_avg
+      properties:
+        1_min_avg:
+          type: number
+          description: 1-minute load average normalised by core count
+          example: 23.5
+        5_min_avg:
+          type: number
+          description: 5-minute load average normalised by core count
+          example: 18.2
+        15_min_avg:
+          type: number
+          description: 15-minute load average normalised by core count
+          example: 14.7
+    ILoggedInUser:
+      type: object
+      required:
+        - user
+        - from
+        - when
+      properties:
+        user:
+          type: string
+          example: alice
+        from:
+          type: string
+          example: 192.168.1.50
+        when:
+          type: string
+          example: 10:32
+    IMonitorMemoryInfo:
+      type: object
+      description: Full /proc/meminfo key-value map
+      additionalProperties:
+        type: string
+      example:
+        MemTotal: 16330752 kB
+        MemFree: 4096 kB
+    IMonitorRecentLogin:
+      type: object
+      required:
+        - user
+        - ip
+        - date
+      properties:
+        user:
+          type: string
+          example: alice
+        ip:
+          type: string
+          example: 192.168.1.50
+        date:
+          type: string
+          example: Mon Jan 15 10:32:00 +0000 2024
+    IMonitorScheduledCron:
+      type: object
+      required:
+        - min
+        - hrs
+        - day
+        - month
+        - wkday
+        - user
+        - CMD
+      properties:
+        min:
+          type: string
+          example: "0"
+        hrs:
+          type: string
+          example: "3"
+        day:
+          type: string
+          example: "*"
+        month:
+          type: string
+          example: "*"
+        wkday:
+          type: string
+          example: "*"
+        user:
+          type: string
+          example: root
+        CMD:
+          type: string
+          example: /usr/bin/backup.sh
+    IMonitorSwapPartition:
+      type: object
+      required:
+        - filename
+        - type
+        - size
+        - used
+        - priority
+      properties:
+        filename:
+          type: string
+          example: /dev/sda2
+        type:
+          type: string
+          example: partition
+        size:
+          type: string
+          example: "8388604"
+        used:
+          type: string
+          example: "102400"
+        priority:
+          type: string
+          example: "-2"
+    IMonitorUserAccount:
+      type: object
+      required:
+        - type
+        - user
+        - home
+      properties:
+        type:
+          type: string
+          enum:
+            - system
+            - user
+          example: user
+        user:
+          type: string
+          example: alice
+        home:
+          type: string
+          example: /home/alice
+paths:
+  /api/auth/login:
+    post:
+      operationId: login
+      parameters:
+        - name: nojs
+          in: query
+          description: For form POSTs. Redirects user back to login page w/ error -
+            JavaScript disabled is not supported for login.
+          required: false
+          schema:
+            type: string
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                  format: password
+              required:
+                - username
+                - password
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                  format: password
+              required:
+                - username
+                - password
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/cicd/start:
+    post:
+      operationId: startCICD
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ref:
+                  type: string
+                  description: The full Git ref that was pushed, e.g. "refs/heads/main" or
+                    "refs/tags/v1.0.0".
+                  example: refs/heads/main
+                before:
+                  type: string
+                  description: The SHA of the most recent commit on the ref before the push.
+                  example: a1b2c3d4e5f67890abcdef1234567890abcdef12
+                after:
+                  type: string
+                  description: The SHA of the most recent commit on the ref after the push.
+                  example: f6e5d4c3b2a10987654321fedcba987654321fed
+                created:
+                  type: boolean
+                  description: Whether this push created the ref.
+                  example: false
+                deleted:
+                  type: boolean
+                  description: Whether this push deleted the ref.
+                  example: false
+                forced:
+                  type: boolean
+                  description: Whether this was a force push.
+                  example: false
+                base_ref:
+                  type: string
+                  nullable: true
+                  description: The base ref of the push, if applicable.
+                  example: null
+                compare:
+                  type: string
+                  description: URL to compare the before and after commits.
+                  example: https://github.com/octocat/Hello-World/compare/abc123...def456
+                commits:
+                  type: array
+                  description: An array of commit objects describing the pushed commits. Empty for
+                    deletions.
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The SHA of the commit.
+                        example: f6e5d4c3b2a10987654321fedcba987654321fed
+                      tree_id:
+                        type: string
+                        description: The SHA of the commit's tree.
+                        example: 9f3d1c2e4b5a6d7e8f90a1b2c3d4e5f678901234
+                      distinct:
+                        type: boolean
+                        description: Whether this commit is distinct from any that have been pushed
+                          before.
+                        example: true
+                      message:
+                        type: string
+                        description: The commit message.
+                        example: Fix bug in authentication flow
+                      timestamp:
+                        type: string
+                        description: The ISO 8601 timestamp of the commit.
+                        example: 2024-01-15T10:30:00Z
+                      url:
+                        type: string
+                        description: URL that points to the commit API resource.
+                        example: https://api.github.com/repos/octocat/Hello-World/commits/f6e5d4c3
+                      author:
+                        type: object
+                        description: The git author of the commit.
+                        properties:
+                          name:
+                            type: string
+                            example: Monalisa Octocat
+                          email:
+                            type: string
+                            nullable: true
+                            example: monalisa@octocat.com
+                          date:
+                            type: string
+                            example: 2024-01-15T10:30:00Z
+                          username:
+                            type: string
+                            example: octocat
+                        required:
+                          - name
+                      committer:
+                        type: object
+                        description: The git committer of the commit.
+                        properties:
+                          name:
+                            type: string
+                            example: GitHub
+                          email:
+                            type: string
+                            nullable: true
+                            example: noreply@github.com
+                          date:
+                            type: string
+                            example: 2024-01-15T10:30:00Z
+                          username:
+                            type: string
+                            example: web-flow
+                        required:
+                          - name
+                      added:
+                        type: array
+                        description: Array of files added in this commit.
+                        items:
+                          type: string
+                        example:
+                          - src/new-file.ts
+                      removed:
+                        type: array
+                        description: Array of files removed in this commit.
+                        items:
+                          type: string
+                        example:
+                          - src/old-file.ts
+                      modified:
+                        type: array
+                        description: Array of files modified in this commit.
+                        items:
+                          type: string
+                        example:
+                          - src/auth.ts
+                          - README.md
+                head_commit:
+                  type: object
+                  nullable: true
+                  description: The most recent commit on the ref after the push. Null if the push
+                    deleted the ref.
+                  properties:
+                    id:
+                      type: string
+                      example: f6e5d4c3b2a10987654321fedcba987654321fed
+                    tree_id:
+                      type: string
+                      example: 9f3d1c2e4b5a6d7e8f90a1b2c3d4e5f678901234
+                    distinct:
+                      type: boolean
+                      example: true
+                    message:
+                      type: string
+                      example: Fix bug in authentication flow
+                    timestamp:
+                      type: string
+                      example: 2024-01-15T10:30:00Z
+                    url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/commits/f6e5d4c3
+                    author:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Monalisa Octocat
+                        email:
+                          type: string
+                          nullable: true
+                          example: monalisa@octocat.com
+                        date:
+                          type: string
+                          example: 2024-01-15T10:30:00Z
+                        username:
+                          type: string
+                          example: octocat
+                      required:
+                        - name
+                    committer:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: GitHub
+                        email:
+                          type: string
+                          nullable: true
+                          example: noreply@github.com
+                        date:
+                          type: string
+                          example: 2024-01-15T10:30:00Z
+                        username:
+                          type: string
+                          example: web-flow
+                      required:
+                        - name
+                    added:
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - src/new-file.ts
+                    removed:
+                      type: array
+                      items:
+                        type: string
+                      example: []
+                    modified:
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - src/auth.ts
+                pusher:
+                  type: object
+                  description: >
+                    The git-level identity that performed the push. Note: this
+                    is NOT a full GitHub User object — it only contains name and
+                    email (no id, login, avatar_url, etc.).
+                  properties:
+                    name:
+                      type: string
+                      description: The username of the pusher.
+                      example: octocat
+                    email:
+                      type: string
+                      nullable: true
+                      description: The email address of the pusher.
+                      example: octocat@github.com
+                  required:
+                    - name
+                sender:
+                  type: object
+                  description: The GitHub user that triggered the event. Full User object.
+                  properties:
+                    login:
+                      type: string
+                      example: octocat
+                    id:
+                      type: integer
+                      example: 1
+                    node_id:
+                      type: string
+                      example: MDQ6VXNlcjE=
+                    name:
+                      type: string
+                      example: Monalisa Octocat
+                    email:
+                      type: string
+                      nullable: true
+                      example: octocat@github.com
+                    avatar_url:
+                      type: string
+                      example: https://github.com/images/error/octocat_happy.gif
+                    gravatar_id:
+                      type: string
+                      example: ""
+                    url:
+                      type: string
+                      example: https://api.github.com/users/octocat
+                    html_url:
+                      type: string
+                      example: https://github.com/octocat
+                    followers_url:
+                      type: string
+                      example: https://api.github.com/users/octocat/followers
+                    following_url:
+                      type: string
+                      example: https://api.github.com/users/octocat/following{/other_user}
+                    gists_url:
+                      type: string
+                      example: https://api.github.com/users/octocat/gists{/gist_id}
+                    starred_url:
+                      type: string
+                      example: https://api.github.com/users/octocat/starred{/owner}{/repo}
+                    subscriptions_url:
+                      type: string
+                      example: https://api.github.com/users/octocat/subscriptions
+                    organizations_url:
+                      type: string
+                      example: https://api.github.com/users/octocat/orgs
+                    repos_url:
+                      type: string
+                      example: https://api.github.com/users/octocat/repos
+                    events_url:
+                      type: string
+                      example: https://api.github.com/users/octocat/events{/privacy}
+                    received_events_url:
+                      type: string
+                      example: https://api.github.com/users/octocat/received_events
+                    type:
+                      type: string
+                      enum:
+                        - User
+                        - Bot
+                        - Organization
+                      example: User
+                    site_admin:
+                      type: boolean
+                      example: false
+                  required:
+                    - login
+                    - id
+                    - node_id
+                    - avatar_url
+                    - gravatar_id
+                    - url
+                    - html_url
+                    - followers_url
+                    - following_url
+                    - gists_url
+                    - starred_url
+                    - subscriptions_url
+                    - organizations_url
+                    - repos_url
+                    - events_url
+                    - received_events_url
+                    - type
+                    - site_admin
+                repository:
+                  type: object
+                  description: The repository the push was made to.
+                  properties:
+                    id:
+                      type: integer
+                      description: Unique identifier of the repository.
+                      example: 123456789
+                    node_id:
+                      type: string
+                      example: MDEwOlJlcG9zaXRvcnkxMjM0NTY3ODk=
+                    name:
+                      type: string
+                      description: The name of the repository.
+                      example: Hello-World
+                    full_name:
+                      type: string
+                      description: The full name of the repository, including the owner.
+                      example: octocat/Hello-World
+                    private:
+                      type: boolean
+                      description: Whether the repository is private or public.
+                      example: false
+                    owner:
+                      type: object
+                      description: The owner of the repository. Full User object.
+                      properties:
+                        login:
+                          type: string
+                          example: octocat
+                        id:
+                          type: integer
+                          example: 1
+                        node_id:
+                          type: string
+                          example: MDQ6VXNlcjE=
+                        name:
+                          type: string
+                          example: Monalisa Octocat
+                        email:
+                          type: string
+                          nullable: true
+                          example: null
+                        avatar_url:
+                          type: string
+                          example: https://github.com/images/error/octocat_happy.gif
+                        gravatar_id:
+                          type: string
+                          example: ""
+                        url:
+                          type: string
+                          example: https://api.github.com/users/octocat
+                        html_url:
+                          type: string
+                          example: https://github.com/octocat
+                        followers_url:
+                          type: string
+                          example: https://api.github.com/users/octocat/followers
+                        following_url:
+                          type: string
+                          example: https://api.github.com/users/octocat/following{/other_user}
+                        gists_url:
+                          type: string
+                          example: https://api.github.com/users/octocat/gists{/gist_id}
+                        starred_url:
+                          type: string
+                          example: https://api.github.com/users/octocat/starred{/owner}{/repo}
+                        subscriptions_url:
+                          type: string
+                          example: https://api.github.com/users/octocat/subscriptions
+                        organizations_url:
+                          type: string
+                          example: https://api.github.com/users/octocat/orgs
+                        repos_url:
+                          type: string
+                          example: https://api.github.com/users/octocat/repos
+                        events_url:
+                          type: string
+                          example: https://api.github.com/users/octocat/events{/privacy}
+                        received_events_url:
+                          type: string
+                          example: https://api.github.com/users/octocat/received_events
+                        type:
+                          type: string
+                          enum:
+                            - User
+                            - Bot
+                            - Organization
+                          example: User
+                        site_admin:
+                          type: boolean
+                          example: false
+                    html_url:
+                      type: string
+                      example: https://github.com/octocat/Hello-World
+                    description:
+                      type: string
+                      nullable: true
+                      example: This your first repo!
+                    fork:
+                      type: boolean
+                      example: false
+                    url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World
+                    forks_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/forks
+                    keys_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/keys{/key_id}
+                    collaborators_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/collaborators{/collaborator}
+                    teams_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/teams
+                    hooks_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/hooks
+                    issue_events_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/issues/events{/number}
+                    events_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/events
+                    assignees_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/assignees{/user}
+                    branches_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/branches{/branch}
+                    tags_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/tags
+                    blobs_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/git/blobs{/sha}
+                    git_tags_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/git/tags{/sha}
+                    git_refs_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/git/refs{/sha}
+                    trees_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/git/trees{/sha}
+                    statuses_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/statuses/{sha}
+                    languages_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/languages
+                    stargazers_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/stargazers
+                    contributors_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/contributors
+                    subscribers_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/subscribers
+                    subscription_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/subscription
+                    commits_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/commits{/sha}
+                    git_commits_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/git/commits{/sha}
+                    comments_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/comments{/number}
+                    issue_comment_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/issues/comments{/number}
+                    contents_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/contents/{+path}
+                    compare_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/compare/{base}...{head}
+                    merges_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/merges
+                    archive_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/{archive_format}{/ref}
+                    downloads_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/downloads
+                    issues_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/issues{/number}
+                    pulls_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/pulls{/number}
+                    milestones_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/milestones{/number}
+                    notifications_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/notifications{?since,all,participating}
+                    labels_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/labels{/name}
+                    releases_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/releases{/id}
+                    deployments_url:
+                      type: string
+                      example: https://api.github.com/repos/octocat/Hello-World/deployments
+                    created_at:
+                      oneOf:
+                        - type: integer
+                          description: Unix timestamp (used in webhook push payloads).
+                        - type: string
+                      example: 1296068472
+                    updated_at:
+                      type: string
+                      example: 2011-01-26T19:14:43Z
+                    pushed_at:
+                      oneOf:
+                        - type: integer
+                          description: Unix timestamp (used in webhook push payloads).
+                        - type: string
+                        - type: "null"
+                      example: 1296068472
+                    git_url:
+                      type: string
+                      example: git://github.com/octocat/Hello-World.git
+                    ssh_url:
+                      type: string
+                      example: git@github.com:octocat/Hello-World.git
+                    clone_url:
+                      type: string
+                      example: https://github.com/octocat/Hello-World.git
+                    svn_url:
+                      type: string
+                      example: https://svn.github.com/octocat/Hello-World
+                    homepage:
+                      type: string
+                      nullable: true
+                      example: https://github.com
+                    size:
+                      type: integer
+                      description: Repository size in kilobytes.
+                      example: 108
+                    stargazers_count:
+                      type: integer
+                      example: 80
+                    watchers_count:
+                      type: integer
+                      example: 80
+                    language:
+                      type: string
+                      nullable: true
+                      example: TypeScript
+                    has_issues:
+                      type: boolean
+                      example: true
+                    has_projects:
+                      type: boolean
+                      example: true
+                    has_downloads:
+                      type: boolean
+                      example: true
+                    has_wiki:
+                      type: boolean
+                      example: true
+                    has_pages:
+                      type: boolean
+                      example: false
+                    has_discussions:
+                      type: boolean
+                      example: false
+                    forks_count:
+                      type: integer
+                      example: 9
+                    mirror_url:
+                      type: string
+                      nullable: true
+                      example: null
+                    archived:
+                      type: boolean
+                      example: false
+                    disabled:
+                      type: boolean
+                      example: false
+                    open_issues_count:
+                      type: integer
+                      example: 0
+                    license:
+                      type: object
+                      nullable: true
+                      properties:
+                        key:
+                          type: string
+                          example: mit
+                        name:
+                          type: string
+                          example: MIT License
+                        spdx_id:
+                          type: string
+                          example: MIT
+                        url:
+                          type: string
+                          nullable: true
+                          example: https://api.github.com/licenses/mit
+                        node_id:
+                          type: string
+                          example: MDc6TGljZW5zZW1pdA==
+                    allow_squash_merge:
+                      type: boolean
+                      example: true
+                    allow_merge_commit:
+                      type: boolean
+                      example: true
+                    allow_rebase_merge:
+                      type: boolean
+                      example: true
+                    allow_auto_merge:
+                      type: boolean
+                      example: false
+                    allow_forking:
+                      type: boolean
+                      example: true
+                    allow_update_branch:
+                      type: boolean
+                      example: false
+                    use_squash_pr_title_as_default:
+                      type: boolean
+                      example: false
+                    squash_merge_commit_message:
+                      type: string
+                      example: COMMIT_MESSAGES
+                    squash_merge_commit_title:
+                      type: string
+                      example: COMMIT_OR_PR_TITLE
+                    merge_commit_message:
+                      type: string
+                      example: PR_TITLE
+                    merge_commit_title:
+                      type: string
+                      example: MERGE_MESSAGE
+                    delete_branch_on_merge:
+                      type: boolean
+                      example: false
+                    is_template:
+                      type: boolean
+                      example: false
+                    web_commit_signoff_required:
+                      type: boolean
+                      example: false
+                    topics:
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - octocat
+                        - api
+                    visibility:
+                      type: string
+                      enum:
+                        - public
+                        - private
+                        - internal
+                      example: public
+                    forks:
+                      type: integer
+                      example: 9
+                    open_issues:
+                      type: integer
+                      example: 0
+                    watchers:
+                      type: integer
+                      example: 80
+                    default_branch:
+                      type: string
+                      description: The default branch of the repository.
+                      example: main
+                    stargazers:
+                      type: integer
+                      example: 80
+                    master_branch:
+                      type: string
+                      description: Alias for default_branch, may appear in push-specific payloads.
+                      example: main
+                    permissions:
+                      type: object
+                      properties:
+                        pull:
+                          type: boolean
+                        push:
+                          type: boolean
+                        admin:
+                          type: boolean
+                        maintain:
+                          type: boolean
+                        triage:
+                          type: boolean
+                      required:
+                        - pull
+                        - push
+                        - admin
+                    public:
+                      type: boolean
+                      example: true
+                    organization:
+                      type: string
+                      description: The organization login name as a string on the repository object.
+                      example: octocat-org
+                organization:
+                  type: object
+                  description: Present when the repository belongs to an organization.
+                  properties:
+                    login:
+                      type: string
+                      example: octocat-org
+                    id:
+                      type: integer
+                      example: 9876543
+                    node_id:
+                      type: string
+                      example: MDEyOk9yZ2FuaXphdGlvbjk4NzY1NDM=
+                    url:
+                      type: string
+                      example: https://api.github.com/orgs/octocat-org
+                    html_url:
+                      type: string
+                      example: https://github.com/octocat-org
+                    repos_url:
+                      type: string
+                      example: https://api.github.com/orgs/octocat-org/repos
+                    events_url:
+                      type: string
+                      example: https://api.github.com/orgs/octocat-org/events
+                    hooks_url:
+                      type: string
+                      example: https://api.github.com/orgs/octocat-org/hooks
+                    issues_url:
+                      type: string
+                      example: https://api.github.com/orgs/octocat-org/issues
+                    members_url:
+                      type: string
+                      example: https://api.github.com/orgs/octocat-org/members{/member}
+                    public_members_url:
+                      type: string
+                      example: https://api.github.com/orgs/octocat-org/public_members{/member}
+                    avatar_url:
+                      type: string
+                      example: https://github.com/images/error/octocat_happy.gif
+                    description:
+                      type: string
+                      nullable: true
+                      example: An organization for testing
+                installation:
+                  type: object
+                  description: >
+                    Present when the event is triggered via a GitHub App
+                    installation. InstallationLite shape — only id and node_id,
+                    not the full Installation object.
+                  properties:
+                    id:
+                      type: integer
+                      description: The ID of the installation.
+                      example: 12345678
+                    node_id:
+                      type: string
+                      example: MDIzOkludGVncmF0aW9uSW5zdGFsbGF0aW9uMTIzNDU2Nzg=
+                  required:
+                    - id
+                    - node_id
+              required:
+                - ref
+                - before
+                - after
+                - created
+                - deleted
+                - forced
+                - compare
+                - commits
+                - head_commit
+                - repository
+                - pusher
+                - sender
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  "/api/media/download-playlist-song/{playlistId}/{songId}":
+    get:
+      operationId: downloadPlaylistSong
+      parameters:
+        - in: path
+          name: playlistId
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: songId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops:
+    get:
+      operationId: getOpsDashboard
+      parameters:
+        - name: render
+          in: query
+          description: Render on-the-fly rather than returning HTML from cache. Good for
+            testing.
+          required: false
+          schema:
+            type: string
+        - name: metricWindow
+          in: query
+          description: 1m, 5m, 15m, 1h, 3h, 6h, 12h, 1d, 3d, 1w, 2w, 1mo...defaults to 1d.
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            text/html:
+              schema:
+                type: string
+  /api/ops/monitor-stat/arp-cache:
+    get:
+      operationId: getMonitorStatArpCache
+      description: Returns the current ARP cache entries from the `arp` command.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/network-bandwidth:
+    get:
+      operationId: getMonitorStatBandwidth
+      description: Raw TX/RX byte counters per interface from `/proc/net/dev`.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/cpu-info:
+    get:
+      operationId: getMonitorStatCpuInfo
+      description: CPU details from `lscpu` as key-value pairs.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/cpu-intensive-processes:
+    get:
+      operationId: getMonitorStatCpuIntensiveProcesses
+      description: Top 15 processes sorted by CPU usage.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/cpu-temp:
+    get:
+      operationId: getMonitorStatCpuTemp
+      description: >
+        Current CPU temperature in degrees Celsius. Returns a number on
+        supported hardware, or an empty array if unavailable.
+      tags:
+        - CPU
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/cpu-utilization:
+    get:
+      operationId: getMonitorStatCpuUtilization
+      description: >
+        Current CPU utilization as a percentage (0–100), sampled over a 1-second
+        window.
+      tags:
+        - CPU
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/cron-history:
+    get:
+      operationId: getMonitorStatCronHistory
+      description: Last 50 CRON entries from `/var/log/syslog`.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/current_ram:
+    get:
+      operationId: getMonitorStatCurrentRam
+      description: Total, used, and available RAM in MB from `/proc/meminfo`.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/disk-partitions:
+    get:
+      operationId: getMonitorStatDiskPartitions
+      description: Disk usage per partition from `df -Ph`.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/docker-processes:
+    get:
+      operationId: getMonitorStatDockerProcesses
+      description: Top processes per running Docker container.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/download-transfer-rate:
+    get:
+      operationId: getMonitorStatDownloadTransferRate
+      description: >
+        Current inbound (RX) transfer rate in KB/s per network interface,
+        sampled over a 1-second window.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/general-info:
+    get:
+      operationId: getMonitorStatGeneralInfo
+      description: OS, hostname, uptime, and server time.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/io-stats:
+    get:
+      operationId: getMonitorStatIoStats
+      description: Per-device I/O stats from `/proc/diskstats`.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/ip-addresses:
+    get:
+      operationId: getMonitorStatIpAddresses
+      description: >
+        IP addresses for all local network interfaces plus the detected external
+        IP address.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/load-avg:
+    get:
+      operationId: getMonitorStatLoadAvg
+      description: >
+        1, 5, and 15 minute load averages from `/proc/loadavg`, normalised by
+        the number of CPU cores.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/logged-in-users:
+    get:
+      operationId: getMonitorStatLoggedInUsers
+      description: Active sessions from the `w` command.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/memory-info:
+    get:
+      operationId: getMonitorStatMemoryInfo
+      description: Full contents of `/proc/meminfo` as key-value pairs.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/network-connections:
+    get:
+      operationId: getMonitorStatNetworkConnections
+      description: Unique remote addresses and connection counts from `netstat -ntu`.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/number-of-cpu-cores:
+    get:
+      operationId: getMonitorStatNumberOfCpuCores
+      description: Count of logical CPU cores from `/proc/cpuinfo`.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/ram-intensive-processes:
+    get:
+      operationId: getMonitorStatRamIntensiveProcesses
+      description: Top 15 processes sorted by memory usage.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/recent-account-logins:
+    get:
+      operationId: getMonitorStatRecentAccountLogins
+      description: Logins from the past 365 days via `lastlog`.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/scheduled-crons:
+    get:
+      operationId: getMonitorStatScheduledCrons
+      description: >
+        All scheduled cron jobs from `/etc/crontab`, `/etc/cron.d/*`, and each
+        user's crontab.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/swap:
+    get:
+      operationId: getMonitorStatSwap
+      description: Swap partition information from `/proc/swaps`.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/upload-transfer-rate:
+    get:
+      operationId: getMonitorStatUploadTransferRate
+      description: >
+        Current outbound (TX) transfer rate in KB/s per network interface,
+        sampled over a 1-second window.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message
+  /api/ops/monitor-stat/user-accounts:
+    get:
+      operationId: getMonitorStatUserAccounts
+      description: >
+        All user accounts from `/etc/passwd`, classified as either system (UID ≤
+        499) or regular users.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - ok
+                      - error
+                  message:
+                    type: string
+                  data:
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: true
+                  headers:
+                    type: object
+                    additionalProperties: true
+                required:
+                  - status
+                  - message

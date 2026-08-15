@@ -1,0 +1,126 @@
+<noscript><p>Playlist support is limited with JavaScript disabled.</p><br/><br/></noscript>
+<div id='<%= playlistId %>' class='playlist'>
+  <div id='playlist-data' hidden><%= JSON.stringify(songs) %></div>
+
+  <input type='checkbox' id='expand-all-toggle' class='master-toggle'>
+  <label for='expand-all-toggle' class='btn-label'>Expand All / Collapse All</label>
+
+  <meblog-table
+    data='<%- escapedSongAnalysesSummary %>'
+    text-columns='[0,1,6,7,17,18]'
+    scroll-y='400px'
+  ></meblog-table>
+
+  <!--
+  <active-table
+    id='song-analyses-summary'
+    filter='true'
+    availableDefaultColumnTypes='["Text", "Number"]'
+    customColumnsSettings='[
+      {"headerName": "Duration (s)", "availableDefaultColumnTypes": ["Number"]},
+      {"headerName": "BPM 1", "availableDefaultColumnTypes": ["Number"]},
+      {"headerName": "BPM 2", "availableDefaultColumnTypes": ["Number"]},
+      {"headerName": "No. Segments", "availableDefaultColumnTypes": ["Number"]},
+      {"headerName": "Key", "availableDefaultColumnTypes": ["Text"]},
+      {"headerName": "Scale", "availableDefaultColumnTypes": ["Text"]},
+      {"headerName": "Key Strength", "availableDefaultColumnTypes": ["Number"]},
+      {"headerName": "Danceability", "availableDefaultColumnTypes": ["Number"]},
+      {"headerName": "Onset Rate", "availableDefaultColumnTypes": ["Number"]},
+      {"headerName": "Avg. Loudness", "availableDefaultColumnTypes": ["Number"]},
+      {"headerName": "Dynamic Complexity", "availableDefaultColumnTypes": ["Number"]},
+      {"headerName": "Loudness (LUFS)", "availableDefaultColumnTypes": ["Number"]},
+      {"headerName": "Spectral Centroid (Hz)", "availableDefaultColumnTypes": ["Number"]},
+      {"headerName": "Dissonance", "availableDefaultColumnTypes": ["Number"]},
+      {"headerName": "Tuning Frequency (Hz)", "availableDefaultColumnTypes": ["Number"]},
+      {"headerName": "Chords Key", "availableDefaultColumnTypes": ["Text"]},
+      {"headerName": "Chords Scale", "availableDefaultColumnTypes": ["Text"]},
+      {"headerName": "Chords Changes Rate", "availableDefaultColumnTypes": ["Number"]},
+      {"headerName": "Chords Number Rate", "availableDefaultColumnTypes": ["Number"]}
+    ]'
+    stripedRows='{"odd": {"backgroundColor": ""}, "even": {"backgroundColor": "#eeeeee7a"}}'
+    cellStyle='{"paddingLeft": "10px"}'
+    isCellTextEditable='false'
+    columnDropdown='{
+      "displaySettings": {"openMethod": {"overlayClick": true}},
+      "isSortAvailable": true,
+      "isDeleteAvailable": false,
+      "isInsertLeftAvailable": false,
+      "isInsertRightAvailable": false,
+      "isMoveAvailable": false
+    }'
+    rowDropdown='{"displaySettings": {"isAvailable": false}}'
+    displayIndexColumn='false'
+    displayAddNewColumn='false'
+    displayAddNewRow='false'
+    displayHeaderIcons='false'
+    wrapIndexCellText='false'
+    preserveNarrowColumns='false'
+    tableStyle='{"borderRadius":"2px"}'
+    stickyHeader='true'
+    data='<%- escapedSongAnalysesSummary %>'
+  ></active-table>
+  -->
+
+  <noscript>
+  <%
+  var summaryRows = songAnalysesSummary;
+  var summaryHeader = songAnalysesSummary.headings;
+  var summaryBody = songAnalysesSummary.data;
+  %>
+  <table class='song-analyses-summary-noscript' style='border-collapse: collapse; border-radius: 2px; width: 100%; font-family: Inter, sans-serif, Avenir, Helvetica, Arial;'>
+    <thead>
+      <tr>
+        <%
+        summaryHeader.forEach(function(header) {
+        %>
+        <th style='text-align: left; padding-left: 10px; padding-top: 6px; padding-bottom: 6px; border-bottom: 1px solid #cdcdcd; position: sticky; top: 0; background-color: #fff;'><%= header %></th>
+        <%
+        });
+        %>
+      </tr>
+    </thead>
+    <tbody>
+      <%
+      summaryBody.forEach(function(row, rowIndex) {
+      %>
+      <tr<%= rowIndex % 2 === 1 ? " style='background-color: #eeeeee7a;'" : "" %>>
+        <%
+        row.forEach(function(cell) {
+        %>
+        <td style='padding-left: 10px; padding-top: 4px; padding-bottom: 4px;'><%= (cell === null || cell === undefined) ? "" : cell %></td>
+        <%
+        });
+        %>
+      </tr>
+      <%
+      });
+      %>
+    </tbody>
+  </table>
+  </noscript>
+
+  <ol class='playlist-songs'>
+    <%
+    songs.forEach(function(song, index) {
+    %>
+    <li class='<%= index === 0 ? 'playlist-track-current' : '' %>' data-track-index='<%= index %>'>
+      <figure>
+        <input type='checkbox' id='toggle-analyses-<%= song.songId %>' class='analyses-shown-state-checkbox' hidden> <!-- Holds analysis visible state. -->
+
+        <p class='song'><label for='toggle-analyses-<%= song.songId %>' class='toggleable-analyses'></label><b><%= song['Track Name'] %></b></p>
+        <p><%= song['Album Name'] %> / <emphasis><%= song['Artist Name(s)'] %></emphasis> - <a href='https://www.youtube.com/watch?v=<%= song.songId %>' target='_blank'>YouTube</a></p>
+
+        <div class='analyses-container'> <!-- Hidden by default. -->
+          <!--<song-analysis song-id='<%= song.songId %>'></song-analysis>-->
+
+          <image loading='lazy' src='/playlist-analyzer/all-in-one-infer/visuals/<%= song.songId %>.png' ondblclick='this.requestFullscreen()' class='can-fullscreen'> <!-- Pre-load image. -->
+          <p>Analyses song text.</p>
+        </div>
+      </figure>
+      <hr/>
+    </li>
+    <%
+    });
+    %>
+  </ol>
+</div>
